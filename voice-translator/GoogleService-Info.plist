@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>753356494760-ciujpg9t8bs3c37hokaclf2fa0evk2r9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.753356494760-ciujpg9t8bs3c37hokaclf2fa0evk2r9</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCqdLc7qnXtGk51zQ48Nk6TRMOUcKEOxsk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>753356494760</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.myapp.voice-translator</string>
+	<key>PROJECT_ID</key>
+	<string>teak-mantis-279104</string>
+	<key>STORAGE_BUCKET</key>
+	<string>teak-mantis-279104.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:753356494760:ios:97cc2c0574266069f1af9d</string>
+	<key>DATABASE_URL</key>
+	<string>https://teak-mantis-279104.firebaseio.com</string>
+</dict>
+</plist>

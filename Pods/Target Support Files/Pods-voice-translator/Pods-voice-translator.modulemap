@@ -1,0 +1,6 @@
+framework module Pods_voice_translator {
+  umbrella header "Pods-voice-translator-umbrella.h"
+
+  export *
+  module * { export * }
+}
