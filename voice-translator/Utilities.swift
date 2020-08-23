@@ -35,6 +35,8 @@ class Utilities {
     static func styleHollowButton(_ button:UIButton) {
         
         button.layer.borderWidth = 2
+        button.backgroundColor = UIColor.white
+        button.setTitleColor(.black, for: .normal)
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.cornerRadius = 25.0
         button.tintColor = UIColor.black
