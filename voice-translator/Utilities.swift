@@ -24,6 +24,12 @@ class Utilities {
         
     }
     
+    static func styleTextFieldNoBorder(_ textField:UITextField) {
+        
+        textField.borderStyle = .none
+        
+    }
+    
     static func styleFilledButton(_ button:UIButton) {
         
         // button.backgroundColor = UIColor.init(red: 48/255, green: 173/255, blue: 99/255, alpha: 1)

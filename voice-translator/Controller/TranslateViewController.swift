@@ -9,13 +9,13 @@
 import UIKit
 import MobileCoreServices
 import AVFoundation
-import Alamofire
 
 class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     @IBOutlet weak var fromLanguagePicker: UITextField!
     @IBOutlet weak var toLanguagePicker: UITextField!
     @IBOutlet weak var chooseFileButton: UIButton!
+    @IBOutlet weak var fileName: UITextField!
     @IBOutlet weak var uploadButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var homeButton: UIButton!
@@ -23,24 +23,25 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     var currentTextField = UITextField()
     var pickerView = UIPickerView()
     
-   // var languagePickerOptions:[String] = []
+    // var languagePickerOptions:[String] = []
     var fromLanguagePickerOptions:[(languageText: String, languageValue: String)] = []
     var toLanguagePickerOptions:[(languageText: String, languageValue: String)] = []
     
     var fromLanguageValue: String = ""
     var toLanguageValue: String = ""
-    let fullUrl: String = Constants.Storyboard.URL_BASE + "/ios-upload"
+    let uploadURL: String = Constants.Storyboard.URL_BASE + Constants.Storyboard.URL_UPLOAD
+    // let uploadURL: String = Constants.Storyboard.URL_BASE + "/ios-upload"
     var fileURL: URL?
     var fileContents: NSMutableData = NSMutableData()
-  //  var fileName: String = ""
+    //  var fileName: String = ""
     var mimeType: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
-  //      languagePickerOptions = ["English","Telugu","Spanish","Hindi","Tamil"]
+        //      languagePickerOptions = ["English","Telugu","Spanish","Hindi","Tamil"]
         let languagePickerOptions:[(languageText: String, languageValue: String)] = [("English(UnitedStates)", "en-US"), ("Telugu(India)", "te-IN"), ("Spanish(Spain)", "es-ES"), ("Zulu(SouthAfrica)", "zu-ZA")]
         
         fromLanguagePickerOptions = languagePickerOptions
@@ -48,22 +49,23 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         setUpElements()
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
     func setUpElements() {
         
         // Hide the error label
         errorLabel.alpha = 0
-                    
+        fileName.alpha = 0
+        
         // Style the UI Elements
         Utilities.styleHollowButton(chooseFileButton)
         Utilities.styleFilledButton(uploadButton)
@@ -75,8 +77,8 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     }
     
     /* func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 36.0
-    } */
+     return 36.0
+     } */
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
@@ -89,7 +91,7 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             return 0
         }
     }
-
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         if currentTextField == fromLanguagePicker {
@@ -138,37 +140,46 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     func uploadSingleFile() {
         // print("File URL is: \(fileURL!)")
-        let fileInfo = NetworkService.FileInfo(withFileURL: fileURL, filename: SharedData.sharedDataInstance.fileName!, name: "file", mimetype: mimeType)
-        upload(files: [fileInfo], toURL: URL(string: fullUrl))
+        let fileInfo = NetworkService.FileInfo(withFileURL: fileURL, filename: SharedData.instance.fileName!, name: "file", mimetype: mimeType)
+        upload(files: [fileInfo], toURL: URL(string: uploadURL))
     }
     
     func upload(files: [NetworkService.FileInfo], toURL url: URL?) {
         if let uploadURL = url {
             
-       //     print("Username is \(String(describing: SharedData.sharedDataInstance.userName!))")
-       //     print("Source Language is: \(fromLanguageValue)")
-       //     print("Target Language is: \(toLanguageValue)")
-       //     NetworkService.sharedNetworkService.requestHttpHeaders.add(value: "application/json", forKey: "Content-Type")
-            NetworkService.sharedNetworkService.httpBodyParameters.add(value: SharedData.sharedDataInstance.userName!, forKey: "username")
+            //     print("Username is \(String(describing: SharedData.instance.userName!))")
+            //     print("Source Language is: \(fromLanguageValue)")
+            //     print("Target Language is: \(toLanguageValue)")
+            //     NetworkService.sharedNetworkService.requestHttpHeaders.add(value: "application/json", forKey: "Content-Type")
+            NetworkService.sharedNetworkService.httpBodyParameters.add(value: SharedData.instance.userName!, forKey: "username")
             NetworkService.sharedNetworkService.httpBodyParameters.add(value: fromLanguageValue, forKey: "srclang")
             NetworkService.sharedNetworkService.httpBodyParameters.add(value: toLanguageValue, forKey: "tgtlang")
             
             NetworkService.sharedNetworkService.upload(files: files, toURL: uploadURL, withHttpMethod: .post) { (results, failedFilesList) in
-                print("HTTP status code:", results.response?.httpStatusCode ?? 0)
-     
-                if let error = results.error {
-                    print(error)
-                }
-     
-                if let data = results.data {
-                    if let toDictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) {
-                        print(toDictionary)
+                
+                DispatchQueue.main.async {
+                    
+                    let statusCode = results.response?.httpStatusCode
+                    print("HTTP status code:", statusCode ?? 0)
+                    
+                    if let error = results.error {
+                        print(error)
                     }
-                }
-     
-                if let failedFiles = failedFilesList {
-                    for file in failedFiles {
-                        print(file)
+                    
+                    if let data = results.data {
+                        if let toDictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) {
+                            print(toDictionary)
+                        }
+                    }
+                    
+                    if let failedFiles = failedFilesList {
+                        for file in failedFiles {
+                            print(file)
+                        }
+                    }
+                    
+                    if statusCode == 200 {
+                        self.performSegue(withIdentifier: Constants.Storyboard.messageVCSegue, sender: self)
                     }
                 }
             }
@@ -203,7 +214,7 @@ extension TranslateViewController: UIDocumentPickerDelegate {
             }
         }
         
-        SharedData.sharedDataInstance.fileName = sandboxFileURL.lastPathComponent
+        SharedData.instance.fileName = sandboxFileURL.lastPathComponent
         fileURL = URL(fileURLWithPath: sandboxFileURL.path)
         
         let pathExtension = sandboxFileURL.pathExtension
@@ -212,41 +223,46 @@ extension TranslateViewController: UIDocumentPickerDelegate {
             print("Mimetype: \(mimeType)")
         }
         
-      /*  let asset = AVAsset(url: fileURL!)
-        print("Audio metadata: \(asset.commonMetadata)")
-        print("Audio duration: \(asset.duration)")
-        print("Audio duration: \(CMTimeGetSeconds(asset.duration))")
-        print("File name: \(sandboxFileURL.lastPathComponent)")
+        // Setting the fileName to the fileName outlet in the view
+        fileName.text = sandboxFileURL.lastPathComponent
+        fileName.alpha = 1
+        self.view.endEditing(true)
         
-        do {
-            fileContents = try NSMutableData(contentsOfFile: sandboxFileURL.path)
-            print("Audio Data: \(fileContents)")
-        } catch {
-            print("Error: \(error)")
-        }
-     
-        let headerS: HTTPHeaders = [
-        "Authorization": "Bearer (HelperGlobalVars.shared.access_token)",
-        "Accept": "application/json"
-        ]
-        
-        print("Username is \(String(describing: SharedData.sharedDataInstance.userName!))")
-        
-        AF.upload(
-        multipartFormData: { multipartFormData in
-            // multipartFormData.append(fileUrl, withName: fileName)
-            multipartFormData.append(self.fileContents as Data, withName: "file", fileName: self.fileName, mimeType: "audio/m4a")
-            multipartFormData.append("mytestuser@mail.com".data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName :"username")
-            multipartFormData.append("en-US".data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName :"srclang")
-            multipartFormData.append("te-IN".data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName :"tgtlang")
-        },
-        to: fullUrl,
-        method: .post,
-        headers: headerS)
-        .responseJSON { response in
-            print("Response: ")
-            debugPrint(response)
-        } */
+        /*  let asset = AVAsset(url: fileURL!)
+         print("Audio metadata: \(asset.commonMetadata)")
+         print("Audio duration: \(asset.duration)")
+         print("Audio duration: \(CMTimeGetSeconds(asset.duration))")
+         print("File name: \(sandboxFileURL.lastPathComponent)")
+         
+         do {
+         fileContents = try NSMutableData(contentsOfFile: sandboxFileURL.path)
+         print("Audio Data: \(fileContents)")
+         } catch {
+         print("Error: \(error)")
+         }
+         
+         let headerS: HTTPHeaders = [
+         "Authorization": "Bearer (HelperGlobalVars.shared.access_token)",
+         "Accept": "application/json"
+         ]
+         
+         print("Username is \(String(describing: SharedData.instance.userName!))")
+         
+         AF.upload(
+         multipartFormData: { multipartFormData in
+         // multipartFormData.append(fileUrl, withName: fileName)
+         multipartFormData.append(self.fileContents as Data, withName: "file", fileName: self.fileName, mimeType: "audio/m4a")
+         multipartFormData.append("mytestuser@mail.com".data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName :"username")
+         multipartFormData.append("en-US".data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName :"srclang")
+         multipartFormData.append("te-IN".data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName :"tgtlang")
+         },
+         to: uploadURL,
+         method: .post,
+         headers: headerS)
+         .responseJSON { response in
+         print("Response: ")
+         debugPrint(response)
+         } */
     }
     
 }

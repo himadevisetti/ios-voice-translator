@@ -24,6 +24,7 @@ class NetworkService {
             for (key, value) in urlQueryParameters.allValues() {
                 let item = URLQueryItem(name: key, value: value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))
                 queryItems.append(item)
+               // print("Query parameter is: \(item)")
             }
             urlComponents.queryItems = queryItems
             
@@ -64,6 +65,7 @@ class NetworkService {
                  withHttpMethod httpMethod: HttpMethod,
                  completion: @escaping (_ result: Results) -> Void) {
  
+        print ("url from NetworkService \(url)")
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             let targetURL = self?.addURLQueryParameters(toURL: url)
             let httpBody = self?.getHttpBody()

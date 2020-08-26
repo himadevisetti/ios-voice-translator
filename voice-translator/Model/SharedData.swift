@@ -10,7 +10,7 @@ import Foundation
 
 class SharedData {
     
-    static var sharedDataInstance: SharedData = {
+    static var instance: SharedData = {
         let instance = SharedData()
         // Setup code
         
@@ -21,5 +21,6 @@ class SharedData {
     
     var userName: String?
     var fileName: String?
+    var statusForUser: [String]?
     
 }

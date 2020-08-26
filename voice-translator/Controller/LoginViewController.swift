@@ -90,7 +90,7 @@ class LoginViewController: UIViewController {
             let password = passwordText.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             
             // Save email for later use
-            SharedData.sharedDataInstance.userName = email
+            SharedData.instance.userName = email
             
             // Sign in the user
             Auth.auth().signIn(withEmail: email, password: password) { (result, err) in

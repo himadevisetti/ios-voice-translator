@@ -109,7 +109,7 @@ class SignUpViewController: UIViewController {
             let password = passwordText.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             
             // Save email for later use
-            SharedData.sharedDataInstance.userName = email
+            SharedData.instance.userName = email
             
             // Create the user
             Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
