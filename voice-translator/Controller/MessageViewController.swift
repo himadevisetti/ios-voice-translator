@@ -11,7 +11,9 @@ import AVFoundation
 
 class MessageViewController: UIViewController {
     
-    @IBOutlet weak var messageText: UITextField!
+    @IBOutlet weak var messageView: UIStackView!
+    @IBOutlet weak var homeButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton!
     
     let viewStatusUrl: String = Constants.Storyboard.URL_BASE + Constants.Storyboard.URL_VIEWSTATUS
     var player: AVPlayer?
@@ -26,12 +28,23 @@ class MessageViewController: UIViewController {
         getStatus()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(finishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     func setUpElements() {
         
         // Style the UI Elements
-        Utilities.styleTextFieldNoBorder(messageText)
-        // messageText.text = "Checking status"
-        // messageText.text = "Your file is currently being processed. Please check status after a few minutes from Home screen"
+        // Add spinning wheel and disable the controls on the screen to show processing
+        activityIndicator()
+        indicator.startAnimating()
+        indicator.backgroundColor = .white
+        homeButton.isUserInteractionEnabled = false
+        logoutButton.isUserInteractionEnabled = false
     }
     
     func getStatus() {
@@ -45,15 +58,33 @@ class MessageViewController: UIViewController {
                 let statusCode = results.response?.httpStatusCode
                 print("HTTP status code:", statusCode ?? 0)
                 
+                // Response returned from the API, disable spinning wheel and re-enable the controls on the screen
+                self.indicator.stopAnimating()
+                self.indicator.hidesWhenStopped = true
+                self.homeButton.isUserInteractionEnabled = true
+                self.logoutButton.isUserInteractionEnabled = true
+                
                 if let data = results.data {
                     print("Data returned by the server is: \(data)")
                     let decoder = JSONDecoder()
                     guard let status = try? decoder.decode(String.self, from: data) else { return }
                     let statusURL = status.description
                     print(status.description)
+                    
                     if statusURL.hasPrefix("https") {
-                        self.messageText.textAlignment = .center
-                        self.messageText.text = "Your translated file"
+                        
+                        // Spacing between the UI elements (label and button) in the stack view
+                        self.messageView.spacing = 16.0
+                        
+                        // GET call returned atleast one URL, display the label
+                        let textLabel = UILabel()
+                        textLabel.backgroundColor = UIColor.white
+                        textLabel.widthAnchor.constraint(equalToConstant: self.messageView.frame.width).isActive = true
+                        textLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+                        textLabel.textAlignment = .center
+                        textLabel.text = "Your translated file"
+                        self.messageView.addArrangedSubview(textLabel)
+                        
                         let url = URL(string: statusURL)
                         print("the url = \(url!)")
                         self.playerItem = AVPlayerItem(url: url!)
@@ -61,31 +92,27 @@ class MessageViewController: UIViewController {
                         let playerLayer = AVPlayerLayer(player: self.player!)
                         playerLayer.frame = self.view.bounds
                         self.view.layer.addSublayer(playerLayer)
-                        self.button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
-                        self.button!.center.x = self.view.center.x // for horizontal center
+                        
+                        // Button to display the translated file so the user could play it
+                        self.button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+                        self.button!.center.x = self.messageView.center.x // for horizontal center
                         self.button!.setTitle(url!.lastPathComponent, for: .normal)
                         self.button!.setBackgroundImage(UIImage(systemName: "play.rectangle.fill"), for: .normal)
                         self.button!.addTarget(self, action: #selector(self.buttonAction), for: .touchUpInside)
-                        self.view.addSubview(self.button!)
+                        self.messageView.addArrangedSubview(self.button!)
                         
-//                        self.downloadAndSaveAudioFile(statusURL) { (savedLocation) in
-//                            print("Saved at \(savedLocation)")
-//                           // self.messageText.text = savedLocation
-//                            do {
-//                                self.player = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: savedLocation))
-//                            } catch {
-//                                print(error)
-//                            }
-//                            let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
-//                            button.center.x = self.view.center.x // for horizontal center
-//                            button.setTitle(url.lastPathComponent, for: .normal)
-//                            button.setBackgroundImage(UIImage(systemName: "play.rectangle.fill"), for: .normal)
-//                            button.addTarget(self, action: #selector(self.buttonAction), for: .touchUpInside)
-//                            self.messageText.text = "Your translated file"
-//                            self.view.addSubview(button)
-//                        }
                     } else {
-                        self.messageText.text = statusURL
+                        
+                        // Uploaded file is currently being processed
+                        let textLabel = UILabel()
+                        textLabel.backgroundColor = UIColor.white
+                        textLabel.widthAnchor.constraint(equalToConstant: self.messageView.frame.width).isActive = true
+                     // textLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+                     // textLabel.textAlignment = .center
+                        textLabel.lineBreakMode = .byWordWrapping
+                        textLabel.numberOfLines = 0;
+                        textLabel.text = statusURL
+                        self.messageView.addArrangedSubview(textLabel)
                     }
                 }
             }
@@ -97,6 +124,7 @@ class MessageViewController: UIViewController {
       if player?.rate == 0
         {
             player!.play()
+            print("playing it")
             //button!.setImage(UIImage(named: "player_control_pause_50px.png"), forState: UIControlState.Normal)
             button!.setTitle("Pause", for: UIControl.State.normal)
         } else {
@@ -106,6 +134,24 @@ class MessageViewController: UIViewController {
         }
     }
     
+    @objc func finishedPlaying(myNotification:NSNotification) {
+        //button!.setImage(UIImage(named: "player_control_play_50px.png"), forState: UIControlState.Normal)
+        let stoppedPlayerItem = myNotification.object as! AVPlayerItem
+        stoppedPlayerItem.seek(to: CMTime.zero, completionHandler: nil)
+    }
+    
+    
+    var indicator = UIActivityIndicatorView()
+
+    // Spinning wheel processing indicator to show while waiting for the GET API's response
+    func activityIndicator() {
+        indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        indicator.style = UIActivityIndicatorView.Style.large
+        indicator.center = self.view.center
+        self.view.addSubview(indicator)
+    }
+    
+    // Currently not using this fucntion. Playing the file directly from Google cloud storage bucket
     func downloadAndSaveAudioFile(_ audioFile: String, completion: @escaping (String) -> Void) {
         
         //Create directory if not present
@@ -150,15 +196,6 @@ class MessageViewController: UIViewController {
             }
         }
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+
     
 }

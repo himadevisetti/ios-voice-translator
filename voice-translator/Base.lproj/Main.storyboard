@@ -202,18 +202,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Dog-QA-jfv">
-                                <rect key="frame" x="40" y="115" width="295" height="216"/>
+                                <rect key="frame" x="40" y="115" width="295" height="246"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Checking status" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FSf-9A-pDz">
-                                        <rect key="frame" x="0.0" y="0.0" width="295" height="100"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Edz-6B-Yam">
+                                        <rect key="frame" x="0.0" y="0.0" width="295" height="130"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="TeS-MG-T0t"/>
+                                            <constraint firstAttribute="height" constant="130" id="wgs-qi-cr1"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                    </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u35-ye-bmf">
-                                        <rect key="frame" x="0.0" y="120" width="295" height="40"/>
+                                        <rect key="frame" x="0.0" y="150" width="295" height="40"/>
                                         <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                         <state key="normal" title="Home">
@@ -224,7 +222,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CEe-eh-ppF">
-                                        <rect key="frame" x="0.0" y="180" width="295" height="36"/>
+                                        <rect key="frame" x="0.0" y="210" width="295" height="36"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
                                         <state key="normal" title="Log out"/>
                                         <connections>
@@ -232,6 +230,11 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="u35-ye-bmf" firstAttribute="top" secondItem="Edz-6B-Yam" secondAttribute="bottom" constant="20" id="33I-Xg-hNa"/>
+                                    <constraint firstAttribute="trailing" secondItem="Edz-6B-Yam" secondAttribute="trailing" id="xMp-k6-PoF"/>
+                                    <constraint firstItem="Edz-6B-Yam" firstAttribute="leading" secondItem="Dog-QA-jfv" secondAttribute="leading" id="xft-E4-mPF"/>
+                                </constraints>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="vUt-rs-ZgZ">
                                 <rect key="frame" x="40" y="40" width="295" height="50"/>
@@ -255,7 +258,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="wBP-80-MUz"/>
                     <connections>
-                        <outlet property="messageText" destination="FSf-9A-pDz" id="NYV-Rs-tbO"/>
+                        <outlet property="homeButton" destination="u35-ye-bmf" id="Smt-NF-LPq"/>
+                        <outlet property="logoutButton" destination="CEe-eh-ppF" id="Fei-Xx-i7R"/>
+                        <outlet property="messageView" destination="Edz-6B-Yam" id="z3e-St-odn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4l2-He-w9A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -672,8 +677,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="OCq-s5-Fmk"/>
-        <segue reference="nOp-9I-cPf"/>
+        <segue reference="OPe-AD-90A"/>
+        <segue reference="WU4-To-nE0"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Logo" width="1920" height="1080"/>

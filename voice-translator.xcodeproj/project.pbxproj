@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		44C7911CF067F13338C0C6A2 /* Pods_voice_translator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D321B5E59AE70B1ED70A2E5C /* Pods_voice_translator.framework */; };
+		A01545D724F38C2C0081E3CB /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01545D624F38C2C0081E3CB /* MessageViewController.swift */; };
+		A01B7EBF24F4D82200969DED /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01B7EBE24F4D82200969DED /* StatusViewController.swift */; };
 		A039597B24EB49C100EC77EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A039597A24EB49C100EC77EE /* AppDelegate.swift */; };
 		A039597D24EB49C100EC77EE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A039597C24EB49C100EC77EE /* SceneDelegate.swift */; };
 		A039598224EB49C100EC77EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A039598024EB49C100EC77EE /* Main.storyboard */; };
@@ -16,14 +18,20 @@
 		A045E03D24EC621F00D9F3CF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A045E03C24EC621F00D9F3CF /* Constants.swift */; };
 		A0683DCD24EC441000318C58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0683DCC24EC440F00318C58 /* GoogleService-Info.plist */; };
 		A06B3E7124EBB6970016233A /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B3E7024EBB6970016233A /* Utilities.swift */; };
+		A0957F3724EED98C00DB237A /* TranslateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0957F3624EED98C00DB237A /* TranslateViewController.swift */; };
+		A0957F3924EF5B6C00DB237A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0957F3824EF5B6C00DB237A /* NetworkService.swift */; };
 		A0B7552624EB4DF8004E04C1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B7552524EB4DF8004E04C1 /* SignUpViewController.swift */; };
 		A0B7552824EB4E2E004E04C1 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B7552724EB4E2E004E04C1 /* LandingViewController.swift */; };
 		A0C59A6824EDE502004CAFE8 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C59A6724EDE502004CAFE8 /* ResetPasswordViewController.swift */; };
 		A0C59A6A24EDF9B2004CAFE8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C59A6924EDF9B2004CAFE8 /* LoginViewController.swift */; };
+		A0E23CFF24F197A1000D6A13 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E23CFE24F197A1000D6A13 /* SharedData.swift */; };
+		A0EE923124F02CBA00C0A687 /* UploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE923024F02CBA00C0A687 /* UploadRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		28ABBD734FA82ED58BE81854 /* Pods-voice-translator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voice-translator.debug.xcconfig"; path = "Target Support Files/Pods-voice-translator/Pods-voice-translator.debug.xcconfig"; sourceTree = "<group>"; };
+		A01545D624F38C2C0081E3CB /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		A01B7EBE24F4D82200969DED /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		A039597724EB49C100EC77EE /* voice-translator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "voice-translator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A039597A24EB49C100EC77EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A039597C24EB49C100EC77EE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -34,10 +42,14 @@
 		A045E03C24EC621F00D9F3CF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A0683DCC24EC440F00318C58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A06B3E7024EBB6970016233A /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = ../Utilities.swift; sourceTree = "<group>"; };
+		A0957F3624EED98C00DB237A /* TranslateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateViewController.swift; sourceTree = "<group>"; };
+		A0957F3824EF5B6C00DB237A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		A0B7552524EB4DF8004E04C1 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		A0B7552724EB4E2E004E04C1 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		A0C59A6724EDE502004CAFE8 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		A0C59A6924EDF9B2004CAFE8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A0E23CFE24F197A1000D6A13 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
+		A0EE923024F02CBA00C0A687 /* UploadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequest.swift; sourceTree = "<group>"; };
 		D321B5E59AE70B1ED70A2E5C /* Pods_voice_translator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voice_translator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB960D4345FD20A65B4384D6 /* Pods-voice-translator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voice-translator.release.xcconfig"; path = "Target Support Files/Pods-voice-translator/Pods-voice-translator.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +123,7 @@
 		A039598E24EB4B0900EC77EE /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A0957F3824EF5B6C00DB237A /* NetworkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -122,6 +135,9 @@
 				A0B7552524EB4DF8004E04C1 /* SignUpViewController.swift */,
 				A0B7552724EB4E2E004E04C1 /* LandingViewController.swift */,
 				A0C59A6724EDE502004CAFE8 /* ResetPasswordViewController.swift */,
+				A0957F3624EED98C00DB237A /* TranslateViewController.swift */,
+				A01545D624F38C2C0081E3CB /* MessageViewController.swift */,
+				A01B7EBE24F4D82200969DED /* StatusViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -136,6 +152,8 @@
 		A039599124EB4B2800EC77EE /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A0EE923024F02CBA00C0A687 /* UploadRequest.swift */,
+				A0E23CFE24F197A1000D6A13 /* SharedData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -265,11 +283,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A01B7EBF24F4D82200969DED /* StatusViewController.swift in Sources */,
+				A0E23CFF24F197A1000D6A13 /* SharedData.swift in Sources */,
+				A01545D724F38C2C0081E3CB /* MessageViewController.swift in Sources */,
+				A0957F3924EF5B6C00DB237A /* NetworkService.swift in Sources */,
 				A06B3E7124EBB6970016233A /* Utilities.swift in Sources */,
 				A039597B24EB49C100EC77EE /* AppDelegate.swift in Sources */,
 				A0C59A6824EDE502004CAFE8 /* ResetPasswordViewController.swift in Sources */,
 				A0B7552624EB4DF8004E04C1 /* SignUpViewController.swift in Sources */,
+				A0EE923124F02CBA00C0A687 /* UploadRequest.swift in Sources */,
 				A0C59A6A24EDF9B2004CAFE8 /* LoginViewController.swift in Sources */,
+				A0957F3724EED98C00DB237A /* TranslateViewController.swift in Sources */,
 				A045E03D24EC621F00D9F3CF /* Constants.swift in Sources */,
 				A0B7552824EB4E2E004E04C1 /* LandingViewController.swift in Sources */,
 				A039597D24EB49C100EC77EE /* SceneDelegate.swift in Sources */,
