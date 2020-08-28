@@ -55,31 +55,9 @@ class StatusViewController: UIViewController {
         // Array to hold filenames (filename is the last part of the URL)
         var fileNamesArray:[String] = []
         
-//        var buttonNamesArray:[String] = []
-//        var urlNamesArray:[String] = []
-//        var playerItemNamesArray:[String] = []
-        
         var buttonValuesArray:[UIButton] = []
         var urlValuesArray:[URL] = []
         var playerItemValuesArray:[AVPlayerItem] = []
-        
-        // When the array has more than one file, create as many buttons, urls and playerItems
-        // Create variable holder arrays for buttons, urls and playerItems
-//        var loopCounter = 0
-//        if fileCount > 1 {
-//            while loopCounter < fileCount {
-//                let buttonName = "button\(loopCounter)"
-//                buttonNamesArray.append(buttonName)
-//
-//                let urlName = "url\(loopCounter)"
-//                urlNamesArray.append(urlName)
-//
-//                let playerItemName = "playerItem\(loopCounter)"
-//                playerItemNamesArray.append(playerItemName)
-//
-//                loopCounter += 1
-//            }
-//        }
         
         var labelAdded = false;
   //      for index in 0..<fileCount {
@@ -272,21 +250,6 @@ class StatusViewController: UIViewController {
         //button!.setImage(UIImage(named: "player_control_play_50px.png"), forState: UIControlState.Normal)
         let stoppedPlayerItem = myNotification.object as! AVPlayerItem
         stoppedPlayerItem.seek(to: CMTime.zero, completionHandler: nil)
-    }
-    
-}
-
-class Player {
-
-    var buttonName: String
-    var url: URL
-    var playerItem: AVPlayerItem
-    
-    init(buttonName: String, url: URL, playerItem: AVPlayerItem)
-    {
-        self.buttonName = buttonName
-        self.url = url
-        self.playerItem = playerItem
     }
     
 }

@@ -99,12 +99,23 @@ class ResetPasswordViewController: UIViewController {
                 }
                 else {
                     // Transition to landing screen
-                    self.showMessage("An email has been sent to the email address provided by you. Please follow the instructions specified in the email.")
+//                    self.showMessage("An email has been sent to the email address provided by you. Please follow the instructions specified in the email.")
+                    self.showSuccessAlert()
                 }
             }
             
         }
 
+    }
+    
+    func showSuccessAlert() {
+        let alert = UIAlertController(title: "Reset Password", message: "An email has been sent to the email address provided by you. Please follow the instructions specified in the email.", preferredStyle: UIAlertController.Style.alert)
+
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
+            self.emailText.text = ""
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
 }
