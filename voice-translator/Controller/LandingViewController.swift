@@ -65,9 +65,16 @@ class LandingViewController: UIViewController {
                 if let data = results.data {
                     print("Data returned by the server is: \(data)")
                     let decoder = JSONDecoder()
-                    guard let status = try? decoder.decode([String].self, from: data) else { return }
-                    let statusURL = status
-                    print(status.description)
+                    var statusURL: [String]
+                    if let status = try? decoder.decode([String].self, from: data) {
+                        statusURL = status
+                    } else if let status = try? decoder.decode(String.self, from: data) {
+                        statusURL = [status]
+                    }
+                    else {
+                        return
+                    }
+                    print(statusURL.description)
                     SharedData.instance.statusForUser = statusURL
                 } else {
                     print("Could not fetch data from server")

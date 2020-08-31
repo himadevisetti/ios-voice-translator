@@ -81,6 +81,7 @@ class MessageViewController: UIViewController {
                         textLabel.backgroundColor = UIColor.white
                         textLabel.widthAnchor.constraint(equalToConstant: self.messageView.frame.width).isActive = true
                         textLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+                        textLabel.font = UIFont(name: "Avenir Next", size: 20)
                         textLabel.textAlignment = .center
                         textLabel.text = "Your translated file"
                         self.messageView.addArrangedSubview(textLabel)
@@ -94,10 +95,17 @@ class MessageViewController: UIViewController {
                         self.view.layer.addSublayer(playerLayer)
                         
                         // Button to display the translated file so the user could play it
-                        self.button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-                        self.button!.center.x = self.messageView.center.x // for horizontal center
+                        self.button = UIButton(type: .system)
                         self.button!.setTitle(url!.lastPathComponent, for: .normal)
-                        self.button!.setBackgroundImage(UIImage(systemName: "play.rectangle.fill"), for: .normal)
+                        self.button!.setTitleColor(.black, for: .normal)
+                        self.button!.titleLabel?.font =  UIFont(name: "Avenir Next", size: 14)
+                        self.button!.titleLabel?.numberOfLines = 0; // Dynamic number of lines
+                        self.button!.titleLabel?.lineBreakMode = .byWordWrapping;
+                        let image = Utilities.resizeImage(image: UIImage(systemName: "play.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
+                        self.button!.setImage(image, for: .normal)
+                        self.button!.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+                        self.button!.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
+                        self.button!.tintColor = .red
                         self.button!.addTarget(self, action: #selector(self.buttonAction), for: .touchUpInside)
                         self.messageView.addArrangedSubview(self.button!)
                         
@@ -106,9 +114,10 @@ class MessageViewController: UIViewController {
                         // Uploaded file is currently being processed
                         let textLabel = UILabel()
                         textLabel.backgroundColor = UIColor.white
-                        textLabel.widthAnchor.constraint(equalToConstant: self.messageView.frame.width).isActive = true
-                     // textLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-                     // textLabel.textAlignment = .center
+                        textLabel.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+                        textLabel.font = UIFont(name: "Avenir Next", size: 14)
+//                        textLabel.sizeToFit()
+                        textLabel.text = statusURL
                         textLabel.lineBreakMode = .byWordWrapping
                         textLabel.numberOfLines = 0;
                         textLabel.text = statusURL
@@ -123,14 +132,15 @@ class MessageViewController: UIViewController {
       print("Play button tapped")
       if player?.rate == 0
         {
+            // playing the audio
             player!.play()
-            print("playing it")
-            //button!.setImage(UIImage(named: "player_control_pause_50px.png"), forState: UIControlState.Normal)
-            button!.setTitle("Pause", for: UIControl.State.normal)
+            let pauseButtonImage = Utilities.resizeImage(image: UIImage(systemName: "pause.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
+            button!.setImage(pauseButtonImage, for: .normal)
         } else {
+            // paused the audio
             player!.pause()
-            //button!.setImage(UIImage(named: "player_control_play_50px.png"), forState: UIControlState.Normal)
-            button!.setTitle("Play", for: UIControl.State.normal)
+            let playButtonImage = Utilities.resizeImage(image: UIImage(systemName: "play.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
+            button!.setImage(playButtonImage, for: .normal)
         }
     }
     

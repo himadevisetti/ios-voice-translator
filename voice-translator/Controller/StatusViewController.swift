@@ -22,6 +22,9 @@ class StatusViewController: UIViewController {
     //Define you tuple to hold player attributes
     typealias Player = (button: UIButton, url: URL, playerItem: AVPlayerItem)
     var playerDictionary = [String: Player]()
+    let pauseButtonImage = Utilities.resizeImage(image: UIImage(systemName: "pause.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
+    let playButtonImage = Utilities.resizeImage(image: UIImage(systemName: "play.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,9 +44,9 @@ class StatusViewController: UIViewController {
     
     func setUpElements() {
         
-       stackViewToShowFiles.alignment = .fill
-       stackViewToShowFiles.distribution = .fillEqually
-       stackViewToShowFiles.spacing = 16.0
+//       stackViewToShowFiles.alignment = .fill
+//       stackViewToShowFiles.distribution = .fillEqually
+       stackViewToShowFiles.spacing = 20.0
         
         // Style the elements
         let fileUrlsArray = SharedData.instance.statusForUser!
@@ -63,7 +66,7 @@ class StatusViewController: UIViewController {
   //      for index in 0..<fileCount {
             
         // Get the first item of the fileUrlsArray
-            let file = fileUrlsArray[0]
+            var file = fileUrlsArray[0]
             print("File: \(file)")
             
             // ios-checkstatus API returned files
@@ -71,6 +74,7 @@ class StatusViewController: UIViewController {
                 
                 if !labelAdded {
                     setUpLabel("Your translated files")
+//                    configureTitleLabel()
                     labelAdded = true; 
                 }
                 
@@ -80,6 +84,8 @@ class StatusViewController: UIViewController {
                     // Create urls, playerItems and buttons to add them to the respective dictionaries
                     var count = 0
                     while count < fileCount {
+                        
+                        file = fileUrlsArray[count]
                         // There is more than one file (upto 5 files could be returned by the ios-checkstatus API)
                         // urlNamesArray will have items such as url1, url2 .. upto url5
                         // Create URLs using the file URLs and append them to urlValuesArray
@@ -157,21 +163,31 @@ class StatusViewController: UIViewController {
         textLabel!.backgroundColor = UIColor.white
         textLabel!.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
         textLabel!.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+        textLabel!.font = UIFont(name: "Avenir Next", size: 20)
         textLabel!.textAlignment = .center
+        textLabel!.sizeToFit()
         textLabel!.text = message
+        textLabel!.lineBreakMode = .byWordWrapping
+        textLabel!.numberOfLines = 0;
         
         // Add the Text Label to Stack View
         stackViewToShowFiles.addArrangedSubview(textLabel!)
         
     }
-    
+
     func setUpButtonSingle(_ title: String) -> UIButton {
         
         // Set up Button
-        button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-        button!.center.x = self.view.center.x // for horizontal center
+        button = UIButton(type: .system)
         button!.setTitle(title, for: .normal)
-        button!.setBackgroundImage(UIImage(systemName: "play.rectangle.fill"), for: .normal)
+        button!.setTitleColor(.black, for: .normal)
+        button!.titleLabel?.font =  UIFont(name: "Avenir Next", size: 14)
+        button!.titleLabel?.numberOfLines = 0; // Dynamic number of lines
+        button!.titleLabel?.lineBreakMode = .byWordWrapping;
+        let image = Utilities.resizeImage(image: UIImage(systemName: "play.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
+        button!.setImage(image, for: .normal)
+        button!.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        button!.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
         button!.tintColor = .red
         button!.addTarget(self, action: #selector(buttonActionSingle), for: .touchUpInside)
         
@@ -184,26 +200,30 @@ class StatusViewController: UIViewController {
     
     @objc func buttonActionSingle(sender: UIButton!) {
       print("Play button tapped")
+        
       if player?.rate == 0
         {
             player!.play()
-            print("playing it")
-            //button!.setImage(UIImage(named: "player_control_pause_50px.png"), forState: UIControlState.Normal)
-            button!.setTitle("Pause", for: UIControl.State.normal)
+            button!.setImage(pauseButtonImage, for: .normal)
         } else {
             player!.pause()
-            //button!.setImage(UIImage(named: "player_control_play_50px.png"), forState: UIControlState.Normal)
-            button!.setTitle("Play", for: UIControl.State.normal)
+            button!.setImage(playButtonImage, for: .normal)
         }
     }
     
     func setUpButton(_ title: String) -> UIButton {
         
         // Set up Button
-        button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-        button!.center.x = self.view.center.x // for horizontal center
+        button = UIButton(type: .system)
         button!.setTitle(title, for: .normal)
-        button!.setBackgroundImage(UIImage(systemName: "play.rectangle.fill"), for: .normal)
+        button!.setTitleColor(.black, for: .normal)
+        button!.titleLabel?.font =  UIFont(name: "Avenir Next", size: 14)
+        button!.titleLabel?.numberOfLines = 0; // Dynamic number of lines
+        button!.titleLabel?.lineBreakMode = .byWordWrapping;
+        let image = Utilities.resizeImage(image: UIImage(systemName: "play.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
+        button!.setImage(image, for: .normal)
+        button!.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        button!.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
         button!.tintColor = .red
         button!.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
@@ -236,13 +256,10 @@ class StatusViewController: UIViewController {
         if player?.rate == 0
         {
             player!.play()
-            print("playing it")
-            //button!.setImage(UIImage(named: "player_control_pause_50px.png"), forState: UIControlState.Normal)
-            button!.setTitle("Pause", for: UIControl.State.normal)
+            button!.setImage(pauseButtonImage, for: .normal)
         } else {
             player!.pause()
-            //button!.setImage(UIImage(named: "player_control_play_50px.png"), forState: UIControlState.Normal)
-            button!.setTitle("Play", for: UIControl.State.normal)
+            button!.setImage(playButtonImage, for: .normal)
         }
     }
     

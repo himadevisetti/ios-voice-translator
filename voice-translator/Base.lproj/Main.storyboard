@@ -418,7 +418,7 @@
                                     <constraint firstAttribute="height" constant="50" id="og3-Nz-UBP"/>
                                 </constraints>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9JV-UI-8GU">
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9JV-UI-8GU">
                                 <rect key="frame" x="20" y="110" width="335" height="397"/>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="b64-RI-bgb">
@@ -467,7 +467,6 @@
                             <constraint firstItem="zQW-Gr-aVs" firstAttribute="leading" secondItem="jf1-7D-pVm" secondAttribute="leading" constant="40" id="c2d-68-jrK"/>
                             <constraint firstItem="jf1-7D-pVm" firstAttribute="trailing" secondItem="9JV-UI-8GU" secondAttribute="trailing" constant="20" id="itK-bs-3PW"/>
                             <constraint firstItem="zQW-Gr-aVs" firstAttribute="top" secondItem="jf1-7D-pVm" secondAttribute="top" constant="40" id="jhx-8w-FNz"/>
-                            <constraint firstItem="b64-RI-bgb" firstAttribute="top" secondItem="9JV-UI-8GU" secondAttribute="bottom" constant="20" id="lPe-L0-Jrm"/>
                             <constraint firstItem="jf1-7D-pVm" firstAttribute="bottom" secondItem="b64-RI-bgb" secondAttribute="bottom" constant="40" id="mER-jS-1v7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jf1-7D-pVm"/>
@@ -677,8 +676,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="OPe-AD-90A"/>
-        <segue reference="WU4-To-nE0"/>
+        <segue reference="OCq-s5-Fmk"/>
+        <segue reference="nOp-9I-cPf"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Logo" width="1920" height="1080"/>
