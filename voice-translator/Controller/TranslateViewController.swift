@@ -41,11 +41,8 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         // Do any additional setup after loading the view.
         
-        //      languagePickerOptions = ["English","Telugu","Spanish","Hindi","Tamil"]
-        let languagePickerOptions:[(languageText: String, languageValue: String)] = [("English(UnitedStates)", "en-US"), ("Telugu(India)", "te-IN"), ("Spanish(Spain)", "es-ES"), ("Zulu(SouthAfrica)", "zu-ZA")]
-        
-        fromLanguagePickerOptions = languagePickerOptions
-        toLanguagePickerOptions = languagePickerOptions
+        fromLanguagePickerOptions = Constants.Storyboard.languagePickerOptions
+        toLanguagePickerOptions = Constants.Storyboard.languagePickerOptions
         
         setUpElements()
     }
@@ -147,9 +144,6 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     func upload(files: [NetworkService.FileInfo], toURL url: URL?) {
         if let uploadURL = url {
             
-            //     print("Username is \(String(describing: SharedData.instance.userName!))")
-            //     print("Source Language is: \(fromLanguageValue)")
-            //     print("Target Language is: \(toLanguageValue)")
             //     NetworkService.sharedNetworkService.requestHttpHeaders.add(value: "application/json", forKey: "Content-Type")
             NetworkService.sharedNetworkService.httpBodyParameters.add(value: SharedData.instance.userName!, forKey: "username")
             NetworkService.sharedNetworkService.httpBodyParameters.add(value: fromLanguageValue, forKey: "srclang")
@@ -228,41 +222,6 @@ extension TranslateViewController: UIDocumentPickerDelegate {
         fileName.alpha = 1
         self.view.endEditing(true)
         
-        /*  let asset = AVAsset(url: fileURL!)
-         print("Audio metadata: \(asset.commonMetadata)")
-         print("Audio duration: \(asset.duration)")
-         print("Audio duration: \(CMTimeGetSeconds(asset.duration))")
-         print("File name: \(sandboxFileURL.lastPathComponent)")
-         
-         do {
-         fileContents = try NSMutableData(contentsOfFile: sandboxFileURL.path)
-         print("Audio Data: \(fileContents)")
-         } catch {
-         print("Error: \(error)")
-         }
-         
-         let headerS: HTTPHeaders = [
-         "Authorization": "Bearer (HelperGlobalVars.shared.access_token)",
-         "Accept": "application/json"
-         ]
-         
-         print("Username is \(String(describing: SharedData.instance.userName!))")
-         
-         AF.upload(
-         multipartFormData: { multipartFormData in
-         // multipartFormData.append(fileUrl, withName: fileName)
-         multipartFormData.append(self.fileContents as Data, withName: "file", fileName: self.fileName, mimeType: "audio/m4a")
-         multipartFormData.append("mytestuser@mail.com".data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName :"username")
-         multipartFormData.append("en-US".data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName :"srclang")
-         multipartFormData.append("te-IN".data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName :"tgtlang")
-         },
-         to: uploadURL,
-         method: .post,
-         headers: headerS)
-         .responseJSON { response in
-         print("Response: ")
-         debugPrint(response)
-         } */
     }
     
 }

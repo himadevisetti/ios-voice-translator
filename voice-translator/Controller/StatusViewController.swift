@@ -45,9 +45,8 @@ class StatusViewController: UIViewController {
     
     func setUpElements() {
         
-        //       stackViewToShowFiles.alignment = .fill
-        //       stackViewToShowFiles.distribution = .fillEqually
         stackViewToShowFiles.spacing = 20.0
+        stackViewToShowFiles.alignment = .leading
         
         // Style the elements
         let fileUrlsArray = SharedData.instance.statusForUser!
@@ -159,7 +158,7 @@ class StatusViewController: UIViewController {
         // Set up Text Label
         textLabel = UILabel()
         textLabel!.backgroundColor = UIColor.white
-        //        textLabel!.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        textLabel!.widthAnchor.constraint(equalToConstant: self.stackViewToShowFiles.frame.width).isActive = true
         textLabel!.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
         textLabel!.font = UIFont(name: "Avenir Next", size: 20)
         textLabel!.textAlignment = .center
