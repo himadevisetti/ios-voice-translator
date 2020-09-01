@@ -79,7 +79,7 @@ class MessageViewController: UIViewController {
                         // GET call returned atleast one URL, display the label
                         let textLabel = UILabel()
                         textLabel.backgroundColor = UIColor.white
-                        textLabel.widthAnchor.constraint(equalToConstant: self.messageView.frame.width).isActive = true
+                        //                        textLabel.widthAnchor.constraint(equalToConstant: self.messageView.frame.width).isActive = true
                         textLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
                         textLabel.font = UIFont(name: "Avenir Next", size: 20)
                         textLabel.textAlignment = .center
@@ -116,7 +116,6 @@ class MessageViewController: UIViewController {
                         textLabel.backgroundColor = UIColor.white
                         textLabel.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
                         textLabel.font = UIFont(name: "Avenir Next", size: 14)
-//                        textLabel.sizeToFit()
                         textLabel.text = statusURL
                         textLabel.lineBreakMode = .byWordWrapping
                         textLabel.numberOfLines = 0;
@@ -129,8 +128,8 @@ class MessageViewController: UIViewController {
     }
     
     @objc func buttonAction(sender: UIButton!) {
-      print("Play button tapped")
-      if player?.rate == 0
+        print("Play button tapped")
+        if player?.rate == 0
         {
             // playing the audio
             player!.play()
@@ -152,7 +151,7 @@ class MessageViewController: UIViewController {
     
     
     var indicator = UIActivityIndicatorView()
-
+    
     // Spinning wheel processing indicator to show while waiting for the GET API's response
     func activityIndicator() {
         indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
@@ -206,6 +205,6 @@ class MessageViewController: UIViewController {
             }
         }
     }
-
+    
     
 }

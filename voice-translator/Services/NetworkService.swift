@@ -24,20 +24,20 @@ class NetworkService {
             for (key, value) in urlQueryParameters.allValues() {
                 let item = URLQueryItem(name: key, value: value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))
                 queryItems.append(item)
-               // print("Query parameter is: \(item)")
+                // print("Query parameter is: \(item)")
             }
             urlComponents.queryItems = queryItems
             
             guard let updatedURL = urlComponents.url else { return url }
             return updatedURL
         }
- 
+        
         return url
     }
     
     private func getHttpBody() -> Data? {
         guard let contentType = requestHttpHeaders.value(forKey: "Content-Type") else { return nil }
-     
+        
         if contentType.contains("application/json") {
             return try? JSONSerialization.data(withJSONObject: httpBodyParameters.allValues(), options: [.prettyPrinted, .sortedKeys])
         } else if contentType.contains("application/x-www-form-urlencoded") {
@@ -52,20 +52,19 @@ class NetworkService {
         guard let url = url else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = httpMethod.rawValue
-     
+        
         for (header, value) in requestHttpHeaders.allValues() {
             request.setValue(value, forHTTPHeaderField: header)
         }
-     
+        
         request.httpBody = httpBody
         return request
     }
     
     func makeRequest(toURL url: URL,
-                 withHttpMethod httpMethod: HttpMethod,
-                 completion: @escaping (_ result: Results) -> Void) {
- 
-        print ("url from NetworkService \(url)")
+                     withHttpMethod httpMethod: HttpMethod,
+                     completion: @escaping (_ result: Results) -> Void) {
+        
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             let targetURL = self?.addURLQueryParameters(toURL: url)
             let httpBody = self?.getHttpBody()
@@ -73,7 +72,7 @@ class NetworkService {
                 completion(Results(withError: CustomError.failedToCreateRequest))
                 return
             }
-     
+            
             let sessionConfiguration = URLSessionConfiguration.default
             let session = URLSession(configuration: sessionConfiguration)
             let task = session.dataTask(with: request) { (data, response, error) in
@@ -86,20 +85,20 @@ class NetworkService {
     }
     
     func upload(files: [FileInfo], toURL url: URL,
-            withHttpMethod httpMethod: HttpMethod,
-            completion: @escaping(_ result: Results, _ failedFiles: [String]?) -> Void) {
- 
+                withHttpMethod httpMethod: HttpMethod,
+                completion: @escaping(_ result: Results, _ failedFiles: [String]?) -> Void) {
+        
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             let targetURL = self?.addURLQueryParameters(toURL: url)
             guard let boundary = self?.createBoundary() else { completion(Results(withError: CustomError.failedToCreateBoundary), nil); return }
             self?.requestHttpHeaders.add(value: "multipart/form-data; boundary=\(boundary)", forKey: "content-type")
-     
+            
             guard var body = self?.getHttpBody(withBoundary: boundary) else { completion(Results(withError: CustomError.failedToCreateHttpBody), nil); return }
             let failedFilenames = self?.add(files: files, toBody: &body, withBoundary: boundary)
             self?.close(body: &body, usingBoundary: boundary)
-     
+            
             guard let request = self?.prepareRequest(withURL: targetURL, httpBody: body, httpMethod: httpMethod) else { completion(Results(withError: CustomError.failedToCreateRequest), nil); return }
-     
+            
             let sessionConfiguration = URLSessionConfiguration.default
             let session = URLSession(configuration: sessionConfiguration)
             let task = session.uploadTask(with: request, from: nil, completionHandler: { (data, response, error) in
@@ -110,7 +109,7 @@ class NetworkService {
             })
             task.resume()
         }
- 
+        
     }
     
     public func getData(fromURL url: URL, completion: @escaping (_ data: Data?) -> Void) {
@@ -136,22 +135,22 @@ extension NetworkService {
         case patch
         case delete
     }
-
+    
     struct RestEntity {
         private var values: [String: String] = [:]
-     
+        
         mutating func add(value: String, forKey key: String) {
             values[key] = value
         }
-     
+        
         func value(forKey key: String) -> String? {
             return values[key]
         }
-     
+        
         func allValues() -> [String: String] {
             return values
         }
-     
+        
         func totalItems() -> Int {
             return values.count
         }
@@ -163,10 +162,10 @@ extension NetworkService {
         var headers = RestEntity()
         
         init(fromURLResponse response: URLResponse?) {
-        guard let response = response else { return }
-        self.response = response
-        httpStatusCode = (response as? HTTPURLResponse)?.statusCode ?? 0
- 
+            guard let response = response else { return }
+            self.response = response
+            httpStatusCode = (response as? HTTPURLResponse)?.statusCode ?? 0
+            
             if let headerFields = (response as? HTTPURLResponse)?.allHeaderFields {
                 for (key, value) in headerFields {
                     headers.add(value: "\(value)", forKey: "\(key)")
@@ -185,7 +184,7 @@ extension NetworkService {
             self.response = response
             self.error = error
         }
-     
+        
         init(withError error: Error) {
             self.error = error
         }
@@ -230,31 +229,31 @@ extension NetworkService {
     
     private func getHttpBody(withBoundary boundary: String) -> Data {
         var body = Data()
-
+        
         for (key, value) in httpBodyParameters.allValues() {
             let values = ["--\(boundary)\r\n",
                 "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n",
                 "\(value)\r\n"]
-          //  print("Values passed in the request body: \(values)"); // to be deleted
+            //  print("Values passed in the request body: \(values)"); // to be deleted
             _ = body.append(values: values)
         }
-
+        
         return body
     }
     
     private func add(files: [FileInfo], toBody body: inout Data, withBoundary boundary: String) -> [String]? {
         var status = true
         var failedFilenames: [String]?
-     
+        
         for file in files {
             guard let filename = file.filename, let content = file.fileContents, let mimetype = file.mimetype, let name = file.name else { continue }
             status = false
             var data = Data()
-     
+            
             let formattedFileInfo = ["--\(boundary)\r\n",
                 "Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(filename)\"\r\n",
                 "Content-Type: \(mimetype)\r\n\r\n"]
-     
+            
             if data.append(values: formattedFileInfo) {
                 if data.append(values: [content]) {
                     if data.append(values: ["\r\n"]) {
@@ -262,18 +261,18 @@ extension NetworkService {
                     }
                 }
             }
-     
+            
             if status {
                 body.append(data)
             } else {
                 if failedFilenames == nil {
                     failedFilenames = [String]()
                 }
-     
+                
                 failedFilenames?.append(filename)
             }
         }
-     
+        
         return failedFilenames
     }
     

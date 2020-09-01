@@ -22,6 +22,7 @@ class StatusViewController: UIViewController {
     //Define you tuple to hold player attributes
     typealias Player = (button: UIButton, url: URL, playerItem: AVPlayerItem)
     var playerDictionary = [String: Player]()
+    var playerValues: Player?
     let pauseButtonImage = Utilities.resizeImage(image: UIImage(systemName: "pause.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
     let playButtonImage = Utilities.resizeImage(image: UIImage(systemName: "play.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
     
@@ -35,7 +36,7 @@ class StatusViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(finishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(finishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -44,9 +45,9 @@ class StatusViewController: UIViewController {
     
     func setUpElements() {
         
-//       stackViewToShowFiles.alignment = .fill
-//       stackViewToShowFiles.distribution = .fillEqually
-       stackViewToShowFiles.spacing = 20.0
+        //       stackViewToShowFiles.alignment = .fill
+        //       stackViewToShowFiles.distribution = .fillEqually
+        stackViewToShowFiles.spacing = 20.0
         
         // Style the elements
         let fileUrlsArray = SharedData.instance.statusForUser!
@@ -63,96 +64,93 @@ class StatusViewController: UIViewController {
         var playerItemValuesArray:[AVPlayerItem] = []
         
         var labelAdded = false;
-  //      for index in 0..<fileCount {
-            
+        
         // Get the first item of the fileUrlsArray
-            var file = fileUrlsArray[0]
-            print("File: \(file)")
+        var file = fileUrlsArray[0]
+        print("File: \(file)")
+        
+        // ios-checkstatus API returned files
+        if file.hasPrefix("https") {
             
-            // ios-checkstatus API returned files
-            if file.hasPrefix("https") {
+            if !labelAdded {
+                setUpLabel("Your translated files")
+                labelAdded = true;
+            }
+            
+            // When there is more than one file
+            if fileCount > 1 {
                 
-                if !labelAdded {
-                    setUpLabel("Your translated files")
-//                    configureTitleLabel()
-                    labelAdded = true; 
-                }
-                
-                // When there is more than one file
-                if fileCount > 1 {
-                   
-                    // Create urls, playerItems and buttons to add them to the respective dictionaries
-                    var count = 0
-                    while count < fileCount {
-                        
-                        file = fileUrlsArray[count]
-                        // There is more than one file (upto 5 files could be returned by the ios-checkstatus API)
-                        // urlNamesArray will have items such as url1, url2 .. upto url5
-                        // Create URLs using the file URLs and append them to urlValuesArray
-                        let url = URL(string: file)!
-                        urlValuesArray.append(url)
-                        
-                        // playerItemNamesArray will have items such as playerItem1, playerItem2 .. upto playerItem5
-                        // Create playerItems using the URLs and append them to playerItemValuesArray
-                        playerItem = AVPlayerItem(url: url)
-                        playerItemValuesArray.append(playerItem!)
-                        
-                        // filename is the last part of the URL
-                        // Get filename and append it to fileNamesArray
-                        let filename = url.lastPathComponent
-                        print("File name: \(filename)")
-                        fileNamesArray.append(filename)
-                        
-                        // buttonnamesArray will have items such as button1, button2 .. upto button5
-                        // Create UIButtons with filename as the title and append them to buttonValuesArray
-                        button = setUpButton(filename)
-                        buttonValuesArray.append(button!)
-                        
-                        // Increment loop control counter
-                        count += 1
-                    } // end of while count < fileCount
+                // Create urls, playerItems and buttons to add them to the respective dictionaries
+                var count = 0
+                while count < fileCount {
                     
-                    for index in 0..<fileCount {
-                        playerDictionary[fileNamesArray[index]] = Player(button: buttonValuesArray[index], url: urlValuesArray[index], playerItem: playerItemValuesArray[index])
-                    }
-                    
-                } else {
-                    
-                    // At this point, there's only one file; Create one url, playerItem each and add item to the player
-                    // Add player to the playerLayer and add playerLayer to the UI view
-                    // Get mp3 filename and create a button using filename as title
-                    // Add button to the vertical stack view
+                    file = fileUrlsArray[count]
+                    // There is more than one file (upto 5 files could be returned by the ios-checkstatus API)
+                    // urlNamesArray will have items such as url1, url2 .. upto url5
+                    // Create URLs using the file URLs and append them to urlValuesArray
                     let url = URL(string: file)!
+                    urlValuesArray.append(url)
                     
+                    // playerItemNamesArray will have items such as playerItem1, playerItem2 .. upto playerItem5
+                    // Create playerItems using the URLs and append them to playerItemValuesArray
                     playerItem = AVPlayerItem(url: url)
-                    player = AVPlayer(playerItem: playerItem!)
-                    let playerLayer = AVPlayerLayer(player: player!)
-                    playerLayer.frame = self.view.bounds
-                    self.view.layer.addSublayer(playerLayer)
+                    playerItemValuesArray.append(playerItem!)
                     
+                    // filename is the last part of the URL
+                    // Get filename and append it to fileNamesArray
                     let filename = url.lastPathComponent
                     print("File name: \(filename)")
-                    button = setUpButtonSingle(filename)
+                    fileNamesArray.append(filename)
                     
-                    // Add the Button to Stack View
-                    // stackViewToShowFiles.addArrangedSubview(button!)
+                    // buttonnamesArray will have items such as button1, button2 .. upto button5
+                    // Create UIButtons with filename as the title and append them to buttonValuesArray
+                    button = setUpButton(filename)
+                    buttonValuesArray.append(button!)
+                    
+                    // Increment loop control counter
+                    count += 1
+                } // end of while count < fileCount
+                
+                for index in 0..<fileCount {
+                    playerDictionary[fileNamesArray[index]] = Player(button: buttonValuesArray[index], url: urlValuesArray[index], playerItem: playerItemValuesArray[index])
                 }
                 
-            } else if file.hasPrefix("No files") {
-                
-                // ios-checkstatus API returned "No files were submitted for translation. Please upload a file by clicking translate button. In case you have just submitted a file, please give it a few minutes"
-                setUpLabel(file)
-                
-            } else if file.hasPrefix("No result") {
-                
-                // ios-checkstatus API returned "No result returned from DB: " + err.message
-                setUpLabel(file)
             } else {
                 
-                //  Could not fetch data from server
-                setUpLabel(file)
+                // At this point, there's only one file; Create one url, playerItem each and add item to the player
+                // Add player to the playerLayer and add playerLayer to the UI view
+                // Get mp3 filename and create a button using filename as title
+                // Add button to the vertical stack view
+                let url = URL(string: file)!
+                
+                playerItem = AVPlayerItem(url: url)
+                player = AVPlayer(playerItem: playerItem!)
+                let playerLayer = AVPlayerLayer(player: player!)
+                playerLayer.frame = self.view.bounds
+                self.view.layer.addSublayer(playerLayer)
+                
+                let filename = url.lastPathComponent
+                print("File name: \(filename)")
+                button = setUpButtonSingle(filename)
+                
+                // Add the Button to Stack View
+                // stackViewToShowFiles.addArrangedSubview(button!)
             }
-        // }
+            
+        } else if file.hasPrefix("No files") {
+            
+            // ios-checkstatus API returned "No files were submitted for translation. Please upload a file by clicking translate button. In case you have just submitted a file, please give it a few minutes"
+            setUpLabel(file)
+            
+        } else if file.hasPrefix("No result") {
+            
+            // ios-checkstatus API returned "No result returned from DB: " + err.message
+            setUpLabel(file)
+        } else {
+            
+            //  Could not fetch data from server
+            setUpLabel(file)
+        }
         
     }
     
@@ -161,7 +159,7 @@ class StatusViewController: UIViewController {
         // Set up Text Label
         textLabel = UILabel()
         textLabel!.backgroundColor = UIColor.white
-        textLabel!.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        //        textLabel!.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
         textLabel!.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
         textLabel!.font = UIFont(name: "Avenir Next", size: 20)
         textLabel!.textAlignment = .center
@@ -174,7 +172,7 @@ class StatusViewController: UIViewController {
         stackViewToShowFiles.addArrangedSubview(textLabel!)
         
     }
-
+    
     func setUpButtonSingle(_ title: String) -> UIButton {
         
         // Set up Button
@@ -184,8 +182,7 @@ class StatusViewController: UIViewController {
         button!.titleLabel?.font =  UIFont(name: "Avenir Next", size: 14)
         button!.titleLabel?.numberOfLines = 0; // Dynamic number of lines
         button!.titleLabel?.lineBreakMode = .byWordWrapping;
-        let image = Utilities.resizeImage(image: UIImage(systemName: "play.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
-        button!.setImage(image, for: .normal)
+        button!.setImage(playButtonImage, for: .normal)
         button!.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         button!.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
         button!.tintColor = .red
@@ -199,15 +196,15 @@ class StatusViewController: UIViewController {
     }
     
     @objc func buttonActionSingle(sender: UIButton!) {
-      print("Play button tapped")
+        print("Play button tapped")
         
-      if player?.rate == 0
+        if player?.rate == 0
         {
             player!.play()
-            button!.setImage(pauseButtonImage, for: .normal)
+            sender.setImage(pauseButtonImage, for: .normal)
         } else {
             player!.pause()
-            button!.setImage(playButtonImage, for: .normal)
+            sender.setImage(playButtonImage, for: .normal)
         }
     }
     
@@ -220,8 +217,7 @@ class StatusViewController: UIViewController {
         button!.titleLabel?.font =  UIFont(name: "Avenir Next", size: 14)
         button!.titleLabel?.numberOfLines = 0; // Dynamic number of lines
         button!.titleLabel?.lineBreakMode = .byWordWrapping;
-        let image = Utilities.resizeImage(image: UIImage(systemName: "play.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
-        button!.setImage(image, for: .normal)
+        button!.setImage(playButtonImage, for: .normal)
         button!.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         button!.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
         button!.tintColor = .red
@@ -239,32 +235,59 @@ class StatusViewController: UIViewController {
         let buttonPressedByUser = sender.titleLabel!.text
         print("Button pressed by user: \(String(describing: buttonPressedByUser))")
         
-        // Get the url that corresponds to the button pressed by the user
-        let playerValues = playerDictionary[buttonPressedByUser!]
-        
-        print("************* Testing ***************")
-        print("Button pressed by user is: \(String(describing: playerValues?.button.titleLabel?.text))")
-        print("Url corresponding to the button pressed: \(String(describing: playerValues?.url))")
-        print("Duration of the player item: \(String(describing: playerValues?.playerItem.duration))")
-        print("************* Testing ***************")
-        
-        player = AVPlayer(playerItem: playerValues!.playerItem)
-        let playerLayer = AVPlayerLayer(player: player!)
-        playerLayer.frame = self.view.bounds
-        self.view.layer.addSublayer(playerLayer)
+        // Load first audio into the player
+        if playerValues == nil {
+            // Get the url that corresponds to the button pressed by the user
+            playerValues = playerDictionary[buttonPressedByUser!]
+            
+            print("************* Testing ***************")
+            print("Button pressed by user is: \(String(describing: playerValues?.button.titleLabel?.text))")
+            print("Url corresponding to the button pressed: \(String(describing: playerValues?.url))")
+            print("Duration of the player item: \(String(describing: playerValues?.playerItem.duration))")
+            print("************* Testing ***************")
+            
+            playerItem = AVPlayerItem(url: playerValues!.url)
+            player = AVPlayer(playerItem: playerItem)
+            let playerLayer = AVPlayerLayer(player: player)
+            playerLayer.frame = self.view.bounds
+            self.view.layer.addSublayer(playerLayer)
+        } else {
+            // Load another audio into the player
+            print("Currently playing button value is: \(String(describing: playerValues?.button.titleLabel?.text))")
+            print("Current playing rate: \(player!.rate)")
+            if buttonPressedByUser != playerValues?.button.titleLabel!.text {
                 
-        if player?.rate == 0
+                // Reset player rate to 0 and change the button image in case something was playing
+                player!.rate = 0
+                playerValues?.button.setImage(playButtonImage, for: .normal)
+                
+                // Get the url that corresponds to the button pressed by the user
+                playerValues = playerDictionary[buttonPressedByUser!]
+                
+                playerItem = AVPlayerItem(url: playerValues!.url)
+                player = AVPlayer(playerItem: playerItem)
+                let playerLayer = AVPlayerLayer(player: player)
+                playerLayer.frame = self.view.bounds
+                self.view.layer.addSublayer(playerLayer)
+            }
+        }
+        
+        // Current audio is not playing
+        if player!.rate == 0
         {
             player!.play()
-            button!.setImage(pauseButtonImage, for: .normal)
+            playerValues?.button.setImage(pauseButtonImage, for: .normal)
         } else {
+            // Pause button tapped on the currently playing audio
             player!.pause()
-            button!.setImage(playButtonImage, for: .normal)
+            playerValues?.button.setImage(playButtonImage, for: .normal)
         }
+        
     }
     
     @objc func finishedPlaying(myNotification:NSNotification) {
         //button!.setImage(UIImage(named: "player_control_play_50px.png"), forState: UIControlState.Normal)
+        playerValues?.button.setImage(playButtonImage, for: .normal)
         let stoppedPlayerItem = myNotification.object as! AVPlayerItem
         stoppedPlayerItem.seek(to: CMTime.zero, completionHandler: nil)
     }
