@@ -160,7 +160,7 @@ class StatusViewController: UIViewController {
         textLabel!.backgroundColor = UIColor.white
         textLabel!.widthAnchor.constraint(equalToConstant: self.stackViewToShowFiles.frame.width).isActive = true
         textLabel!.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-        textLabel!.font = UIFont(name: "Avenir Next", size: 20)
+        textLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
         textLabel!.textAlignment = .center
         textLabel!.sizeToFit()
         textLabel!.text = message

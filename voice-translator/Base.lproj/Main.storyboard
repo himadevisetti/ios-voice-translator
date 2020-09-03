@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H4v-sg-7kD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H4v-sg-7kD">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -15,6 +15,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="GMQ-2s-ggR">
+                                <rect key="frame" x="40" y="40" width="295" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Z6f-aC-5R5"/>
+                                </constraints>
+                            </imageView>
                             <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="3cE-mf-46i">
                                 <rect key="frame" x="40" y="115" width="295" height="315.5"/>
                                 <subviews>
@@ -69,12 +75,19 @@
                                     <constraint firstItem="BTs-j5-2Sm" firstAttribute="height" secondItem="LTh-v3-i8a" secondAttribute="height" id="iFr-vO-WAE"/>
                                 </constraints>
                             </stackView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="GMQ-2s-ggR">
-                                <rect key="frame" x="40" y="40" width="295" height="50"/>
+                            <stackView opaque="NO" contentMode="scaleAspectFit" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="5ml-7K-Pxd">
+                                <rect key="frame" x="129.5" y="481" width="116" height="48"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Z6f-aC-5R5"/>
+                                    <constraint firstAttribute="height" constant="48" id="ZdU-v1-5mu"/>
+                                    <constraint firstAttribute="width" constant="116" id="x81-8t-OFO"/>
                                 </constraints>
-                            </imageView>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or Login with Social Media" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQa-BT-BGK">
+                                <rect key="frame" x="95.5" y="440.5" width="184" height="20.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
+                                <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -82,10 +95,14 @@
                             <constraint firstItem="3cE-mf-46i" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CGs-hS-eJ1"/>
                             <constraint firstItem="GMQ-2s-ggR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="E9X-w2-Tk7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3cE-mf-46i" secondAttribute="trailing" constant="40" id="RjB-3r-8N3"/>
+                            <constraint firstItem="5ml-7K-Pxd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bCx-1l-syw"/>
+                            <constraint firstItem="vQa-BT-BGK" firstAttribute="top" secondItem="3cE-mf-46i" secondAttribute="bottom" constant="10" id="gj9-dx-Kmn"/>
+                            <constraint firstItem="vQa-BT-BGK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gxt-nm-Olj"/>
                             <constraint firstItem="GMQ-2s-ggR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hfU-dd-wd2"/>
                             <constraint firstItem="3cE-mf-46i" firstAttribute="top" secondItem="GMQ-2s-ggR" secondAttribute="bottom" constant="25" id="klg-tZ-e1e"/>
                             <constraint firstItem="GMQ-2s-ggR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="rsy-cg-gjA"/>
                             <constraint firstItem="3cE-mf-46i" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="vwU-nX-yVB"/>
+                            <constraint firstItem="5ml-7K-Pxd" firstAttribute="top" secondItem="vQa-BT-BGK" secondAttribute="bottom" constant="20" id="wPg-Hh-rfF"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -97,11 +114,12 @@
                         <outlet property="logInButton" destination="BTs-j5-2Sm" id="zSX-g9-N5D"/>
                         <outlet property="passwordText" destination="1YJ-qy-THK" id="E1O-mR-XFo"/>
                         <outlet property="signUpLink" destination="pw8-NG-LZp" id="S5Z-aR-u57"/>
+                        <outlet property="stackToShowSocialButtons" destination="5ml-7K-Pxd" id="J8K-Fd-BBl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4901" y="286"/>
+            <point key="canvasLocation" x="-4901.6000000000004" y="285.60719640179911"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="NHs-L5-YmG">
@@ -419,7 +437,7 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9JV-UI-8GU">
-                                <rect key="frame" x="20" y="110" width="335" height="397"/>
+                                <rect key="frame" x="20" y="110" width="335" height="400"/>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="b64-RI-bgb">
                                 <rect key="frame" x="40" y="527" width="295" height="100"/>

@@ -52,6 +52,7 @@
 		A0EE923024F02CBA00C0A687 /* UploadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequest.swift; sourceTree = "<group>"; };
 		D321B5E59AE70B1ED70A2E5C /* Pods_voice_translator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voice_translator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB960D4345FD20A65B4384D6 /* Pods-voice-translator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voice-translator.release.xcconfig"; path = "Target Support Files/Pods-voice-translator/Pods-voice-translator.release.xcconfig"; sourceTree = "<group>"; };
+		DC3B0B4C24FF739A006567F9 /* voice-translator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "voice-translator.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +105,7 @@
 		A039597924EB49C100EC77EE /* voice-translator */ = {
 			isa = PBXGroup;
 			children = (
+				DC3B0B4C24FF739A006567F9 /* voice-translator.entitlements */,
 				A0B7552B24EB9334004E04C1 /* Helpers */,
 				A039599124EB4B2800EC77EE /* Model */,
 				A039599024EB4B1E00EC77EE /* View */,
@@ -459,6 +461,8 @@
 			baseConfigurationReference = 28ABBD734FA82ED58BE81854 /* Pods-voice-translator.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "voice-translator/voice-translator.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 83AJSFCSHH;
 				INFOPLIST_FILE = "voice-translator/Info.plist";
@@ -468,6 +472,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.myapp.voice-translator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -478,6 +483,8 @@
 			baseConfigurationReference = DB960D4345FD20A65B4384D6 /* Pods-voice-translator.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "voice-translator/voice-translator.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 83AJSFCSHH;
 				INFOPLIST_FILE = "voice-translator/Info.plist";
@@ -487,6 +494,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.myapp.voice-translator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

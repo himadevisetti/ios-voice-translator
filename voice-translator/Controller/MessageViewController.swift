@@ -81,7 +81,7 @@ class MessageViewController: UIViewController {
                         textLabel.backgroundColor = UIColor.white
                         //                        textLabel.widthAnchor.constraint(equalToConstant: self.messageView.frame.width).isActive = true
                         textLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-                        textLabel.font = UIFont(name: "Avenir Next", size: 20)
+                        textLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
                         textLabel.textAlignment = .center
                         textLabel.text = "Your translated file"
                         self.messageView.addArrangedSubview(textLabel)
