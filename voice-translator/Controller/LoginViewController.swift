@@ -171,7 +171,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                 let givenName = user.profile.givenName
                 let familyName = user.profile.familyName
                 
-                print("User \(givenName!), \(familyName!) signed in as \(userId), email: \(email ?? "unknown email")")
+//              print("User \(givenName!), \(familyName!) signed in as \(userId), email: \(email ?? "unknown email")")
+                print("User signed in as \(userId), email: \(email ?? "unknown email")")
                 
                 // Save email for later use
                 SharedData.instance.userName = email
@@ -307,7 +308,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     let givenName = appleIDCredential.fullName?.givenName
                     let familyName = appleIDCredential.fullName?.familyName
                     
-                    print("User \(givenName!), \(familyName!) signed in as \(userId), email: \(email ?? "unknown email")")
+//                  print("User \(givenName!), \(familyName!) signed in as \(userId), email: \(email ?? "unknown email")")
+                    print("User signed in as \(userId), email: \(email ?? "unknown email")")
                     
                     // Save email for later use
                     SharedData.instance.userName = email

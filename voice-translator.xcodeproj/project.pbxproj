@@ -32,7 +32,7 @@
 		28ABBD734FA82ED58BE81854 /* Pods-voice-translator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voice-translator.debug.xcconfig"; path = "Target Support Files/Pods-voice-translator/Pods-voice-translator.debug.xcconfig"; sourceTree = "<group>"; };
 		A01545D624F38C2C0081E3CB /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		A01B7EBE24F4D82200969DED /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
-		A039597724EB49C100EC77EE /* voice-translator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "voice-translator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A039597724EB49C100EC77EE /* Voice Translate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Voice Translate.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A039597A24EB49C100EC77EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A039597C24EB49C100EC77EE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A039598124EB49C100EC77EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		A039597824EB49C100EC77EE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A039597724EB49C100EC77EE /* voice-translator.app */,
+				A039597724EB49C100EC77EE /* Voice Translate.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,7 +108,6 @@
 				DC3B0B4C24FF739A006567F9 /* voice-translator.entitlements */,
 				A0B7552B24EB9334004E04C1 /* Helpers */,
 				A039599124EB4B2800EC77EE /* Model */,
-				A039599024EB4B1E00EC77EE /* View */,
 				A039598F24EB4B1500EC77EE /* Controller */,
 				A039598E24EB4B0900EC77EE /* Services */,
 				A039597A24EB49C100EC77EE /* AppDelegate.swift */,
@@ -142,13 +141,6 @@
 				A01B7EBE24F4D82200969DED /* StatusViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		A039599024EB4B1E00EC77EE /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		A039599124EB4B2800EC77EE /* Model */ = {
@@ -189,7 +181,7 @@
 			);
 			name = "voice-translator";
 			productName = "voice-translator";
-			productReference = A039597724EB49C100EC77EE /* voice-translator.app */;
+			productReference = A039597724EB49C100EC77EE /* Voice Translate.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -462,7 +454,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "voice-translator/voice-translator.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 83AJSFCSHH;
 				INFOPLIST_FILE = "voice-translator/Info.plist";
@@ -471,7 +463,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.myapp.voice-translator";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Voice Translate";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -484,7 +476,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "voice-translator/voice-translator.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 83AJSFCSHH;
 				INFOPLIST_FILE = "voice-translator/Info.plist";
@@ -493,7 +485,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.myapp.voice-translator";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Voice Translate";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -72,7 +72,7 @@ class StatusViewController: UIViewController {
         if file.hasPrefix("https") {
             
             if !labelAdded {
-                setUpLabel("Your translated files")
+                setUpMultilineLabel("Your translated files")
                 labelAdded = true;
             }
             
@@ -153,16 +153,32 @@ class StatusViewController: UIViewController {
         
     }
     
+    func setUpMultilineLabel(_ message:String) {
+        
+        // Set up Text Label
+        textLabel = UILabel()
+        textLabel!.backgroundColor = UIColor.white
+        textLabel!.widthAnchor.constraint(equalToConstant: self.stackViewToShowFiles.frame.width).isActive = true
+        textLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
+        textLabel!.textAlignment = .center
+        textLabel!.text = message
+        textLabel!.lineBreakMode = .byWordWrapping
+        textLabel!.numberOfLines = 0;
+        
+        // Add the Text Label to Stack View
+        stackViewToShowFiles.addArrangedSubview(textLabel!)
+        
+    }
+    
     func setUpLabel(_ message:String) {
         
         // Set up Text Label
         textLabel = UILabel()
         textLabel!.backgroundColor = UIColor.white
         textLabel!.widthAnchor.constraint(equalToConstant: self.stackViewToShowFiles.frame.width).isActive = true
-        textLabel!.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+//      textLabel!.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
         textLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
-        textLabel!.textAlignment = .center
-        textLabel!.sizeToFit()
+//      textLabel!.sizeToFit()
         textLabel!.text = message
         textLabel!.lineBreakMode = .byWordWrapping
         textLabel!.numberOfLines = 0;
