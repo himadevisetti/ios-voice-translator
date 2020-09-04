@@ -151,6 +151,10 @@ class StatusViewController: UIViewController {
             setUpLabel(file)
         }
         
+        stackViewToShowFiles.layoutIfNeeded()
+        print("Stack view height after adding all the elements: \(stackViewToShowFiles.frame.height)") // new height
+        setUpEmptyLabel()
+        
     }
     
     func setUpMultilineLabel(_ message:String) {
@@ -182,6 +186,21 @@ class StatusViewController: UIViewController {
         textLabel!.text = message
         textLabel!.lineBreakMode = .byWordWrapping
         textLabel!.numberOfLines = 0;
+        
+        // Add the Text Label to Stack View
+        stackViewToShowFiles.addArrangedSubview(textLabel!)
+        
+    }
+    
+    func setUpEmptyLabel() {
+        
+        // Set up Text Label
+        textLabel = UILabel()
+        textLabel!.backgroundColor = UIColor.white
+        textLabel!.widthAnchor.constraint(equalToConstant: self.stackViewToShowFiles.frame.width).isActive = true
+//      textLabel!.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+//      textLabel!.sizeToFit()
+        textLabel!.numberOfLines = 1;
         
         // Add the Text Label to Stack View
         stackViewToShowFiles.addArrangedSubview(textLabel!)
