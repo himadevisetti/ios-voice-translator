@@ -7,14 +7,16 @@
 //
 
 import UIKit
+import AVFoundation
 
 class LandingViewController: UIViewController {
     
+    @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var translateButton: UIButton!
     @IBOutlet weak var checkStatusButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     
-   // let checkStatusUrl: String = Constants.Storyboard.URL_BASE + Constants.Storyboard.URL_CHECKSTATUS
+    var recordingSession: AVAudioSession!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,9 +31,16 @@ class LandingViewController: UIViewController {
         errorLabel.alpha = 0
         
         // Style the elements
+        Utilities.styleFilledButton(recordButton)
         Utilities.styleFilledButton(translateButton)
         Utilities.styleFilledButton(checkStatusButton)
         
+    }
+    
+    func showError(_ message:String) {
+        
+        errorLabel.text = message
+        errorLabel.alpha = 1
     }
     
     /*
@@ -48,9 +57,9 @@ class LandingViewController: UIViewController {
     @IBAction func checkStatusForUser(_ sender: Any) {
         
         checkStatus()
-      //  transitionToShowStatus()
     }
     
+    // Call ios-checkstatus API to fetch upto 5 previously translated audio files for the current user
     func checkStatus() {
         let checkStatusUrl: String = Constants.Storyboard.URL_BASE + Constants.Storyboard.URL_CHECKSTATUS
         guard let url = URL(string: checkStatusUrl) else { return }
@@ -87,12 +96,43 @@ class LandingViewController: UIViewController {
     
     // Transition to Status screen
     func transitionToShowStatus() {
-
+        
         let statusViewController = storyboard?.instantiateViewController(identifier: Constants.Storyboard.statusViewController) as? StatusViewController
-
+        
         view.window?.rootViewController = statusViewController
         view.window?.makeKeyAndVisible()
         
+    }
+    
+    @IBAction func recordButtonTapped(_ sender: Any) {
+        seekUserPermission()
+    }
+    
+    // Segue for back button from Record View Controller
+    @IBAction func unwindFromRecordVC(unwindSegue: UIStoryboardSegue) {
+    }
+    
+    // Seek user's permission to record
+    func seekUserPermission() {
+        recordingSession = AVAudioSession.sharedInstance()
+        
+        do {
+            try recordingSession.setCategory(.playAndRecord, mode: .default)
+            try recordingSession.setActive(true)
+            recordingSession.requestRecordPermission() { [unowned self] allowed in
+                DispatchQueue.main.async {
+                    if allowed {
+                        print("User has granted permission to record.")
+                    } else {
+                        // failed to record!
+                        self.showError("You did not grant permission to record.")
+                    }
+                }
+            }
+        } catch {
+            // failed to record!
+            showError("Error occured while trying to record.")
+        }
     }
     
 }

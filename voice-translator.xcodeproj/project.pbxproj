@@ -26,6 +26,7 @@
 		A0C59A6A24EDF9B2004CAFE8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C59A6924EDF9B2004CAFE8 /* LoginViewController.swift */; };
 		A0E23CFF24F197A1000D6A13 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E23CFE24F197A1000D6A13 /* SharedData.swift */; };
 		A0EE923124F02CBA00C0A687 /* UploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE923024F02CBA00C0A687 /* UploadRequest.swift */; };
+		DC92D827250206A3006FE59E /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC92D826250206A3006FE59E /* RecordViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		D321B5E59AE70B1ED70A2E5C /* Pods_voice_translator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voice_translator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB960D4345FD20A65B4384D6 /* Pods-voice-translator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voice-translator.release.xcconfig"; path = "Target Support Files/Pods-voice-translator/Pods-voice-translator.release.xcconfig"; sourceTree = "<group>"; };
 		DC3B0B4C24FF739A006567F9 /* voice-translator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "voice-translator.entitlements"; sourceTree = "<group>"; };
+		DC92D826250206A3006FE59E /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 				A0957F3624EED98C00DB237A /* TranslateViewController.swift */,
 				A01545D624F38C2C0081E3CB /* MessageViewController.swift */,
 				A01B7EBE24F4D82200969DED /* StatusViewController.swift */,
+				DC92D826250206A3006FE59E /* RecordViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 				A0C59A6A24EDF9B2004CAFE8 /* LoginViewController.swift in Sources */,
 				A0957F3724EED98C00DB237A /* TranslateViewController.swift in Sources */,
 				A045E03D24EC621F00D9F3CF /* Constants.swift in Sources */,
+				DC92D827250206A3006FE59E /* RecordViewController.swift in Sources */,
 				A0B7552824EB4E2E004E04C1 /* LandingViewController.swift in Sources */,
 				A039597D24EB49C100EC77EE /* SceneDelegate.swift in Sources */,
 			);

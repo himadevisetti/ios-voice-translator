@@ -20,6 +20,9 @@ class MessageViewController: UIViewController {
     var playerItem: AVPlayerItem?
     var button: UIButton?
     
+    let playButtonImage = Utilities.resizeImage(image: UIImage(systemName: "play.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
+    let pauseButtonImage = Utilities.resizeImage(image: UIImage(systemName: "pause.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,7 +32,7 @@ class MessageViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(finishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(finishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -79,7 +82,6 @@ class MessageViewController: UIViewController {
                         // GET call returned atleast one URL, display the label
                         let textLabel = UILabel()
                         textLabel.backgroundColor = UIColor.white
-                        //                        textLabel.widthAnchor.constraint(equalToConstant: self.messageView.frame.width).isActive = true
                         textLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
                         textLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
                         textLabel.textAlignment = .center
@@ -114,7 +116,7 @@ class MessageViewController: UIViewController {
                         // Uploaded file is currently being processed
                         let textLabel = UILabel()
                         textLabel.backgroundColor = UIColor.white
-                        textLabel.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+//                        textLabel.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
                         textLabel.font = UIFont(name: "Avenir Next", size: 14)
                         textLabel.text = statusURL
                         textLabel.lineBreakMode = .byWordWrapping
@@ -133,18 +135,16 @@ class MessageViewController: UIViewController {
         {
             // playing the audio
             player!.play()
-            let pauseButtonImage = Utilities.resizeImage(image: UIImage(systemName: "pause.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
             button!.setImage(pauseButtonImage, for: .normal)
         } else {
             // paused the audio
             player!.pause()
-            let playButtonImage = Utilities.resizeImage(image: UIImage(systemName: "play.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
             button!.setImage(playButtonImage, for: .normal)
         }
     }
     
     @objc func finishedPlaying(myNotification:NSNotification) {
-        //button!.setImage(UIImage(named: "player_control_play_50px.png"), forState: UIControlState.Normal)
+        button!.setImage(playButtonImage, for: .normal)
         let stoppedPlayerItem = myNotification.object as! AVPlayerItem
         stoppedPlayerItem.seek(to: CMTime.zero, completionHandler: nil)
     }

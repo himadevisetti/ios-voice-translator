@@ -197,15 +197,11 @@ extension TranslateViewController: UIDocumentPickerDelegate {
         let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let sandboxFileURL = dir.appendingPathComponent(selectedFileURL.lastPathComponent)
         
-        if FileManager.default.fileExists(atPath: sandboxFileURL.path) {
-            print("File already exists in the app sandbox")
-        } else {
-            do {
-                try FileManager.default.copyItem(at: selectedFileURL, to: sandboxFileURL)
-                print("Copied file")
-            } catch {
-                print("Error: \(error)")
-            }
+        do {
+            try FileManager.default.copyItem(at: selectedFileURL, to: sandboxFileURL)
+            print("Copied file")
+        } catch {
+            print("Error: \(error)")
         }
         
         SharedData.instance.fileName = sandboxFileURL.lastPathComponent

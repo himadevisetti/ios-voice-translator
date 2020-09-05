@@ -132,6 +132,9 @@ class StatusViewController: UIViewController {
                 print("File name: \(filename)")
                 button = setUpButtonSingle(filename)
                 
+                // Populate playerValues object to act upon finished playing notification
+                playerValues = Player(button: button!, url: url, playerItem: playerItem!)
+                
                 // Add the Button to Stack View
                 // stackViewToShowFiles.addArrangedSubview(button!)
             }
@@ -151,9 +154,10 @@ class StatusViewController: UIViewController {
             setUpLabel(file)
         }
         
+        setUpEmptyLabel()
         stackViewToShowFiles.layoutIfNeeded()
         print("Stack view height after adding all the elements: \(stackViewToShowFiles.frame.height)") // new height
-        setUpEmptyLabel()
+//        stackViewToShowFiles.heightAnchor.constraint(equalToConstant: stackViewToShowFiles.frame.height).isActive = true
         
     }
     
@@ -320,7 +324,6 @@ class StatusViewController: UIViewController {
     }
     
     @objc func finishedPlaying(myNotification:NSNotification) {
-        //button!.setImage(UIImage(named: "player_control_play_50px.png"), forState: UIControlState.Normal)
         playerValues?.button.setImage(playButtonImage, for: .normal)
         let stoppedPlayerItem = myNotification.object as! AVPlayerItem
         stoppedPlayerItem.seek(to: CMTime.zero, completionHandler: nil)

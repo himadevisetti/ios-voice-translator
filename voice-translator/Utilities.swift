@@ -39,6 +39,18 @@ class Utilities {
         
     }
     
+    static func styleFilledLeftButton(_ button:UIButton) {
+        
+        button.roundedLeftButton()
+        
+    }
+    
+    static func styleFilledRightButton(_ button:UIButton) {
+        
+        button.roundedRightButton()
+        
+    }
+    
     static func styleHollowButton(_ button:UIButton) {
         
         button.layer.borderWidth = 2
@@ -152,4 +164,26 @@ class Utilities {
       return hashString
     }
     
+}
+
+extension UIButton{
+    func roundedLeftButton() {
+        let maskPath1 = UIBezierPath(roundedRect: bounds,
+            byRoundingCorners: [.topLeft, .bottomLeft],
+            cornerRadii: CGSize(width: 25, height: 25))
+        let maskLayer1 = CAShapeLayer()
+        maskLayer1.frame = bounds
+        maskLayer1.path = maskPath1.cgPath
+        layer.mask = maskLayer1
+    }
+    
+    func roundedRightButton() {
+        let maskPath1 = UIBezierPath(roundedRect: bounds,
+            byRoundingCorners: [.topRight, .bottomRight],
+            cornerRadii: CGSize(width: 25, height: 25))
+        let maskLayer1 = CAShapeLayer()
+        maskLayer1.frame = bounds
+        maskLayer1.path = maskPath1.cgPath
+        layer.mask = maskLayer1
+    }
 }
