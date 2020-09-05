@@ -136,7 +136,6 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     }
     
     func uploadSingleFile() {
-        // print("File URL is: \(fileURL!)")
         let fileInfo = NetworkService.FileInfo(withFileURL: fileURL, filename: SharedData.instance.fileName!, name: "file", mimetype: mimeType)
         upload(files: [fileInfo], toURL: URL(string: uploadURL))
     }
@@ -144,7 +143,7 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     func upload(files: [NetworkService.FileInfo], toURL url: URL?) {
         if let uploadURL = url {
             
-            //     NetworkService.sharedNetworkService.requestHttpHeaders.add(value: "application/json", forKey: "Content-Type")
+     //     NetworkService.sharedNetworkService.requestHttpHeaders.add(value: "application/json", forKey: "Content-Type")
             NetworkService.sharedNetworkService.httpBodyParameters.add(value: SharedData.instance.userName!, forKey: "username")
             NetworkService.sharedNetworkService.httpBodyParameters.add(value: fromLanguageValue, forKey: "srclang")
             NetworkService.sharedNetworkService.httpBodyParameters.add(value: toLanguageValue, forKey: "tgtlang")
@@ -210,7 +209,6 @@ extension TranslateViewController: UIDocumentPickerDelegate {
         let pathExtension = sandboxFileURL.pathExtension
         if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension as NSString, nil)?.takeRetainedValue() {
             mimeType = (UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType)?.takeRetainedValue())! as String
-            print("Mimetype: \(mimeType)")
         }
         
         // Setting the fileName to the fileName outlet in the view

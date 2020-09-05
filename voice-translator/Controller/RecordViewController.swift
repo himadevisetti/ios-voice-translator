@@ -66,7 +66,7 @@ class RecordViewController: UIViewController, AVAudioRecorderDelegate {
     
     func startRecording() {
         let filename = SharedData.instance.userName! + "_recording.m4a"
-        print("file name is: \(filename)")
+//      print("file name is: \(filename)")
         SharedData.instance.fileName = filename
         let audioFilename = getDocumentsDirectory().appendingPathComponent(filename)
         

@@ -50,10 +50,10 @@ class StatusViewController: UIViewController {
         
         // Style the elements
         let fileUrlsArray = SharedData.instance.statusForUser!
-        print("File names array: \(fileUrlsArray)")
+//      print("File names array: \(fileUrlsArray)")
         
         let fileCount = fileUrlsArray.count
-        print("File count: \(fileCount)")
+//      print("File count: \(fileCount)")
         
         // Array to hold filenames (filename is the last part of the URL)
         var fileNamesArray:[String] = []
@@ -66,7 +66,7 @@ class StatusViewController: UIViewController {
         
         // Get the first item of the fileUrlsArray
         var file = fileUrlsArray[0]
-        print("File: \(file)")
+//      print("File: \(file)")
         
         // ios-checkstatus API returned files
         if file.hasPrefix("https") {
@@ -98,7 +98,7 @@ class StatusViewController: UIViewController {
                     // filename is the last part of the URL
                     // Get filename and append it to fileNamesArray
                     let filename = url.lastPathComponent
-                    print("File name: \(filename)")
+//                  print("File name: \(filename)")
                     fileNamesArray.append(filename)
                     
                     // buttonnamesArray will have items such as button1, button2 .. upto button5
@@ -129,7 +129,7 @@ class StatusViewController: UIViewController {
                 self.view.layer.addSublayer(playerLayer)
                 
                 let filename = url.lastPathComponent
-                print("File name: \(filename)")
+//              print("File name: \(filename)")
                 button = setUpButtonSingle(filename)
                 
                 // Populate playerValues object to act upon finished playing notification
@@ -156,8 +156,8 @@ class StatusViewController: UIViewController {
         
         setUpEmptyLabel()
         stackViewToShowFiles.layoutIfNeeded()
-        print("Stack view height after adding all the elements: \(stackViewToShowFiles.frame.height)") // new height
-//        stackViewToShowFiles.heightAnchor.constraint(equalToConstant: stackViewToShowFiles.frame.height).isActive = true
+//      print("Stack view height after adding all the elements: \(stackViewToShowFiles.frame.height)") // new height
+//      stackViewToShowFiles.heightAnchor.constraint(equalToConstant: stackViewToShowFiles.frame.height).isActive = true
         
     }
     
@@ -234,8 +234,6 @@ class StatusViewController: UIViewController {
     }
     
     @objc func buttonActionSingle(sender: UIButton!) {
-        print("Play button tapped")
-        
         if player?.rate == 0
         {
             player!.play()
@@ -269,20 +267,19 @@ class StatusViewController: UIViewController {
     }
     
     @objc func buttonAction(sender: UIButton!) {
-        print("Play button tapped")
         let buttonPressedByUser = sender.titleLabel!.text
-        print("Button pressed by user: \(String(describing: buttonPressedByUser))")
+//      print("Button pressed by user: \(String(describing: buttonPressedByUser))")
         
         // Load first audio into the player
         if playerValues == nil {
             // Get the url that corresponds to the button pressed by the user
             playerValues = playerDictionary[buttonPressedByUser!]
             
-            print("************* Testing ***************")
-            print("Button pressed by user is: \(String(describing: playerValues?.button.titleLabel?.text))")
-            print("Url corresponding to the button pressed: \(String(describing: playerValues?.url))")
-            print("Duration of the player item: \(String(describing: playerValues?.playerItem.duration))")
-            print("************* Testing ***************")
+//          print("************* Testing ***************")
+//          print("Button pressed by user is: \(String(describing: playerValues?.button.titleLabel?.text))")
+//          print("Url corresponding to the button pressed: \(String(describing: playerValues?.url))")
+//          print("Duration of the player item: \(String(describing: playerValues?.playerItem.duration))")
+//          print("************* Testing ***************")
             
             playerItem = AVPlayerItem(url: playerValues!.url)
             player = AVPlayer(playerItem: playerItem)
@@ -291,8 +288,8 @@ class StatusViewController: UIViewController {
             self.view.layer.addSublayer(playerLayer)
         } else {
             // Load another audio into the player
-            print("Currently playing button value is: \(String(describing: playerValues?.button.titleLabel?.text))")
-            print("Current playing rate: \(player!.rate)")
+//          print("Currently playing button value is: \(String(describing: playerValues?.button.titleLabel?.text))")
+//          print("Current playing rate: \(player!.rate)")
             if buttonPressedByUser != playerValues?.button.titleLabel!.text {
                 
                 // Reset player rate to 0 and change the button image in case something was playing

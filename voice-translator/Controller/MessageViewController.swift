@@ -68,11 +68,10 @@ class MessageViewController: UIViewController {
                 self.logoutButton.isUserInteractionEnabled = true
                 
                 if let data = results.data {
-                    print("Data returned by the server is: \(data)")
                     let decoder = JSONDecoder()
                     guard let status = try? decoder.decode(String.self, from: data) else { return }
                     let statusURL = status.description
-                    print(status.description)
+//                  print(status.description)
                     
                     if statusURL.hasPrefix("https") {
                         
@@ -89,7 +88,6 @@ class MessageViewController: UIViewController {
                         self.messageView.addArrangedSubview(textLabel)
                         
                         let url = URL(string: statusURL)
-                        print("the url = \(url!)")
                         self.playerItem = AVPlayerItem(url: url!)
                         self.player = AVPlayer(playerItem: self.playerItem!)
                         let playerLayer = AVPlayerLayer(player: self.player!)
@@ -130,7 +128,6 @@ class MessageViewController: UIViewController {
     }
     
     @objc func buttonAction(sender: UIButton!) {
-        print("Play button tapped")
         if player?.rate == 0
         {
             // playing the audio
@@ -170,7 +167,7 @@ class MessageViewController: UIViewController {
         
         do {
             try FileManager.default.createDirectory(atPath: soundDirPathString, withIntermediateDirectories: true, attributes:nil)
-            print("directory created at \(soundDirPathString)")
+//          print("directory created at \(soundDirPathString)")
         } catch let error as NSError {
             print("error while creating dir : \(error.localizedDescription)");
         }
@@ -181,8 +178,7 @@ class MessageViewController: UIViewController {
             let documentsFolderUrl = documentsUrl.appendingPathComponent("Sounds")
             // your destination file url
             let destinationUrl = documentsFolderUrl.appendingPathComponent(audioUrl.lastPathComponent)
-            
-            print(destinationUrl)
+//          print(destinationUrl)
             // check if it exists before downloading it
             if FileManager().fileExists(atPath: destinationUrl.path) {
                 print("The file already exists at path")

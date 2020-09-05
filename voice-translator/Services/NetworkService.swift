@@ -24,7 +24,6 @@ class NetworkService {
             for (key, value) in urlQueryParameters.allValues() {
                 let item = URLQueryItem(name: key, value: value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))
                 queryItems.append(item)
-                // print("Query parameter is: \(item)")
             }
             urlComponents.queryItems = queryItems
             
@@ -234,7 +233,6 @@ extension NetworkService {
             let values = ["--\(boundary)\r\n",
                 "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n",
                 "\(value)\r\n"]
-            //  print("Values passed in the request body: \(values)"); // to be deleted
             _ = body.append(values: values)
         }
         
