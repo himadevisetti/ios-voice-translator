@@ -65,10 +65,25 @@ class RecordViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     func startRecording() {
-        let filename = SharedData.instance.userName! + "_recording.m4a"
+        
+        let usernameArr = SharedData.instance.userName!.components(separatedBy: "@")
+        let filename = usernameArr[0] + "_recording.m4a"
 //      print("file name is: \(filename)")
+        
         SharedData.instance.fileName = filename
         let audioFilename = getDocumentsDirectory().appendingPathComponent(filename)
+        
+        // Get the singleton instance.
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            // Set the audio session category, mode, and options.
+            try audioSession.setCategory(.playAndRecord, mode:.spokenAudio)
+            try audioSession.setActive(true)
+            try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
+            
+        } catch {
+            print("Failed to set audio session properties.")
+        }
         
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),

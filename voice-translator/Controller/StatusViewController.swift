@@ -84,33 +84,36 @@ class StatusViewController: UIViewController {
                 while count < fileCount {
                     
                     file = fileUrlsArray[count]
-                    // There is more than one file (upto 5 files could be returned by the ios-checkstatus API)
-                    // urlNamesArray will have items such as url1, url2 .. upto url5
-                    // Create URLs using the file URLs and append them to urlValuesArray
-                    let url = URL(string: file)!
-                    urlValuesArray.append(url)
                     
-                    // playerItemNamesArray will have items such as playerItem1, playerItem2 .. upto playerItem5
-                    // Create playerItems using the URLs and append them to playerItemValuesArray
-                    playerItem = AVPlayerItem(url: url)
-                    playerItemValuesArray.append(playerItem!)
-                    
-                    // filename is the last part of the URL
-                    // Get filename and append it to fileNamesArray
-                    let filename = url.lastPathComponent
-//                  print("File name: \(filename)")
-                    fileNamesArray.append(filename)
-                    
-                    // buttonnamesArray will have items such as button1, button2 .. upto button5
-                    // Create UIButtons with filename as the title and append them to buttonValuesArray
-                    button = setUpButton(filename)
-                    buttonValuesArray.append(button!)
-                    
+                    // Ignore the files under processing
+                    if file.hasPrefix("https") {
+                        // There is more than one file (upto 5 files could be returned by the ios-checkstatus API)
+                        // urlNamesArray will have items such as url1, url2 .. upto url5
+                        // Create URLs using the file URLs and append them to urlValuesArray
+                        let url = URL(string: file)!
+                        urlValuesArray.append(url)
+                        
+                        // playerItemNamesArray will have items such as playerItem1, playerItem2 .. upto playerItem5
+                        // Create playerItems using the URLs and append them to playerItemValuesArray
+                        playerItem = AVPlayerItem(url: url)
+                        playerItemValuesArray.append(playerItem!)
+                        
+                        // filename is the last part of the URL
+                        // Get filename and append it to fileNamesArray
+                        let filename = url.lastPathComponent
+    //                  print("File name: \(filename)")
+                        fileNamesArray.append(filename)
+                        
+                        // buttonnamesArray will have items such as button1, button2 .. upto button5
+                        // Create UIButtons with filename as the title and append them to buttonValuesArray
+                        button = setUpButton(filename)
+                        buttonValuesArray.append(button!)
+                    }
                     // Increment loop control counter
                     count += 1
                 } // end of while count < fileCount
                 
-                for index in 0..<fileCount {
+                for index in 0..<urlValuesArray.count {
                     playerDictionary[fileNamesArray[index]] = Player(button: buttonValuesArray[index], url: urlValuesArray[index], playerItem: playerItemValuesArray[index])
                 }
                 
