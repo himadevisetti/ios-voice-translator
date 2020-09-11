@@ -180,7 +180,43 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     }
     
     @IBAction func uploadButtonTapped(_ sender: Any) {
-        uploadSingleFile()
+        let error = validateFields()
+        
+        if error != nil {
+            // Input is not valid
+            self.showError(error!)
+            
+        } else {
+            self.uploadSingleFile()
+        }
+        
+    }
+    
+    func showError(_ message:String) {
+        
+        errorLabel.text = message
+        errorLabel.alpha = 1
+    }
+    
+    // Validate the input fields
+    // If valid, returns nil
+    // If invalid, return an error string
+    func validateFields() -> String? {
+        
+        // Esnure that all mandatory fields are filled in
+        if fromLanguageValue == "" || toLanguageValue == "" {
+            return "Please fill in all fields."
+        }
+        
+        // Validate that a file was uploaded
+        let filename = fileName.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        if Utilities.isValidFile(filename) == false {
+            
+            // File is invalid
+            return "Please upload a valid file"
+        }
+        
+        return nil
     }
     
 }

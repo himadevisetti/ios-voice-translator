@@ -22,5 +22,6 @@ class SharedData {
     var userName: String?
     var fileName: String?
     var statusForUser: [String]?
+    var statusCode: Int?
     
 }

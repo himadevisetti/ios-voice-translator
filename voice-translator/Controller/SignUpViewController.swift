@@ -12,7 +12,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class SignUpViewController: UIViewController {
-
+    
     
     @IBOutlet weak var firstNameText: UITextField!
     @IBOutlet weak var lastNameText: UITextField!
@@ -23,7 +23,7 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         setUpElements()
@@ -42,22 +42,22 @@ class SignUpViewController: UIViewController {
         Utilities.styleFilledButton(signUpButton)
         
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
     // Validate the input fields
     // If valid, returns nil
     // If invalid, return an error string
     func validateFields() -> String? {
-       
+        
         // Esnure that all mandatory fields are filled in
         if firstNameText.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
             || lastNameText.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
@@ -116,21 +116,35 @@ class SignUpViewController: UIViewController {
                 
                 // Check for errors
                 if err != nil {
+                    let error = err! as NSError
+                    print(error.code)
                     // There's an error while creating user
-                    self.showError("Error creating user")
+//                  self.showError("Error creating user")
+                    switch error.code {
+                    case AuthErrorCode.wrongPassword.rawValue:
+                        self.showError("Wrong password")
+                    case AuthErrorCode.invalidEmail.rawValue:
+                        self.showError("Invalid email")
+                    case AuthErrorCode.accountExistsWithDifferentCredential.rawValue:
+                        self.showError("AccountExistsWithDifferentCredential")
+                    case AuthErrorCode.emailAlreadyInUse.rawValue: //<- Your Error
+                        self.showError("Email is already in use")
+                    default:
+                        self.showError("Unknown error: \(error.localizedDescription)")
+                    }
                     
                 } else {
-                    // User was created successfully. Store the firstname and lastname in Firestore
+                    // User was created successfully. Store the firstname, lastname and email in Firestore
                     let db = Firestore.firestore()
-                    db.collection("users").addDocument(data: ["firstname": firstName, "lastname": lastName, "uid": result!.user.uid]) { (error) in
+                    db.collection("users").addDocument(data: ["email": email,  "firstname": firstName, "lastname": lastName, "uid": result!.user.uid]) { (error) in
                         if error != nil {
                             self.showError("Error saving user data")
                         }
                     }
+                    
+                    // Transition to landing screen
+                    self.transitionToLanding()
                 }
-                
-                // Transition to landing screen
-                self.transitionToLanding()
                 
             }
             

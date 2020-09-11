@@ -184,7 +184,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                     self.appDelegate.sethasAlreadyLaunched()
                     
                     // first-time user and hence save user info to firestore
-                    let errMessage = self.saveUserToFirestore(firstName: givenName!, lastName: familyName!, uid: userId)
+                    let errMessage = self.saveUserToFirestore(email: email!, firstName: givenName!, lastName: familyName!, uid: userId)
                     
                     if errMessage != nil {
                         // user doesn't need to know that there's an error while saving their data to DB
@@ -261,11 +261,11 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     
     
     // save users to firestore
-    func saveUserToFirestore(firstName: String, lastName: String, uid: String) -> String? {
-        // User was created successfully. Store the firstname and lastname in Firestore
+    func saveUserToFirestore(email: String, firstName: String, lastName: String, uid: String) -> String? {
+        // User was created successfully. Store the firstname, lastname and email in Firestore
         let db = Firestore.firestore()
         var errMessage: String? = nil
-        db.collection("users").addDocument(data: ["firstname": firstName, "lastname": lastName, "uid": uid]) { (error) in
+        db.collection("users").addDocument(data: ["email": email,  "firstname": firstName, "lastname": lastName, "uid": uid]) { (error) in
             if error != nil {
                 errMessage = "Error saving user data"
                 //                self.showError(errMessage)
@@ -321,7 +321,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                         self.appDelegate.sethasAlreadyLaunched()
                         
                         // first-time user and hence save user info to firestore
-                        let errMessage = self.saveUserToFirestore(firstName: givenName!, lastName: familyName!, uid: userId)
+                        let errMessage = self.saveUserToFirestore(email: email!, firstName: givenName!, lastName: familyName!, uid: userId)
                         
                         if errMessage != nil {
                             // user doesn't need to know that there's an error while saving their data to DB

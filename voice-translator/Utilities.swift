@@ -93,6 +93,20 @@ class Utilities {
         
     }
     
+    // validate filename for the right format
+    static func isValidFile(_ filename:String?) -> Bool {
+        
+        guard filename != nil else { return false }
+        
+        // There’s some text before the . (basename)
+        // There’s at least 3 characters after the . (extension)
+        let regEx = "[A-Z0-9a-z._%+-]+\\.[A-Za-z0-9]{3,}"
+        
+        let pred = NSPredicate(format:"SELF MATCHES %@", regEx)
+        return pred.evaluate(with: filename)
+        
+    }
+    
     // resize an image
     static func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size

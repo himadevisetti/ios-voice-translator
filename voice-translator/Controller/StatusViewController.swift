@@ -25,7 +25,7 @@ class StatusViewController: UIViewController {
     var playerValues: Player?
     let pauseButtonImage = Utilities.resizeImage(image: UIImage(systemName: "pause.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
     let playButtonImage = Utilities.resizeImage(image: UIImage(systemName: "play.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -188,7 +188,8 @@ class StatusViewController: UIViewController {
         textLabel!.backgroundColor = UIColor.white
         textLabel!.widthAnchor.constraint(equalToConstant: self.stackViewToShowFiles.frame.width).isActive = true
 //      textLabel!.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-        textLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
+//      textLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
+        textLabel!.font = UIFont(name: "Avenir Next", size: 14)
 //      textLabel!.sizeToFit()
         textLabel!.text = message
         textLabel!.lineBreakMode = .byWordWrapping
@@ -228,6 +229,8 @@ class StatusViewController: UIViewController {
         button!.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
         button!.tintColor = .red
         button!.addTarget(self, action: #selector(buttonActionSingle), for: .touchUpInside)
+        let rightSwipeButton = UISwipeGestureRecognizer(target: self, action: #selector(rightSwipeButtonActionSingle))
+        button!.addGestureRecognizer(rightSwipeButton)
         
         // Add the Button to Stack View
         stackViewToShowFiles.addArrangedSubview(button!)
@@ -247,6 +250,42 @@ class StatusViewController: UIViewController {
         }
     }
     
+    @objc func rightSwipeButtonActionSingle(recognizer: UITapGestureRecognizer) {
+
+        let swipedButton = recognizer.view as! UIButton
+        let buttonTitle = swipedButton.titleLabel!.text!
+        print("Button to be deleted: \(buttonTitle)")
+        let deleteURL = playerValues?.url
+//      print("URL to be deleted: \(deleteURL!.absoluteString)")
+        showDeleteAlertSingle(deleteURL!.absoluteString)
+    }
+    
+    func showDeleteAlertSingle(_ deleteURLString: String) {
+        let alert = UIAlertController(title: "Delete the File?", message: "", preferredStyle: .alert)
+        let yesButton = UIAlertAction(title: "Yes", style: .default, handler: {(_ action: UIAlertAction) -> Void in
+//          print("you pressed 'Yes' button")
+            // Call deleteFile API
+            self.deleteFile(deleteURLString)
+            
+            // Remove all subviews from the stackview because there are no more translated files for this user
+            while let first = self.stackViewToShowFiles.arrangedSubviews.first {
+                self.stackViewToShowFiles.removeArrangedSubview(first)
+                    first.removeFromSuperview()
+            }
+            
+            // Add label to the stackView to show status
+            self.setUpEmptyLabel()
+            self.setUpLabel("There are no translated files for you at this time")
+            self.setUpEmptyLabel()
+        })
+        let noButton = UIAlertAction(title: "No", style: .default, handler: {(_ action: UIAlertAction) -> Void in
+            print("You pressed 'No' button")
+        })
+        alert.addAction(yesButton)
+        alert.addAction(noButton)
+        present(alert, animated: true, completion: nil)
+    }
+    
     func setUpButton(_ title: String) -> UIButton {
         
         // Set up Button
@@ -261,6 +300,8 @@ class StatusViewController: UIViewController {
         button!.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
         button!.tintColor = .red
         button!.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        let rightSwipeButton = UISwipeGestureRecognizer(target: self, action: #selector(rightSwipeButtonAction))
+        button!.addGestureRecognizer(rightSwipeButton)
         
         // Add the Button to Stack View
         stackViewToShowFiles.addArrangedSubview(button!)
@@ -323,10 +364,64 @@ class StatusViewController: UIViewController {
         
     }
     
+    @objc func rightSwipeButtonAction(recognizer: UITapGestureRecognizer) {
+
+        let swipedButton = recognizer.view as! UIButton
+        let buttonTitle = swipedButton.titleLabel!.text!
+//      print("Button to be deleted: \(buttonTitle)")
+        playerValues = playerDictionary[buttonTitle]
+        let deleteURL = playerValues?.url
+//      print("URL to be deleted: \(deleteURL!.absoluteString)")
+        showDeleteAlert(deleteURL!.absoluteString, swipedButton)
+    }
+    
+    func showDeleteAlert(_ deleteURLString: String, _ swipedButton: UIButton) {
+        let alert = UIAlertController(title: "Delete the File?", message: "", preferredStyle: .alert)
+        let yesButton = UIAlertAction(title: "Yes", style: .default, handler: {(_ action: UIAlertAction) -> Void in
+//          print("you pressed 'Yes' button")
+            // Call deleteFile API
+            self.deleteFile(deleteURLString)
+            
+            // Remove deleted item from the displayed items list
+            if let buttonIndex = self.stackViewToShowFiles.arrangedSubviews.firstIndex(of: swipedButton) {
+//              print("Index of the button to be removed: \(buttonIndex)")
+                self.stackViewToShowFiles.arrangedSubviews[buttonIndex].removeFromSuperview()
+            }
+            
+        })
+        let noButton = UIAlertAction(title: "No", style: .default, handler: {(_ action: UIAlertAction) -> Void in
+//          print("You pressed 'No' button")
+            if let buttonIndex = self.stackViewToShowFiles.arrangedSubviews.firstIndex(of: swipedButton) {
+                print("Index of the button to be removed: \(buttonIndex)")
+            }
+        })
+        alert.addAction(yesButton)
+        alert.addAction(noButton)
+        present(alert, animated: true, completion: nil)
+    }
+    
     @objc func finishedPlaying(myNotification:NSNotification) {
         playerValues?.button.setImage(playButtonImage, for: .normal)
         let stoppedPlayerItem = myNotification.object as! AVPlayerItem
         stoppedPlayerItem.seek(to: CMTime.zero, completionHandler: nil)
+    }
+    
+    // Call ios-deletefile API to delete translated audio file for the current user
+    func deleteFile(_ urlString: String) {
+        let deleteFileUrl: String = Constants.Storyboard.URL_BASE + Constants.Storyboard.URL_DELETEFILE
+        guard let url = URL(string: deleteFileUrl) else { return }
+        NetworkService.sharedNetworkService.urlQueryParameters.add(value: urlString, forKey: "urlstring")
+        NetworkService.sharedNetworkService.urlQueryParameters.add(value: SharedData.instance.userName!, forKey: "username")
+        
+        var statusCode: Int?
+        NetworkService.sharedNetworkService.makeRequest(toURL: url, withHttpMethod: .delete) { (results) in
+            
+            DispatchQueue.main.async {
+                statusCode = results.response?.httpStatusCode
+                print("HTTP status code:", statusCode ?? 0)
+                SharedData.instance.statusCode = statusCode
+            }
+        }
     }
     
 }
