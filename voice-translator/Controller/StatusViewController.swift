@@ -408,7 +408,7 @@ class StatusViewController: UIViewController {
     
     // Call ios-deletefile API to delete translated audio file for the current user
     func deleteFile(_ urlString: String) {
-        let deleteFileUrl: String = Constants.Storyboard.URL_BASE + Constants.Storyboard.URL_DELETEFILE
+        let deleteFileUrl: String = Constants.Api.URL_BASE + Constants.Api.URL_DELETEFILE
         guard let url = URL(string: deleteFileUrl) else { return }
         NetworkService.sharedNetworkService.urlQueryParameters.add(value: urlString, forKey: "urlstring")
         NetworkService.sharedNetworkService.urlQueryParameters.add(value: SharedData.instance.userName!, forKey: "username")

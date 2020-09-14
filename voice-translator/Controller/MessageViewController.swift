@@ -15,7 +15,7 @@ class MessageViewController: UIViewController {
     @IBOutlet weak var homeButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
     
-    let viewStatusUrl: String = Constants.Storyboard.URL_BASE + Constants.Storyboard.URL_VIEWSTATUS
+    let viewStatusUrl: String = Constants.Api.URL_BASE + Constants.Api.URL_VIEWSTATUS
     var player: AVPlayer?
     var playerItem: AVPlayerItem?
     var button: UIButton?

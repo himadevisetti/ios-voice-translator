@@ -61,7 +61,7 @@ class LandingViewController: UIViewController {
     
     // Call ios-checkstatus API to fetch upto 5 previously translated audio files for the current user
     func checkStatus() {
-        let checkStatusUrl: String = Constants.Storyboard.URL_BASE + Constants.Storyboard.URL_CHECKSTATUS
+        let checkStatusUrl: String = Constants.Api.URL_BASE + Constants.Api.URL_CHECKSTATUS
         guard let url = URL(string: checkStatusUrl) else { return }
         NetworkService.sharedNetworkService.urlQueryParameters.add(value: SharedData.instance.userName!, forKey: "username")
         

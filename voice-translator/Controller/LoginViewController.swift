@@ -183,18 +183,13 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                     //set hasAlreadyLaunched to false
                     self.appDelegate.sethasAlreadyLaunched()
                     
-                    // first-time user and hence save user info to firestore
-                    let errMessage = self.saveUserToFirestore(email: email!, firstName: givenName!, lastName: familyName!, uid: userId)
-                    
-                    if errMessage != nil {
-                        // user doesn't need to know that there's an error while saving their data to DB
-                        // write it to the application log and monitor such errors
-                        print(errMessage!)
-                    }
+                    // display privacy policy
+                    self.displayPrivacyPolicy(email: email!, givenName: givenName!, familyName: familyName!, userId: userId)
+
+                } else {
+                    // Transition to landing screen
+                    self.transitionToLanding()
                 }
-                
-                // Transition to landing screen
-                self.transitionToLanding()
             }
         }
     }
@@ -202,7 +197,13 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
               withError error: Error!) {
         // Perform any operations when the user disconnects from app here.
-        
+        GIDSignIn.sharedInstance().signOut()
+        let firebaseAuth = Auth.auth()
+        do {
+          try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            showError(signOutError.localizedDescription)
+        }
     }
     
     func setupAppleButton() {
@@ -259,19 +260,33 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         
     }
     
-    
-    // save users to firestore
-    func saveUserToFirestore(email: String, firstName: String, lastName: String, uid: String) -> String? {
-        // User was created successfully. Store the firstname, lastname and email in Firestore
-        let db = Firestore.firestore()
-        var errMessage: String? = nil
-        db.collection("users").addDocument(data: ["email": email,  "firstname": firstName, "lastname": lastName, "uid": uid]) { (error) in
-            if error != nil {
-                errMessage = "Error saving user data"
-                //                self.showError(errMessage)
+    // Display privacy policy when the app was launched for the first time
+    func displayPrivacyPolicy(email: String, givenName: String, familyName: String, userId: String) {
+        
+        // Create alert
+        let alert = UIAlertController(title: "License Agreement", message: "", preferredStyle: .alert)
+        alert.setValue(Utilities.formattedLicenseAgreement(), forKey: "attributedMessage")
+        
+        // Create Agree button
+        let agreeAction = UIAlertAction(title: "Agree", style: .default) { (action) -> Void in
+            print("License agreement accepted")
+            // first-time user and hence save user info to firestore
+            let errMessage = Utilities.saveUserToFirestore(email: email, firstName: givenName, lastName: familyName, uid: userId)
+            
+            if errMessage != nil {
+                // user doesn't need to know that there's an error while saving their data to DB
+                // write it to the application log and monitor such errors
+                print(errMessage!)
             }
+            
+            // Transition to landing screen
+            self.transitionToLanding()
         }
-        return errMessage
+        
+        // Add task to tableview buttons
+        alert.addAction(agreeAction)
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
 }
@@ -320,18 +335,13 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                         //set hasAlreadyLaunched to false
                         self.appDelegate.sethasAlreadyLaunched()
                         
-                        // first-time user and hence save user info to firestore
-                        let errMessage = self.saveUserToFirestore(email: email!, firstName: givenName!, lastName: familyName!, uid: userId)
+                        // display privacy policy
+                        self.displayPrivacyPolicy(email: email!, givenName: givenName!, familyName: familyName!, userId: userId)
                         
-                        if errMessage != nil {
-                            // user doesn't need to know that there's an error while saving their data to DB
-                            // write it to the application log and monitor such errors
-                            print(errMessage!)
-                        }
+                    } else {
+                        // Transition to landing screen
+                        self.transitionToLanding()
                     }
-                    
-                    // Transition to landing screen
-                    self.transitionToLanding()
                 }
             }
         }

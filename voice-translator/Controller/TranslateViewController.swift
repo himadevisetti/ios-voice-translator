@@ -29,8 +29,7 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     var fromLanguageValue: String = ""
     var toLanguageValue: String = ""
-    let uploadURL: String = Constants.Storyboard.URL_BASE + Constants.Storyboard.URL_UPLOAD
-    // let uploadURL: String = Constants.Storyboard.URL_BASE + "/ios-upload"
+    let uploadURL: String = Constants.Api.URL_BASE + Constants.Api.URL_UPLOAD
     var fileURL: URL?
     var fileContents: NSMutableData = NSMutableData()
     //  var fileName: String = ""
@@ -41,8 +40,8 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         // Do any additional setup after loading the view.
         
-        fromLanguagePickerOptions = Constants.Storyboard.languagePickerOptions
-        toLanguagePickerOptions = Constants.Storyboard.languagePickerOptions
+        fromLanguagePickerOptions = Constants.languagePickerOptions
+        toLanguagePickerOptions = Constants.languagePickerOptions
         
         setUpElements()
     }

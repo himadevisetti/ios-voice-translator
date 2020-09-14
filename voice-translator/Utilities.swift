@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CryptoKit
+import Firebase
 
 class Utilities {
     
@@ -176,6 +177,105 @@ class Utilities {
       }.joined()
 
       return hashString
+    }
+    
+    // save users to firestore
+    static func saveUserToFirestore(email: String, firstName: String, lastName: String, uid: String) -> String? {
+        // User was created successfully. Store the firstname, lastname and email in Firestore
+        let db = Firestore.firestore()
+        var errMessage: String? = nil
+        
+        // Create a reference to the users collection
+        let docRef = db.collection("users")
+
+        // Create a query against the collection.
+        let query = docRef.whereField("email", isEqualTo: email)
+        
+        query.getDocuments(completion: { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                let numDocs = querySnapshot?.documents.count
+                
+                if numDocs == 0 {
+                    docRef.addDocument(data: ["email": email,  "firstname": firstName, "lastname": lastName, "uid": uid]) { (error) in
+                        if error != nil {
+                            errMessage = "Error saving user data"
+                        }
+                    }
+                } else {
+                    for document in querySnapshot!.documents {
+                        print("\(document.documentID) => \(document.data())")
+                    }
+                }
+            }
+        })
+        
+        return errMessage
+    }
+    
+    // return formatted License Agreement
+    static func formattedLicenseAgreement() -> NSAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        let messageText = NSAttributedString(
+            string: Constants.licenseAgreement,
+            attributes: [
+                NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                NSAttributedString.Key.foregroundColor : UIColor.black,
+                NSAttributedString.Key.font : UIFont(name: "Avenir Next", size: 14)!
+            ]
+        )
+        
+        return messageText
+    }
+    
+    // Not using this currently because of the way html is formatted to show both Privacy Policy and Terms
+    static func licensedAgreementFromHtmlString() -> NSAttributedString {
+        
+        var htmlString: String = ""
+        if let url = URL(string: "https://teak-mantis-279104.firebaseapp.com") {
+            do {
+                htmlString = try String(contentsOf: url)
+            } catch {
+                // contents could not be loaded
+                let error = "Privacy policy could not be loaded"
+                let errorAttribute = [ NSAttributedString.Key.foregroundColor: UIColor.red ]
+                let errorAttrString = NSAttributedString(string: error, attributes: errorAttribute)
+                return errorAttrString
+            }
+        } else {
+            // the URL was bad!
+            let error = "Found bad URL while loading privacy policy"
+            let errorAttribute = [ NSAttributedString.Key.foregroundColor: UIColor.red ]
+            let errorAttrString = NSAttributedString(string: error, attributes: errorAttribute)
+            return errorAttrString
+        }
+        
+        print(htmlString)
+        
+        let data = htmlString.data(using: String.Encoding.unicode)!
+        let mattrStr = try! NSMutableAttributedString(
+            data: data,
+            options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
+            documentAttributes: nil)
+        let normalFont = UIFontMetrics.default.scaledFont(for: UIFont(name: "Avenir Next", size: 14.0)!)
+        let boldFont = UIFontMetrics.default.scaledFont(for: UIFont(name: "AvenirNext-DemiBold", size: 15.0)!)
+        mattrStr.beginEditing()
+        mattrStr.enumerateAttribute(.font, in: NSRange(location: 0, length: mattrStr.length), options: .longestEffectiveRangeNotRequired) { (value, range, _) in
+            if let oFont = value as? UIFont {
+                mattrStr.removeAttribute(.font, range: range)
+                if oFont.fontName.contains("Bold"){
+                    mattrStr.addAttribute(.font, value: boldFont, range: range)
+                }
+                else{
+                    mattrStr.addAttribute(.font, value: normalFont, range: range)
+                }
+
+            }
+        }
+        
+        return mattrStr
     }
     
 }

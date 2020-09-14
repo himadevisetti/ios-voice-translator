@@ -134,16 +134,10 @@ class SignUpViewController: UIViewController {
                     }
                     
                 } else {
-                    // User was created successfully. Store the firstname, lastname and email in Firestore
-                    let db = Firestore.firestore()
-                    db.collection("users").addDocument(data: ["email": email,  "firstname": firstName, "lastname": lastName, "uid": result!.user.uid]) { (error) in
-                        if error != nil {
-                            self.showError("Error saving user data")
-                        }
-                    }
                     
-                    // Transition to landing screen
-                    self.transitionToLanding()
+                    // Display privacy policy
+                    self.displayPrivacyPolicy(email: email, givenName: firstName, familyName: lastName, userId: result!.user.uid)
+
                 }
                 
             }
@@ -160,5 +154,48 @@ class SignUpViewController: UIViewController {
         view.window?.rootViewController = landingViewController
         view.window?.makeKeyAndVisible()
         
+    }
+    
+    func displayPrivacyPolicy(email: String, givenName: String, familyName: String, userId: String) {
+        
+        // Create alert
+        let alert = UIAlertController(title: "License Agreement", message: "", preferredStyle: .alert)
+        alert.setValue(Utilities.formattedLicenseAgreement(), forKey: "attributedMessage")
+        
+        // Create Decline button
+        let declineAction = UIAlertAction(title: "Decline" , style: .destructive) { (action) -> Void in
+            let user = Auth.auth().currentUser
+            user?.delete { error in
+              if let error = error {
+                // An error happened.
+                self.showError(error.localizedDescription)
+              } else {
+                // Account deleted.
+                print("Account was deleted")
+              }
+            }
+            
+            self.showError("Please accept privacy policy in order to access the app")
+        }
+        
+        // Create Accept button
+        let acceptAction = UIAlertAction(title: "Accept", style: .default) { (action) -> Void in
+            // first-time user and hence save user info to firestore
+            let errMessage = Utilities.saveUserToFirestore(email: email, firstName: givenName, lastName: familyName, uid: userId)
+            
+            if errMessage != nil {
+                // user doesn't need to know that there's an error while saving their data to DB
+                // write it to the application log and monitor such errors
+                print(errMessage!)
+            }
+            // Transition to landing screen
+            self.transitionToLanding()
+        }
+        
+        // Add task to tableview buttons
+        alert.addAction(declineAction)
+        alert.addAction(acceptAction)
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }
