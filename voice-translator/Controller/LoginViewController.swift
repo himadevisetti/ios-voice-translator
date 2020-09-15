@@ -128,12 +128,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     func setupGoogleButton() {
         
         let googleButton = UIButton(frame: CGRect(x: 0,y: 0,width: 48,height: 48))
-        //      googleButton.center = stackToShowSocialButtons.center
-        googleButton.setImage(UIImage(named: "btn_google_dark_focus_ios.png"), for: .normal)
-        googleButton.layer.cornerRadius = 5
-        //      googleButton.layer.masksToBounds = true
-        googleButton.layer.borderColor = .none
-        //      googleButton.layer.borderWidth = 2
+        let googleButtonImage = Utilities.resizeImage(image: UIImage(named: "google_logo_custom.png")!, targetSize: CGSize(width: 48, height: 48.0))
+        googleButton.setImage(googleButtonImage, for: .normal)
         googleButton.addTarget(self, action: #selector(googleSignInButtonTapped), for: .touchUpInside)
         
         // Add the Button to Stack View
@@ -207,14 +203,10 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     }
     
     func setupAppleButton() {
-        //        let appleButton = ASAuthorizationAppleIDButton(authorizationButtonType: .signIn, authorizationButtonStyle: .white)
+//      let appleButton = ASAuthorizationAppleIDButton(authorizationButtonType: .signIn, authorizationButtonStyle: .white)
         let appleButton = UIButton(frame: CGRect(x: 0,y: 0,width: 48,height: 48))
-        //      appleButton.center = stackToShowSocialButtons.center
-        appleButton.setImage(UIImage(named: "White_Logo_Square.png"), for: .normal)
-        appleButton.layer.cornerRadius = 5
-        appleButton.layer.masksToBounds = true
-        appleButton.layer.borderColor = UIColor.black.cgColor
-        appleButton.layer.borderWidth = 0.5
+        let appleButtonImage = Utilities.resizeImage(image: UIImage(named: "apple_logo_custom.png")!, targetSize: CGSize(width: 48, height: 48.0))
+        appleButton.setImage(appleButtonImage, for: .normal)
         appleButton.addTarget(self, action: #selector(appleSignInButtonTapped), for: .touchUpInside)
         
         // Add the Button to Stack View
