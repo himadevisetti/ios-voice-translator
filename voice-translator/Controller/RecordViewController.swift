@@ -13,6 +13,7 @@ class RecordViewController: UIViewController, AVAudioRecorderDelegate {
     
     @IBOutlet weak var recordingImage: UIImageView!    
     @IBOutlet weak var startRecordButton: UIButton!
+    @IBOutlet weak var uploadButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     
     var audioRecorder: AVAudioRecorder!
@@ -35,6 +36,7 @@ class RecordViewController: UIViewController, AVAudioRecorderDelegate {
         setStartRecordingImage()
         Utilities.styleFilledButton(startRecordButton)
         startRecordButton.titleLabel?.font =  UIFont(name: "AvenirNext-DemiBold", size: 20)
+        Utilities.styleFilledButton(uploadButton)
         
     }
     

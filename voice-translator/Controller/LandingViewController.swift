@@ -57,6 +57,10 @@ class LandingViewController: UIViewController {
     @IBAction func checkStatusForUser(_ sender: Any) {
         
         checkStatus()
+        activityIndicator()
+        indicator.startAnimating()
+        indicator.backgroundColor = .white
+        checkStatusButton.isUserInteractionEnabled = false
     }
     
     // Call ios-checkstatus API to fetch upto 5 previously translated audio files for the current user
@@ -70,6 +74,10 @@ class LandingViewController: UIViewController {
             DispatchQueue.main.async {
                 let statusCode = results.response?.httpStatusCode
                 print("HTTP status code:", statusCode ?? 0)
+                
+                // Response returned from the API, disable spinning wheel and re-enable the controls on the screen
+                self.indicator.stopAnimating()
+                self.indicator.hidesWhenStopped = true
                 
                 if let data = results.data {
                     let decoder = JSONDecoder()
@@ -101,6 +109,16 @@ class LandingViewController: UIViewController {
         view.window?.rootViewController = statusViewController
         view.window?.makeKeyAndVisible()
         
+    }
+    
+    var indicator = UIActivityIndicatorView()
+    
+    // Spinning wheel processing indicator to show while waiting for the GET API's response
+    func activityIndicator() {
+        indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        indicator.style = UIActivityIndicatorView.Style.large
+        indicator.center = self.view.center
+        self.view.addSubview(indicator)
     }
     
     @IBAction func recordButtonTapped(_ sender: Any) {

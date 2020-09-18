@@ -34,6 +34,7 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     var fileContents: NSMutableData = NSMutableData()
     //  var fileName: String = ""
     var mimeType: String = ""
+    var fileSize: UInt64 = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +56,10 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
      // Pass the selected object to the new view controller.
      }
      */
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
     
     func setUpElements() {
         
@@ -154,6 +159,10 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                     let statusCode = results.response?.httpStatusCode
                     print("HTTP status code:", statusCode ?? 0)
                     
+                    // Response returned from the API, disable spinning wheel and re-enable the controls on the screen
+                    self.indicator.stopAnimating()
+                    self.indicator.hidesWhenStopped = true
+                    
                     if let error = results.error {
                         print(error)
                     }
@@ -187,8 +196,22 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             
         } else {
             self.uploadSingleFile()
+            activityIndicator()
+            indicator.startAnimating()
+            indicator.backgroundColor = .white
+            uploadButton.isUserInteractionEnabled = false
         }
         
+    }
+    
+    var indicator = UIActivityIndicatorView()
+    
+    // Spinning wheel processing indicator to show while waiting for the GET API's response
+    func activityIndicator() {
+        indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        indicator.style = UIActivityIndicatorView.Style.large
+        indicator.center = self.view.center
+        self.view.addSubview(indicator)
     }
     
     func showError(_ message:String) {
@@ -202,9 +225,13 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     // If invalid, return an error string
     func validateFields() -> String? {
         
-        // Esnure that all mandatory fields are filled in
-        if fromLanguageValue == "" || toLanguageValue == "" {
-            return "Please fill in all fields."
+        // Ensure that all mandatory fields are filled in
+        if fromLanguageValue == "" {
+            return "Please choose a value from 'From Language' dropdown."
+        }
+        
+        if toLanguageValue == "" {
+            return "Please choose a value from 'To Language' dropdown."
         }
         
         // Validate that a file was uploaded
@@ -213,6 +240,12 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             
             // File is invalid
             return "Please upload a valid file"
+        }
+        
+        // Validate that the file size is not greater than 100MB
+        let oneHundredMB = 100 * 1024 * 1024
+        if fileSize > oneHundredMB {
+            return "File too big, please upload a file less than 100MB"
         }
         
         return nil
@@ -232,8 +265,12 @@ extension TranslateViewController: UIDocumentPickerDelegate {
         let sandboxFileURL = dir.appendingPathComponent(selectedFileURL.lastPathComponent)
         
         do {
+            let attr = try FileManager.default.attributesOfItem(atPath: selectedFileURL.path)
+            fileSize = attr[FileAttributeKey.size] as! UInt64
+//          print("File size: + \(fileSize)")
+            
             try FileManager.default.copyItem(at: selectedFileURL, to: sandboxFileURL)
-            print("Copied file")
+//          print("Copied file")
         } catch {
             print("Error: \(error)")
         }

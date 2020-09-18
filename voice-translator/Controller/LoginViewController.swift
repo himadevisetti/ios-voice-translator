@@ -38,6 +38,10 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
     func setUpElements() {
         
         // Hide the error label

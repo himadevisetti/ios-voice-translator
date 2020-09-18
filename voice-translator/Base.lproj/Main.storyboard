@@ -456,7 +456,7 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="nHR-rm-XFg">
-                                <rect key="frame" x="40" y="115" width="295" height="199.5"/>
+                                <rect key="frame" x="40" y="115" width="295" height="259.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rFq-V5-i3F">
                                         <rect key="frame" x="97.5" y="0.0" width="100" height="100"/>
@@ -477,15 +477,31 @@
                                             <action selector="startRecordTapped:" destination="jnQ-b0-WZC" eventType="touchUpInside" id="mRL-o8-Q4W"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ul5-gB-rpU">
+                                        <rect key="frame" x="0.0" y="180" width="295" height="40"/>
+                                        <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                                        <state key="normal" title="Upload">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="signUpTapped:" destination="sef-US-vEC" eventType="touchUpInside" id="mbO-rG-HbK"/>
+                                            <action selector="uploadButtonTapped:" destination="amz-jx-FqK" eventType="touchUpInside" id="CqI-2I-OGH"/>
+                                            <segue destination="amz-jx-FqK" kind="presentation" modalPresentationStyle="fullScreen" id="F1D-Zj-XTA"/>
+                                        </connections>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydW-7F-EMG">
-                                        <rect key="frame" x="131.5" y="180" width="32" height="19.5"/>
+                                        <rect key="frame" x="131.5" y="240" width="32" height="19.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="ydW-7F-EMG" firstAttribute="width" secondItem="ORN-Cs-Vaw" secondAttribute="width" multiplier="0.108475" id="9Uu-jV-p9P"/>
+                                    <constraint firstItem="Ul5-gB-rpU" firstAttribute="leading" secondItem="nHR-rm-XFg" secondAttribute="leading" id="EkW-uE-3Yj"/>
+                                    <constraint firstItem="ORN-Cs-Vaw" firstAttribute="leading" secondItem="nHR-rm-XFg" secondAttribute="leading" id="GWe-Qd-lM1"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ul5-gB-rpU" secondAttribute="trailing" id="dSQ-kx-xLn"/>
+                                    <constraint firstAttribute="trailing" secondItem="ORN-Cs-Vaw" secondAttribute="trailing" id="nzu-8B-DgG"/>
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="exQ-n6-vml">
@@ -523,6 +539,7 @@
                         <outlet property="errorLabel" destination="ydW-7F-EMG" id="rwk-ol-DG5"/>
                         <outlet property="recordingImage" destination="rFq-V5-i3F" id="zQX-hd-w0i"/>
                         <outlet property="startRecordButton" destination="ORN-Cs-Vaw" id="5hl-Sc-IJu"/>
+                        <outlet property="uploadButton" destination="Ul5-gB-rpU" id="r1F-ca-T7s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YW6-Ie-Rms" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -818,6 +835,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="8CF-SS-CTb"/>
         <segue reference="OCq-s5-Fmk"/>
+        <segue reference="F1D-Zj-XTA"/>
         <segue reference="iBV-BE-wrv"/>
     </inferredMetricsTieBreakers>
     <resources>
