@@ -31,6 +31,7 @@ class StatusViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        setUpNavigationBarAndItems()
         setUpElements()
         
     }
@@ -43,10 +44,21 @@ class StatusViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    func setUpNavigationBarAndItems() {
+        
+        // Set the screen title
+        self.navigationController?.navigationBar.isTranslucent = false
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 17)!]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+        self.navigationItem.title = Constants.Storyboard.statusScreenTitle
+        
+    }
+    
     func setUpElements() {
         
         stackViewToShowFiles.spacing = 20.0
         stackViewToShowFiles.alignment = .leading
+//      stackViewToShowFiles.distribution = .fill
         
         // Style the elements
         let fileUrlsArray = SharedData.instance.statusForUser!
@@ -175,6 +187,8 @@ class StatusViewController: UIViewController {
         textLabel!.text = message
         textLabel!.lineBreakMode = .byWordWrapping
         textLabel!.numberOfLines = 0;
+        textLabel!.sizeToFit()
+        textLabel!.layoutIfNeeded()
         
         // Add the Text Label to Stack View
         stackViewToShowFiles.addArrangedSubview(textLabel!)
@@ -190,7 +204,8 @@ class StatusViewController: UIViewController {
 //      textLabel!.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
 //      textLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
         textLabel!.font = UIFont(name: "Avenir Next", size: 14)
-//      textLabel!.sizeToFit()
+        textLabel!.sizeToFit()
+        textLabel!.layoutIfNeeded()
         textLabel!.text = message
         textLabel!.lineBreakMode = .byWordWrapping
         textLabel!.numberOfLines = 0;
@@ -207,7 +222,8 @@ class StatusViewController: UIViewController {
         textLabel!.backgroundColor = UIColor.white
         textLabel!.widthAnchor.constraint(equalToConstant: self.stackViewToShowFiles.frame.width).isActive = true
 //      textLabel!.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-//      textLabel!.sizeToFit()
+        textLabel!.sizeToFit()
+        textLabel!.layoutIfNeeded()
         textLabel!.numberOfLines = 1;
         
         // Add the Text Label to Stack View
@@ -231,6 +247,9 @@ class StatusViewController: UIViewController {
         button!.addTarget(self, action: #selector(buttonActionSingle), for: .touchUpInside)
         let rightSwipeButton = UISwipeGestureRecognizer(target: self, action: #selector(rightSwipeButtonActionSingle))
         button!.addGestureRecognizer(rightSwipeButton)
+        
+        button!.sizeToFit()
+        button!.layoutIfNeeded()
         
         // Add the Button to Stack View
         stackViewToShowFiles.addArrangedSubview(button!)
@@ -302,6 +321,9 @@ class StatusViewController: UIViewController {
         button!.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         let rightSwipeButton = UISwipeGestureRecognizer(target: self, action: #selector(rightSwipeButtonAction))
         button!.addGestureRecognizer(rightSwipeButton)
+        
+        button!.sizeToFit()
+        button!.layoutIfNeeded()
         
         // Add the Button to Stack View
         stackViewToShowFiles.addArrangedSubview(button!)

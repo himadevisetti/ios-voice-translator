@@ -25,12 +25,25 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
+        setUpNavigationBarAndItems()
         setUpElements()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+    }
+    
+    func setUpNavigationBarAndItems() {
+        
+        // Set the screen title
+        self.navigationController?.navigationBar.isTranslucent = false
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 17)!]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+        self.navigationItem.title = Constants.Storyboard.signUpScreenTitle
+        
+        // Hide the back button to avoid navigating back to login screen
+        self.navigationItem.hidesBackButton = true
+        
     }
     
     func setUpElements() {
@@ -95,6 +108,14 @@ class SignUpViewController: UIViewController {
         errorLabel.alpha = 1
     }
     
+    @IBAction func loginTapped(_ sender: Any) {
+        
+        if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.loginViewController) as? LoginViewController {
+          navigationController?.pushViewController(loginViewController, animated: true)
+        }
+        
+    }
+    
     @IBAction func signUpTapped(_ sender: Any) {
         
         // Validate the input
@@ -153,10 +174,9 @@ class SignUpViewController: UIViewController {
     // Transition to landing screen
     func transitionToLanding() {
         
-        let landingViewController = storyboard?.instantiateViewController(identifier: Constants.Storyboard.landingViewController) as? LandingViewController
-        
-        view.window?.rootViewController = landingViewController
-        view.window?.makeKeyAndVisible()
+        if let landingViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.landingViewController) as? LandingViewController {
+          navigationController?.pushViewController(landingViewController, animated: true)
+        }
         
     }
     

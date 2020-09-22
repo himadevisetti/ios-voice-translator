@@ -24,6 +24,10 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    override func viewWillLayoutSubviews() {
+        setupNavigationBarItems()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,11 +39,35 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         //        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
         
         setUpElements()
-        
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+    }
+    
+    func setupNavigationBarItems() {
+//        let width = self.view.frame.width
+//        let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: width, height: 34))
+//        applyBarTintColorToTheNavigationBar()
+//        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.7388114333, green: 0.9007369876, blue: 0.7299064994, alpha: 1)
+        let navigationBar: UINavigationBar = UINavigationBar()
+        navigationController?.navigationBar.barTintColor = UIColor.systemIndigo
+        navigationController?.navigationBar.isTranslucent = false
+//        let navigationItem = UINavigationItem()
+//        let titleImageView = UIImageView(image: #imageLiteral(resourceName: "Logo"))
+//        titleImageView.frame = CGRect(x: 0, y: 0, width: width, height: 34)
+//        titleImageView.contentMode = .scaleAspectFit
+//
+//        navigationItem.titleView = titleImageView
+//        navigationController?.navigationBar.setItems([navigationItem], animated: false)
+        self.view.addSubview(navigationBar)
+        self.navigationController?.setToolbarHidden(false, animated: true)
+        
+        // Back button shows on login screen when log out is tapped
+        // Hide the back button to avoid navigating back from login screen
+        self.navigationItem.hidesBackButton = true
+        
     }
     
     func setUpElements() {
@@ -93,6 +121,22 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         
         errorLabel.text = message
         errorLabel.alpha = 1
+    }
+    
+    @IBAction func forgotPasswordTapped(_ sender: Any) {
+        
+        if let resetPasswordViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.resetPasswordViewController) as? ResetPasswordViewController {
+          navigationController?.pushViewController(resetPasswordViewController, animated: true)
+        }
+        
+    }
+    
+    @IBAction func signUpTapped(_ sender: Any) {
+        
+        if let signUpViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.signUpViewController) as? SignUpViewController {
+          navigationController?.pushViewController(signUpViewController, animated: true)
+        }
+        
     }
     
     @IBAction func logInTapped(_ sender: Any) {
@@ -249,10 +293,14 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     // Transition to landing screen
     func transitionToLanding() {
         
-        let landingViewController = storyboard?.instantiateViewController(identifier: Constants.Storyboard.landingViewController) as? LandingViewController
+//        let landingViewController = storyboard?.instantiateViewController(identifier: Constants.Storyboard.landingViewController) as? LandingViewController
         
-        view.window?.rootViewController = landingViewController
-        view.window?.makeKeyAndVisible()
+//        view.window?.rootViewController = landingViewController
+//        view.window?.makeKeyAndVisible()
+        
+        if let landingViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.landingViewController) as? LandingViewController {
+          navigationController?.pushViewController(landingViewController, animated: true)
+        }
         
     }
     

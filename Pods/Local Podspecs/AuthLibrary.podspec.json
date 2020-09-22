@@ -1,0 +1,59 @@
+{
+  "name": "AuthLibrary",
+  "version": "0.5.0",
+  "summary": "Auth client library for Swift command-line tools, cloud services, and apps.",
+  "swift_versions": "5.0",
+  "platforms": {
+    "ios": "10.0"
+  },
+  "description": "Swift packages that can be used to write command-line tools and cloud services that use OAuth to authenticate and authorize access to remote services.\n\nCurrently these packages support OAuth1 and OAuth2. They are designed to work on OS X systems and on Linux systems that are running in the Google Cloud.\n\nThe CocoaPods distribution supports iOS-based authentication using Google Cloud Service Accounts (only).",
+  "homepage": "https://github.com/google/auth-library-swift",
+  "license": {
+    "type": "Apache License, Version 2.0",
+    "file": "LICENSE"
+  },
+  "authors": "Google",
+  "source": {
+    "git": "https://github.com/google/auth-library-swift.git",
+    "tag": "0.5.0"
+  },
+  "source_files": [
+    "Sources/OAuth2/Code.swift",
+    "Sources/OAuth2/Connection.swift",
+    "Sources/OAuth2/ServiceAccountTokenProvider/ASN1.swift",
+    "Sources/OAuth2/ServiceAccountTokenProvider/JWT.swift",
+    "Sources/OAuth2/ServiceAccountTokenProvider/RSA.swift",
+    "Sources/OAuth2/ServiceAccountTokenProvider/ServiceAccountTokenProvider.swift",
+    "Sources/OAuth2/Token.swift",
+    "Sources/OAuth2/TokenProvider.swift",
+    "Sources/OAuth2/FCMTokenProvider/FCMTokenProvider.swift"
+  ],
+  "static_framework": true,
+  "dependencies": {
+    "CryptoSwift": [
+      "~> 1.0.0"
+    ],
+    "BigInt": [
+      "~> 3.1.0"
+    ],
+    "SwiftyBase64": [
+      "~> 1.1.1"
+    ],
+    "SwiftNIO": [
+      "2.0.0"
+    ],
+    "Firebase/Core": [
+
+    ],
+    "Firebase/Functions": [
+
+    ],
+    "Firebase/Auth": [
+
+    ],
+    "Firebase/Firestore": [
+
+    ]
+  },
+  "swift_version": "5.0"
+}

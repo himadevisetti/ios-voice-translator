@@ -11,18 +11,42 @@ import AVFoundation
 
 class LandingViewController: UIViewController {
     
-    @IBOutlet weak var recordButton: UIButton!
-    @IBOutlet weak var translateButton: UIButton!
+    @IBOutlet weak var speechButton: UIButton!
+    @IBOutlet weak var audioButton: UIButton!
     @IBOutlet weak var checkStatusButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
+    
+    var toolItems : [UIBarButtonItem] = []
     
     var recordingSession: AVAudioSession!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad()        
         
         // Do any additional setup after loading the view.
+        setUpNavigationBarAndItems()
         setUpElements()
+    }
+    
+    func setUpNavigationBarAndItems() {
+        
+        // Set the screen title
+        self.navigationController?.navigationBar.isTranslucent = false
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 17)!]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+        self.navigationItem.title = Constants.Storyboard.homeScreenTitle
+
+        // Hide the back button to avoid navigating back to login screen
+        self.navigationItem.hidesBackButton = true
+        
+        // Add profile to bottom bar
+        navigationController?.isToolbarHidden = false
+        toolItems.append(UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil))
+        toolItems.append(UIBarButtonItem(image: UIImage(systemName: "person.crop.circle")!.withRenderingMode(.alwaysOriginal),
+                                         style: .plain, target: self, action: #selector(profileButtonTapped)))
+        toolItems.append(UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil))
+        self.toolbarItems = toolItems
+        
     }
     
     func setUpElements() {
@@ -31,8 +55,8 @@ class LandingViewController: UIViewController {
         errorLabel.alpha = 0
         
         // Style the elements
-        Utilities.styleFilledButton(recordButton)
-        Utilities.styleFilledButton(translateButton)
+        Utilities.styleFilledButton(speechButton)
+        Utilities.styleFilledButton(audioButton)
         Utilities.styleFilledButton(checkStatusButton)
         
     }
@@ -43,15 +67,21 @@ class LandingViewController: UIViewController {
         errorLabel.alpha = 1
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    @IBAction func speechButtonTapped(_ sender: Any) {
+        
+        if let settingsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.settingsViewController) as? SettingsViewController {
+            navigationController?.pushViewController(settingsVC, animated: true)
+        }
+        
+    }
+        
+    @IBAction func audioButtonTapped(_ sender: Any) {
+        
+        if let translateVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.translateViewController) as? TranslateViewController {
+            navigationController?.pushViewController(translateVC, animated: true)
+        }
+        
+    }
     
     // Queries database and returns upto 5 translated audio files for the user
     @IBAction func checkStatusForUser(_ sender: Any) {
@@ -60,7 +90,15 @@ class LandingViewController: UIViewController {
         activityIndicator()
         indicator.startAnimating()
         indicator.backgroundColor = .white
-        checkStatusButton.isUserInteractionEnabled = false
+//      checkStatusButton.isUserInteractionEnabled = false
+    }
+    
+    @IBAction func profileButtonTapped(_ sender: Any) {
+        
+        if let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.profileViewController) as? ProfileViewController {
+            navigationController?.pushViewController(profileVC, animated: true)
+        }
+        
     }
     
     // Call ios-checkstatus API to fetch upto 5 previously translated audio files for the current user
@@ -90,10 +128,10 @@ class LandingViewController: UIViewController {
                     else {
                         return
                     }
-//                  print(statusURL.description)
+                    //                  print(statusURL.description)
                     SharedData.instance.statusForUser = statusURL
                 } else {
-//                  print("Could not fetch data from server")
+                    //                  print("Could not fetch data from server")
                     SharedData.instance.statusForUser = ["Could not fetch data from server"]
                 }
                 self.transitionToShowStatus()
@@ -104,10 +142,14 @@ class LandingViewController: UIViewController {
     // Transition to Status screen
     func transitionToShowStatus() {
         
-        let statusViewController = storyboard?.instantiateViewController(identifier: Constants.Storyboard.statusViewController) as? StatusViewController
+//        let statusViewController = storyboard?.instantiateViewController(identifier: Constants.Storyboard.statusViewController) as? StatusViewController
+//
+//        view.window?.rootViewController = statusViewController
+//        view.window?.makeKeyAndVisible()
         
-        view.window?.rootViewController = statusViewController
-        view.window?.makeKeyAndVisible()
+        if let statusViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.statusViewController) as? StatusViewController {
+          navigationController?.pushViewController(statusViewController, animated: true)
+        }
         
     }
     
@@ -121,35 +163,31 @@ class LandingViewController: UIViewController {
         self.view.addSubview(indicator)
     }
     
-    @IBAction func recordButtonTapped(_ sender: Any) {
-        seekUserPermission()
-    }
-    
-    // Segue for back button from Record View Controller
-    @IBAction func unwindFromRecordVC(unwindSegue: UIStoryboardSegue) {
-    }
-    
-    // Seek user's permission to record
-    func seekUserPermission() {
-        recordingSession = AVAudioSession.sharedInstance()
-        
-        do {
-            try recordingSession.setCategory(.playAndRecord, mode: .default)
-            try recordingSession.setActive(true)
-            recordingSession.requestRecordPermission() { [unowned self] allowed in
-                DispatchQueue.main.async {
-                    if allowed {
-                        print("User has granted permission to record.")
-                    } else {
-                        // failed to record!
-                        self.showError("You did not grant permission to record.")
-                    }
-                }
-            }
-        } catch {
-            // failed to record!
-            showError("Error occured while trying to record.")
-        }
-    }
+//    @IBAction func recordButtonTapped(_ sender: Any) {
+//        seekUserPermission()
+//    }
+//
+//    // Seek user's permission to record
+//    func seekUserPermission() {
+//        recordingSession = AVAudioSession.sharedInstance()
+//
+//        do {
+//            try recordingSession.setCategory(.playAndRecord, mode: .default)
+//            try recordingSession.setActive(true)
+//            recordingSession.requestRecordPermission() { [unowned self] allowed in
+//                DispatchQueue.main.async {
+//                    if allowed {
+//                        print("User has granted permission to record.")
+//                    } else {
+//                        // failed to record!
+//                        self.showError("You did not grant permission to record.")
+//                    }
+//                }
+//            }
+//        } catch {
+//            // failed to record!
+//            showError("Error occured while trying to record.")
+//        }
+//    }
     
 }

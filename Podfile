@@ -12,5 +12,17 @@ target 'voice-translator' do
     pod 'Firebase/Core'
     pod 'Firebase/Firestore'
     pod 'GoogleSignIn'
+    pod 'AuthLibrary', :git => 'https://github.com/googleapis/google-auth-library-swift.git'
+    pod 'Firebase/Messaging'
+    pod 'googleapis', :path => '.'
+    pod 'MaterialComponents'
 
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
+    end
+  end
 end

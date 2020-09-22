@@ -19,7 +19,21 @@ class ResetPasswordViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setUpNavigationBarAndItems()
         setUpElements()
+    }
+    
+    func setUpNavigationBarAndItems() {
+        
+        // Set the screen title
+        self.navigationController?.navigationBar.isTranslucent = false
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 17)!]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+        self.navigationItem.title = Constants.Storyboard.resetPasswordScreenTitle
+        
+        // Hide the back button to avoid navigating back to login screen
+        self.navigationItem.hidesBackButton = true
+        
     }
     
     func setUpElements() {
@@ -31,16 +45,6 @@ class ResetPasswordViewController: UIViewController {
         Utilities.styleTextField(emailText)
         Utilities.styleFilledButton(resetPasswordButton)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // Validate the input fields
     // If valid, returns nil
@@ -98,8 +102,6 @@ class ResetPasswordViewController: UIViewController {
                     self.showError(err!.localizedDescription)
                 }
                 else {
-                    // Transition to landing screen
-//                    self.showMessage("An email has been sent to the email address provided by you. Please follow the instructions specified in the email.")
                     self.showSuccessAlert()
                 }
             }
@@ -116,6 +118,14 @@ class ResetPasswordViewController: UIViewController {
         }))
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func loginTapped(_ sender: Any) {
+        
+        if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.loginViewController) as? LoginViewController {
+          navigationController?.pushViewController(loginViewController, animated: true)
+        }
+        
     }
     
 }

@@ -12,8 +12,6 @@ import AVFoundation
 class MessageViewController: UIViewController {
     
     @IBOutlet weak var messageView: UIStackView!
-    @IBOutlet weak var homeButton: UIButton!
-    @IBOutlet weak var logoutButton: UIButton!
     
     let viewStatusUrl: String = Constants.Api.URL_BASE + Constants.Api.URL_VIEWSTATUS
     var player: AVPlayer?
@@ -23,10 +21,13 @@ class MessageViewController: UIViewController {
     let playButtonImage = Utilities.resizeImage(image: UIImage(systemName: "play.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
     let pauseButtonImage = Utilities.resizeImage(image: UIImage(systemName: "pause.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
     
+    var toolItems : [UIBarButtonItem] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        setUpNavigationBarAndItems()
         setUpElements()
         getStatus()
     }
@@ -39,6 +40,27 @@ class MessageViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    func setUpNavigationBarAndItems() {
+        
+        // Set the screen title
+        self.navigationController?.navigationBar.isTranslucent = false
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 17)!]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+        self.navigationItem.title = Constants.Storyboard.messageScreenTitle
+        
+        // Hide the back button to avoid navigating back to upload screen
+        self.navigationItem.hidesBackButton = true
+        
+        // Add profile to bottom bar
+        navigationController?.isToolbarHidden = false
+        toolItems.append(UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil))
+        toolItems.append(UIBarButtonItem(image: UIImage(systemName: "person.crop.circle")!.withRenderingMode(.alwaysOriginal),
+                                         style: .plain, target: self, action: #selector(profileButtonTapped)))
+        toolItems.append(UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil))
+        self.toolbarItems = toolItems
+        
+    }
+    
     func setUpElements() {
         
         // Style the UI Elements
@@ -46,8 +68,6 @@ class MessageViewController: UIViewController {
         activityIndicator()
         indicator.startAnimating()
         indicator.backgroundColor = .white
-        homeButton.isUserInteractionEnabled = false
-        logoutButton.isUserInteractionEnabled = false
     }
     
     func getStatus() {
@@ -64,8 +84,6 @@ class MessageViewController: UIViewController {
                 // Response returned from the API, disable spinning wheel and re-enable the controls on the screen
                 self.indicator.stopAnimating()
                 self.indicator.hidesWhenStopped = true
-                self.homeButton.isUserInteractionEnabled = true
-                self.logoutButton.isUserInteractionEnabled = true
                 
                 if let data = results.data {
                     let decoder = JSONDecoder()
@@ -157,7 +175,15 @@ class MessageViewController: UIViewController {
         self.view.addSubview(indicator)
     }
     
-    // Currently not using this fucntion. Playing the file directly from Google cloud storage bucket
+    @IBAction func profileButtonTapped(_ sender: Any) {
+        
+        if let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.profileViewController) as? ProfileViewController {
+            navigationController?.pushViewController(profileVC, animated: true)
+        }
+        
+    }
+    
+    // Currently not using this function. Playing the file directly from Google cloud storage bucket
     func downloadAndSaveAudioFile(_ audioFile: String, completion: @escaping (String) -> Void) {
         
         //Create directory if not present

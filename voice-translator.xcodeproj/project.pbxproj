@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		44C7911CF067F13338C0C6A2 /* Pods_voice_translator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D321B5E59AE70B1ED70A2E5C /* Pods_voice_translator.framework */; };
 		A01545D724F38C2C0081E3CB /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01545D624F38C2C0081E3CB /* MessageViewController.swift */; };
 		A01B7EBF24F4D82200969DED /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01B7EBE24F4D82200969DED /* StatusViewController.swift */; };
 		A039597B24EB49C100EC77EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A039597A24EB49C100EC77EE /* AppDelegate.swift */; };
@@ -26,7 +25,19 @@
 		A0C59A6A24EDF9B2004CAFE8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C59A6924EDF9B2004CAFE8 /* LoginViewController.swift */; };
 		A0E23CFF24F197A1000D6A13 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E23CFE24F197A1000D6A13 /* SharedData.swift */; };
 		A0EE923124F02CBA00C0A687 /* UploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE923024F02CBA00C0A687 /* UploadRequest.swift */; };
-		DC92D827250206A3006FE59E /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC92D826250206A3006FE59E /* RecordViewController.swift */; };
+		DCA13B1B2515781F006DD9F3 /* SpeechRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B182515781E006DD9F3 /* SpeechRecognitionService.swift */; };
+		DCA13B1C2515781F006DD9F3 /* TextToSpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B192515781E006DD9F3 /* TextToSpeechService.swift */; };
+		DCA13B1D2515781F006DD9F3 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B1A2515781E006DD9F3 /* TranslationService.swift */; };
+		DCA13B1F2515A940006DD9F3 /* SpeechViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B1E2515A940006DD9F3 /* SpeechViewController.swift */; };
+		DCA13B232515AA3C006DD9F3 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B222515AA3C006DD9F3 /* AudioController.swift */; };
+		DCA13B2A2515AB64006DD9F3 /* ApplicationScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B282515AB63006DD9F3 /* ApplicationScheme.swift */; };
+		DCA13B2B2515AB64006DD9F3 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B292515AB63006DD9F3 /* ChatTableViewCell.swift */; };
+		DCA13B362515B518006DD9F3 /* Rubik-OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = DCA13B332515B518006DD9F3 /* Rubik-OFL.txt */; };
+		DCA13B372515B518006DD9F3 /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCA13B342515B518006DD9F3 /* Rubik-Regular.ttf */; };
+		DCA13B382515B518006DD9F3 /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCA13B352515B518006DD9F3 /* Rubik-Medium.ttf */; };
+		DCA13B3A2516D7C2006DD9F3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B392516D7C2006DD9F3 /* SettingsViewController.swift */; };
+		DCB023FC2516EB99007585ED /* Pods_voice_translator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB023FB2516EB99007585ED /* Pods_voice_translator.framework */; };
+		DCC145FA25199C3E0091124A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC145F925199C3E0091124A /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,10 +62,21 @@
 		A0C59A6924EDF9B2004CAFE8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A0E23CFE24F197A1000D6A13 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		A0EE923024F02CBA00C0A687 /* UploadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequest.swift; sourceTree = "<group>"; };
-		D321B5E59AE70B1ED70A2E5C /* Pods_voice_translator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voice_translator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB960D4345FD20A65B4384D6 /* Pods-voice-translator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voice-translator.release.xcconfig"; path = "Target Support Files/Pods-voice-translator/Pods-voice-translator.release.xcconfig"; sourceTree = "<group>"; };
 		DC3B0B4C24FF739A006567F9 /* voice-translator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "voice-translator.entitlements"; sourceTree = "<group>"; };
-		DC92D826250206A3006FE59E /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
+		DCA13B182515781E006DD9F3 /* SpeechRecognitionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechRecognitionService.swift; sourceTree = "<group>"; };
+		DCA13B192515781E006DD9F3 /* TextToSpeechService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextToSpeechService.swift; sourceTree = "<group>"; };
+		DCA13B1A2515781E006DD9F3 /* TranslationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
+		DCA13B1E2515A940006DD9F3 /* SpeechViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechViewController.swift; sourceTree = "<group>"; };
+		DCA13B222515AA3C006DD9F3 /* AudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AudioController.swift; path = "voice-translator/AudioController.swift"; sourceTree = SOURCE_ROOT; };
+		DCA13B282515AB63006DD9F3 /* ApplicationScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationScheme.swift; sourceTree = "<group>"; };
+		DCA13B292515AB63006DD9F3 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
+		DCA13B332515B518006DD9F3 /* Rubik-OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Rubik-OFL.txt"; sourceTree = "<group>"; };
+		DCA13B342515B518006DD9F3 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
+		DCA13B352515B518006DD9F3 /* Rubik-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Medium.ttf"; sourceTree = "<group>"; };
+		DCA13B392516D7C2006DD9F3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		DCB023FB2516EB99007585ED /* Pods_voice_translator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_voice_translator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCC145F925199C3E0091124A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44C7911CF067F13338C0C6A2 /* Pods_voice_translator.framework in Frameworks */,
+				DCB023FC2516EB99007585ED /* Pods_voice_translator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,7 +94,7 @@
 		2A5B0671D0DCFCDE6BE48FF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D321B5E59AE70B1ED70A2E5C /* Pods_voice_translator.framework */,
+				DCB023FB2516EB99007585ED /* Pods_voice_translator.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -113,7 +135,11 @@
 				A039598F24EB4B1500EC77EE /* Controller */,
 				A039598E24EB4B0900EC77EE /* Services */,
 				A039597A24EB49C100EC77EE /* AppDelegate.swift */,
+				DCA13B2C2515B3F4006DD9F3 /* Fonts */,
 				A039597C24EB49C100EC77EE /* SceneDelegate.swift */,
+				DCA13B222515AA3C006DD9F3 /* AudioController.swift */,
+				DCA13B282515AB63006DD9F3 /* ApplicationScheme.swift */,
+				DCA13B292515AB63006DD9F3 /* ChatTableViewCell.swift */,
 				A039598024EB49C100EC77EE /* Main.storyboard */,
 				A039598324EB49C400EC77EE /* Assets.xcassets */,
 				A039598524EB49C400EC77EE /* LaunchScreen.storyboard */,
@@ -126,6 +152,9 @@
 		A039598E24EB4B0900EC77EE /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				DCA13B182515781E006DD9F3 /* SpeechRecognitionService.swift */,
+				DCA13B192515781E006DD9F3 /* TextToSpeechService.swift */,
+				DCA13B1A2515781E006DD9F3 /* TranslationService.swift */,
 				A0957F3824EF5B6C00DB237A /* NetworkService.swift */,
 			);
 			path = Services;
@@ -134,6 +163,7 @@
 		A039598F24EB4B1500EC77EE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DCA13B392516D7C2006DD9F3 /* SettingsViewController.swift */,
 				A0C59A6924EDF9B2004CAFE8 /* LoginViewController.swift */,
 				A0B7552524EB4DF8004E04C1 /* SignUpViewController.swift */,
 				A0B7552724EB4E2E004E04C1 /* LandingViewController.swift */,
@@ -141,7 +171,8 @@
 				A0957F3624EED98C00DB237A /* TranslateViewController.swift */,
 				A01545D624F38C2C0081E3CB /* MessageViewController.swift */,
 				A01B7EBE24F4D82200969DED /* StatusViewController.swift */,
-				DC92D826250206A3006FE59E /* RecordViewController.swift */,
+				DCA13B1E2515A940006DD9F3 /* SpeechViewController.swift */,
+				DCC145F925199C3E0091124A /* ProfileViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -162,6 +193,16 @@
 				A045E03C24EC621F00D9F3CF /* Constants.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DCA13B2C2515B3F4006DD9F3 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				DCA13B352515B518006DD9F3 /* Rubik-Medium.ttf */,
+				DCA13B332515B518006DD9F3 /* Rubik-OFL.txt */,
+				DCA13B342515B518006DD9F3 /* Rubik-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,7 +235,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1160;
-				LastUpgradeCheck = 1160;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Hima Bindu Devisetti";
 				TargetAttributes = {
 					A039597624EB49C100EC77EE = {
@@ -226,9 +267,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A039598724EB49C400EC77EE /* LaunchScreen.storyboard in Resources */,
+				DCA13B372515B518006DD9F3 /* Rubik-Regular.ttf in Resources */,
 				A0683DCD24EC441000318C58 /* GoogleService-Info.plist in Resources */,
 				A039598424EB49C400EC77EE /* Assets.xcassets in Resources */,
+				DCA13B362515B518006DD9F3 /* Rubik-OFL.txt in Resources */,
 				A039598224EB49C100EC77EE /* Main.storyboard in Resources */,
+				DCA13B382515B518006DD9F3 /* Rubik-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,17 +344,25 @@
 			files = (
 				A01B7EBF24F4D82200969DED /* StatusViewController.swift in Sources */,
 				A0E23CFF24F197A1000D6A13 /* SharedData.swift in Sources */,
+				DCA13B1C2515781F006DD9F3 /* TextToSpeechService.swift in Sources */,
 				A01545D724F38C2C0081E3CB /* MessageViewController.swift in Sources */,
+				DCA13B1B2515781F006DD9F3 /* SpeechRecognitionService.swift in Sources */,
+				DCA13B2B2515AB64006DD9F3 /* ChatTableViewCell.swift in Sources */,
+				DCC145FA25199C3E0091124A /* ProfileViewController.swift in Sources */,
+				DCA13B1D2515781F006DD9F3 /* TranslationService.swift in Sources */,
 				A0957F3924EF5B6C00DB237A /* NetworkService.swift in Sources */,
 				A06B3E7124EBB6970016233A /* Utilities.swift in Sources */,
 				A039597B24EB49C100EC77EE /* AppDelegate.swift in Sources */,
 				A0C59A6824EDE502004CAFE8 /* ResetPasswordViewController.swift in Sources */,
+				DCA13B232515AA3C006DD9F3 /* AudioController.swift in Sources */,
 				A0B7552624EB4DF8004E04C1 /* SignUpViewController.swift in Sources */,
 				A0EE923124F02CBA00C0A687 /* UploadRequest.swift in Sources */,
 				A0C59A6A24EDF9B2004CAFE8 /* LoginViewController.swift in Sources */,
+				DCA13B3A2516D7C2006DD9F3 /* SettingsViewController.swift in Sources */,
 				A0957F3724EED98C00DB237A /* TranslateViewController.swift in Sources */,
 				A045E03D24EC621F00D9F3CF /* Constants.swift in Sources */,
-				DC92D827250206A3006FE59E /* RecordViewController.swift in Sources */,
+				DCA13B2A2515AB64006DD9F3 /* ApplicationScheme.swift in Sources */,
+				DCA13B1F2515A940006DD9F3 /* SpeechViewController.swift in Sources */,
 				A0B7552824EB4E2E004E04C1 /* LandingViewController.swift in Sources */,
 				A039597D24EB49C100EC77EE /* SceneDelegate.swift in Sources */,
 			);
@@ -364,6 +416,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -424,6 +477,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

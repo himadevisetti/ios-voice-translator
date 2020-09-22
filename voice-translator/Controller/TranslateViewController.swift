@@ -18,7 +18,6 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     @IBOutlet weak var fileName: UITextField!
     @IBOutlet weak var uploadButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
-    @IBOutlet weak var homeButton: UIButton!
     
     var currentTextField = UITextField()
     var pickerView = UIPickerView()
@@ -40,6 +39,7 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        setUpNavigationBarAndItems()
         
         fromLanguagePickerOptions = Constants.languagePickerOptions
         toLanguagePickerOptions = Constants.languagePickerOptions
@@ -47,15 +47,15 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         setUpElements()
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func setUpNavigationBarAndItems() {
+        
+        // Set the screen title
+        self.navigationController?.navigationBar.isTranslucent = false
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 17)!]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+        self.navigationItem.title = Constants.Storyboard.translateScreenTitle
+        
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -180,7 +180,9 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                     }
                     
                     if statusCode == 200 {
-                        self.performSegue(withIdentifier: Constants.Storyboard.messageVCSegue, sender: self)
+                        if let messageVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.messageViewController) as? MessageViewController {
+                            self.navigationController?.pushViewController(messageVC, animated: true)
+                        }
                     }
                 }
             }
