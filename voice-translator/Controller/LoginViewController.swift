@@ -53,6 +53,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
 //        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.7388114333, green: 0.9007369876, blue: 0.7299064994, alpha: 1)
         let navigationBar: UINavigationBar = UINavigationBar()
         navigationController?.navigationBar.barTintColor = UIColor.systemIndigo
+        navigationController?.navigationBar.tintColor = .white // change the Back button color
         navigationController?.navigationBar.isTranslucent = false
 //        let navigationItem = UINavigationItem()
 //        let titleImageView = UIImageView(image: #imageLiteral(resourceName: "Logo"))

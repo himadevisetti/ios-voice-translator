@@ -475,7 +475,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="recordButtonTapped:" destination="OCX-kQ-Env" eventType="touchUpInside" id="ipu-14-nHi"/>
                                             <action selector="speechButtonTapped:" destination="OCX-kQ-Env" eventType="touchUpInside" id="AM6-qu-Zm4"/>
                                         </connections>
                                     </button>

@@ -18,8 +18,6 @@ class LandingViewController: UIViewController {
     
     var toolItems : [UIBarButtonItem] = []
     
-    var recordingSession: AVAudioSession!
-    
     override func viewDidLoad() {
         super.viewDidLoad()        
         
@@ -162,32 +160,5 @@ class LandingViewController: UIViewController {
         indicator.center = self.view.center
         self.view.addSubview(indicator)
     }
-    
-//    @IBAction func recordButtonTapped(_ sender: Any) {
-//        seekUserPermission()
-//    }
-//
-//    // Seek user's permission to record
-//    func seekUserPermission() {
-//        recordingSession = AVAudioSession.sharedInstance()
-//
-//        do {
-//            try recordingSession.setCategory(.playAndRecord, mode: .default)
-//            try recordingSession.setActive(true)
-//            recordingSession.requestRecordPermission() { [unowned self] allowed in
-//                DispatchQueue.main.async {
-//                    if allowed {
-//                        print("User has granted permission to record.")
-//                    } else {
-//                        // failed to record!
-//                        self.showError("You did not grant permission to record.")
-//                    }
-//                }
-//            }
-//        } catch {
-//            // failed to record!
-//            showError("Error occured while trying to record.")
-//        }
-//    }
     
 }
