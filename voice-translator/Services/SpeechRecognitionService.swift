@@ -44,7 +44,7 @@ class SpeechRecognitionService {
         print("Error fetching remote instance ID: \(error)")
         callBack( "")
       } else if let result = result {
-        print("Remote instance ID token: \(result.token)")
+//      print("Remote instance ID token: \(result.token)")
         callBack( result.token)
       } else {
         callBack( "")
@@ -71,7 +71,7 @@ class SpeechRecognitionService {
             // if the API key has a bundle ID restriction, specify the bundle ID like this
             self.call.requestHeaders.setObject(NSString(string:Bundle.main.bundleIdentifier!),
                                                forKey:NSString(string:"X-Ios-Bundle-Identifier"))
-            print("HEADERS:\(String(describing: self.call.requestHeaders))")
+//          print("HEADERS:\(String(describing: self.call.requestHeaders))")
             self.call.start()
             self.streaming = true
             // send an initial request message to configure the service

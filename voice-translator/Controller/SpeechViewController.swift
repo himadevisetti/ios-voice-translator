@@ -32,20 +32,15 @@ class SpeechViewController : UIViewController, AudioControllerDelegate {
 
   func setUpNavigationBarAndItems() {
     
+    // Set the screen title
     self.navigationController?.navigationBar.isTranslucent = false
     let attributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 17)!]
     UINavigationBar.appearance().titleTextAttributes = attributes
     self.title = Constants.Storyboard.speechScreenTitle
     
-  }
+    // Hide bottom toolbar
+    self.navigationController?.setToolbarHidden(true, animated: true)
     
-  @objc func backToSettings() {
-//    self.navigationController?.popViewController(animated: true)
-    if let settingsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.settingsViewController) as? SettingsViewController {
-        navigationController?.pushViewController(settingsVC, animated: true)
-//        settingsVC.modalPresentationStyle = .fullScreen
-//        self.present(settingsVC, animated: true, completion: nil)
-    }
   }
 
   @IBAction func recordAudio(_ sender: UIButton) {
@@ -130,7 +125,7 @@ extension SpeechViewController: SpeechRecognitionServiceProtocol {
     if let error = error {
       handleError(error: error)
     } else if let response = response, let resultArray = response.resultsArray as? [StreamingRecognitionResult] {
-      print(response)
+//    print(response)
       for result in resultArray {
         if result.isFinal {
           recordAudio(audioButton)

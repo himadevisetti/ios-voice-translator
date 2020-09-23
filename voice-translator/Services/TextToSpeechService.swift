@@ -39,7 +39,7 @@ class TextToSpeechRecognitionService {
         print("Error fetching remote instance ID: \(error)")
         callBack( "")
       } else if let result = result {
-        print("Remote instance ID token: \(result.token)")
+//      print("Remote instance ID token: \(result.token)")
         callBack( result.token)
       } else {
         callBack( "")
@@ -99,7 +99,7 @@ class TextToSpeechRecognitionService {
         print("No response received")
         return
       }
-      print("Text to speech response\(response)")
+//    print("Text to speech response\(response)")
       guard let audioData =  response.audioContent else {
         print("no audio data received")
         return
@@ -110,7 +110,7 @@ class TextToSpeechRecognitionService {
     self.call.requestHeaders.setObject(NSString(string:authT), forKey:NSString(string:"Authorization"))
     // if the API key has a bundle ID restriction, specify the bundle ID like this
     self.call.requestHeaders.setObject(NSString(string:Bundle.main.bundleIdentifier!), forKey:NSString(string:"X-Ios-Bundle-Identifier"))
-    print("HEADERS:\(String(describing: self.call.requestHeaders))")
+//  print("HEADERS:\(String(describing: self.call.requestHeaders))")
     self.call.start()
   }
   
@@ -124,7 +124,7 @@ class TextToSpeechRecognitionService {
               //                        completionHandler(nil, errorStr)
               return
             }
-            print(listVoiceResponse ?? "No voice list found")
+//          print(listVoiceResponse ?? "No voice list found")
             if let listVoiceResponse = listVoiceResponse {
               let formattedVoice = FormattedVoice.formatVoiceResponse(listVoiceResponse: listVoiceResponse)
               self.voiceListDelegate?.didReceiveVoiceList(voiceList: formattedVoice, errorString: nil)
@@ -134,7 +134,7 @@ class TextToSpeechRecognitionService {
           self.call.requestHeaders.setObject(NSString(string:authT), forKey:NSString(string:"Authorization"))
           // if the API key has a bundle ID restriction, specify the bundle ID like this
           self.call.requestHeaders.setObject(NSString(string:Bundle.main.bundleIdentifier!), forKey:NSString(string:"X-Ios-Bundle-Identifier"))
-          print("HEADERS:\(String(describing: self.call.requestHeaders))")
+//        print("HEADERS:\(String(describing: self.call.requestHeaders))")
           self.call.start()
         } else if shouldWait == true {//Token will be sent via PN.
           //Observe for notification

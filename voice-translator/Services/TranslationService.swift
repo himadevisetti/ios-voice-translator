@@ -67,7 +67,7 @@ class TranslationServices {
           completionHandler(nil, error?.localizedDescription)
           return
         }
-        print(translateResponse ?? "Response found nil")
+//      print(translateResponse ?? "Response found nil")
         guard let res = translateResponse else {return}
         completionHandler(res, nil)
       })

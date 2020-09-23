@@ -24,10 +24,6 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    override func viewWillLayoutSubviews() {
-        setupNavigationBarItems()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,9 +31,10 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         GIDSignIn.sharedInstance()?.presentingViewController = self
         GIDSignIn.sharedInstance()?.delegate = self
         
-        //        Automatically sign in the user.
-        //        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
+        // Automatically sign in the user.
+        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
         
+        setupNavigationBarItems()
         setUpElements()
 
     }
@@ -47,23 +44,15 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     }
     
     func setupNavigationBarItems() {
-//        let width = self.view.frame.width
-//        let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: width, height: 34))
-//        applyBarTintColorToTheNavigationBar()
-//        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.7388114333, green: 0.9007369876, blue: 0.7299064994, alpha: 1)
-        let navigationBar: UINavigationBar = UINavigationBar()
-        navigationController?.navigationBar.barTintColor = UIColor.systemIndigo
-        navigationController?.navigationBar.tintColor = .white // change the Back button color
-        navigationController?.navigationBar.isTranslucent = false
-//        let navigationItem = UINavigationItem()
-//        let titleImageView = UIImageView(image: #imageLiteral(resourceName: "Logo"))
-//        titleImageView.frame = CGRect(x: 0, y: 0, width: width, height: 34)
-//        titleImageView.contentMode = .scaleAspectFit
-//
-//        navigationItem.titleView = titleImageView
-//        navigationController?.navigationBar.setItems([navigationItem], animated: false)
-        self.view.addSubview(navigationBar)
-        self.navigationController?.setToolbarHidden(false, animated: true)
+        
+        // Set the screen title
+        self.navigationController?.navigationBar.barTintColor = UIColor.systemIndigo
+        self.navigationController?.navigationBar.tintColor = .white // change the Back button color
+        self.navigationController?.navigationBar.isTranslucent = false
+//      let attributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 17)!]
+//      UINavigationBar.appearance().titleTextAttributes = attributes
+//      self.navigationItem.title = Constants.Storyboard.homeScreenTitle
+        self.navigationController?.setToolbarHidden(true, animated: true)
         
         // Back button shows on login screen when log out is tapped
         // Hide the back button to avoid navigating back from login screen

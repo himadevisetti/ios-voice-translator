@@ -51,6 +51,11 @@ class MessageViewController: UIViewController {
         // Hide the back button to avoid navigating back to upload screen
         self.navigationItem.hidesBackButton = true
         
+        // Add home button to navigation bar on the right-side
+        let homeButton = UIBarButtonItem(image: UIImage(systemName: "house")!.withRenderingMode(.alwaysOriginal),
+                                      style: .plain, target: self, action: #selector(homeButtonTapped))
+        self.navigationItem.rightBarButtonItem  = homeButton
+        
         // Add profile to bottom bar
         navigationController?.isToolbarHidden = false
         toolItems.append(UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil))
@@ -173,6 +178,14 @@ class MessageViewController: UIViewController {
         indicator.style = UIActivityIndicatorView.Style.large
         indicator.center = self.view.center
         self.view.addSubview(indicator)
+    }
+    
+    @IBAction func homeButtonTapped(_ sender: Any) {
+        
+        if let landingViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.landingViewController) as? LandingViewController {
+          navigationController?.pushViewController(landingViewController, animated: true)
+        }
+        
     }
     
     @IBAction func profileButtonTapped(_ sender: Any) {

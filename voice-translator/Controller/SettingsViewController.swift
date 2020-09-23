@@ -16,33 +16,33 @@ class SettingsViewController: UIViewController {
   @IBOutlet weak var getStartedButton: UIButton!
     
   let translateFromView: MDCTextField = {
-    let address = MDCTextField()
-    address.translatesAutoresizingMaskIntoConstraints = false
-    address.autocapitalizationType = .words
-    return address
+    let fromLanguage = MDCTextField()
+    fromLanguage.translatesAutoresizingMaskIntoConstraints = false
+    fromLanguage.autocapitalizationType = .words
+    return fromLanguage
   }()
   var translateFromController: MDCTextInputControllerFilled!
 
   let translateToView: MDCTextField = {
-    let city = MDCTextField()
-    city.translatesAutoresizingMaskIntoConstraints = false
-    city.autocapitalizationType = .words
-    return city
+    let toLanguage = MDCTextField()
+    toLanguage.translatesAutoresizingMaskIntoConstraints = false
+    toLanguage.autocapitalizationType = .words
+    return toLanguage
   }()
   var translateToController: MDCTextInputControllerFilled!
 
   let synthNameView: MDCTextField = {
-    let state = MDCTextField()
-    state.translatesAutoresizingMaskIntoConstraints = false
-    state.autocapitalizationType = .allCharacters
-    return state
+    let synthName = MDCTextField()
+    synthName.translatesAutoresizingMaskIntoConstraints = false
+    synthName.autocapitalizationType = .allCharacters
+    return synthName
   }()
   var synthNameController: MDCTextInputControllerFilled!
 
   let voiceTypeView: MDCTextField = {
-    let zip = MDCTextField()
-    zip.translatesAutoresizingMaskIntoConstraints = false
-    return zip
+    let voiceType = MDCTextField()
+    voiceType.translatesAutoresizingMaskIntoConstraints = false
+    return voiceType
   }()
   var voiceTypeController: MDCTextInputControllerFilled!
   var allTextFieldControllers = [MDCTextInputControllerFilled]()
@@ -107,10 +107,19 @@ class SettingsViewController: UIViewController {
 
   func setUpNavigationBarAndItems() {
     
+    // Set the screen title
     self.navigationController?.navigationBar.isTranslucent = false
     let attributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 17)!]
     UINavigationBar.appearance().titleTextAttributes = attributes
     self.title = Constants.Storyboard.settingsScreenTitle
+    
+    // Hide the back button to avoid navigating back to upload screen
+    self.navigationItem.hidesBackButton = true
+    
+    // Add home button to navigation bar on the right-side
+    let homeButton = UIBarButtonItem(image: UIImage(systemName: "house")!.withRenderingMode(.alwaysOriginal),
+                                  style: .plain, target: self, action: #selector(homeButtonTapped))
+    self.navigationItem.rightBarButtonItem  = homeButton
     
   }
 
@@ -152,7 +161,7 @@ class SettingsViewController: UIViewController {
     var tag = 0
     for controller in allTextFieldControllers {
       guard let textField = controller.textInput as? MDCTextField else { continue }
-      style(textInputController: controller);
+//    style(textInputController: controller);
       textField.tag = tag
       tag += 1
     }
@@ -199,6 +208,14 @@ class SettingsViewController: UIViewController {
     self.allTextFieldControllers.forEach({ (controller) in
       controller.isFloatingEnabled = true
     })
+  }
+    
+  @IBAction func homeButtonTapped(_ sender: Any) {
+      
+      if let landingViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.landingViewController) as? LandingViewController {
+        navigationController?.pushViewController(landingViewController, animated: true)
+      }
+      
   }
 
   @IBAction func getStarted(_ sender: Any) {

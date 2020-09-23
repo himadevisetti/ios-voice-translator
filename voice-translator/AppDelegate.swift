@@ -125,7 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.post(name: NSNotification.Name(Constants.tokenReceived), object: tokenData)
       }
       // Print full message.
-      print(userInfo)
+//    print(userInfo)
     }
 
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
@@ -193,7 +193,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
       NotificationCenter.default.post(name: NSNotification.Name(Constants.tokenReceived), object: tokenData)
     }
     // Print full message.
-    print(userInfo)
+//  print(userInfo)
     // Change this to your preferred presentation option
     completionHandler([])
   }

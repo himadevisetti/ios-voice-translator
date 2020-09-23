@@ -52,6 +52,14 @@ class StatusViewController: UIViewController {
         UINavigationBar.appearance().titleTextAttributes = attributes
         self.navigationItem.title = Constants.Storyboard.statusScreenTitle
         
+        // Hide the back button to avoid navigating back to upload screen
+        self.navigationItem.hidesBackButton = true
+        
+        // Add home button to navigation bar on the right-side
+        let homeButton = UIBarButtonItem(image: UIImage(systemName: "house")!.withRenderingMode(.alwaysOriginal),
+                                      style: .plain, target: self, action: #selector(homeButtonTapped))
+        self.navigationItem.rightBarButtonItem  = homeButton
+        
     }
     
     func setUpElements() {
@@ -444,6 +452,14 @@ class StatusViewController: UIViewController {
                 SharedData.instance.statusCode = statusCode
             }
         }
+    }
+    
+    @IBAction func homeButtonTapped(_ sender: Any) {
+        
+        if let landingViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.landingViewController) as? LandingViewController {
+          navigationController?.pushViewController(landingViewController, animated: true)
+        }
+        
     }
     
 }
