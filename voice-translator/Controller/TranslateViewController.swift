@@ -12,12 +12,15 @@ import AVFoundation
 
 class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    @IBOutlet weak var recordPromptLabel: UILabel!
     @IBOutlet weak var fromLanguagePicker: UITextField!
     @IBOutlet weak var toLanguagePicker: UITextField!
     @IBOutlet weak var chooseFileButton: UIButton!
     @IBOutlet weak var fileName: UITextField!
     @IBOutlet weak var uploadButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
+    
+    var recordingSession: AVAudioSession!
     
     var currentTextField = UITextField()
     var pickerView = UIPickerView()
@@ -55,6 +58,47 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         UINavigationBar.appearance().titleTextAttributes = attributes
         self.navigationItem.title = Constants.Storyboard.translateScreenTitle
         
+        // Hide bottom toolbar
+//      self.navigationController?.setToolbarHidden(true, animated: true)
+        
+        // Add record button to navigation bar on the right-side
+        let recordButton = UIBarButtonItem(image: UIImage(systemName: "music.mic")!.withRenderingMode(.alwaysOriginal),
+                                      style: .plain, target: self, action: #selector(recordButtonTapped))
+        self.navigationItem.rightBarButtonItem  = recordButton
+        
+    }
+    
+    @IBAction func recordButtonTapped(_ sender: Any) {
+        
+        seekUserPermission()
+        
+    }
+    
+    // Seek user's permission to record
+    func seekUserPermission() {
+        
+        recordingSession = AVAudioSession.sharedInstance()
+            
+        do {
+            try recordingSession.setCategory(.playAndRecord, mode: .default)
+            try recordingSession.setActive(true)
+            recordingSession.requestRecordPermission() { (allowed) in
+                DispatchQueue.main.async {
+                    if allowed {
+                        print("User has granted permission to record.")
+                        if let recordViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.recordViewController) as? RecordViewController {
+                            self.navigationController?.pushViewController(recordViewController, animated: true)
+                        }
+                    } else {
+                        // failed to record!
+                        self.showError("You did not grant permission to record. Please grant permission from settings for this app or upload an existing file from your storage")
+                     }
+                }
+            }
+        } catch {
+            // failed to record!
+            showError("Error occured while trying to record.")
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -68,6 +112,7 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         fileName.alpha = 0
         
         // Style the UI Elements
+        recordPromptLabel.text = "Want to record? Click on record icon at the top-right corner"
         Utilities.styleHollowButton(chooseFileButton)
         Utilities.styleFilledButton(uploadButton)
         

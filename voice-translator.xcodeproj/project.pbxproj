@@ -25,6 +25,7 @@
 		A0C59A6A24EDF9B2004CAFE8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C59A6924EDF9B2004CAFE8 /* LoginViewController.swift */; };
 		A0E23CFF24F197A1000D6A13 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E23CFE24F197A1000D6A13 /* SharedData.swift */; };
 		A0EE923124F02CBA00C0A687 /* UploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE923024F02CBA00C0A687 /* UploadRequest.swift */; };
+		DC54B247251BDD2A00F5BEF4 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */; };
 		DCA13B1B2515781F006DD9F3 /* SpeechRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B182515781E006DD9F3 /* SpeechRecognitionService.swift */; };
 		DCA13B1C2515781F006DD9F3 /* TextToSpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B192515781E006DD9F3 /* TextToSpeechService.swift */; };
 		DCA13B1D2515781F006DD9F3 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B1A2515781E006DD9F3 /* TranslationService.swift */; };
@@ -64,6 +65,7 @@
 		A0EE923024F02CBA00C0A687 /* UploadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequest.swift; sourceTree = "<group>"; };
 		DB960D4345FD20A65B4384D6 /* Pods-voice-translator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voice-translator.release.xcconfig"; path = "Target Support Files/Pods-voice-translator/Pods-voice-translator.release.xcconfig"; sourceTree = "<group>"; };
 		DC3B0B4C24FF739A006567F9 /* voice-translator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "voice-translator.entitlements"; sourceTree = "<group>"; };
+		DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 		DCA13B182515781E006DD9F3 /* SpeechRecognitionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechRecognitionService.swift; sourceTree = "<group>"; };
 		DCA13B192515781E006DD9F3 /* TextToSpeechService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextToSpeechService.swift; sourceTree = "<group>"; };
 		DCA13B1A2515781E006DD9F3 /* TranslationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				A01B7EBE24F4D82200969DED /* StatusViewController.swift */,
 				DCA13B1E2515A940006DD9F3 /* SpeechViewController.swift */,
 				DCC145F925199C3E0091124A /* ProfileViewController.swift */,
+				DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				A01B7EBF24F4D82200969DED /* StatusViewController.swift in Sources */,
 				A0E23CFF24F197A1000D6A13 /* SharedData.swift in Sources */,
 				DCA13B1C2515781F006DD9F3 /* TextToSpeechService.swift in Sources */,
+				DC54B247251BDD2A00F5BEF4 /* RecordViewController.swift in Sources */,
 				A01545D724F38C2C0081E3CB /* MessageViewController.swift in Sources */,
 				DCA13B1B2515781F006DD9F3 /* SpeechRecognitionService.swift in Sources */,
 				DCA13B2B2515AB64006DD9F3 /* ChatTableViewCell.swift in Sources */,

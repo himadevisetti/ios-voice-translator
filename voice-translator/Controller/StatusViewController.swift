@@ -195,8 +195,8 @@ class StatusViewController: UIViewController {
         textLabel!.text = message
         textLabel!.lineBreakMode = .byWordWrapping
         textLabel!.numberOfLines = 0;
-        textLabel!.sizeToFit()
-        textLabel!.layoutIfNeeded()
+//      textLabel!.sizeToFit()
+//      textLabel!.layoutIfNeeded()
         
         // Add the Text Label to Stack View
         stackViewToShowFiles.addArrangedSubview(textLabel!)
@@ -212,8 +212,8 @@ class StatusViewController: UIViewController {
 //      textLabel!.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
 //      textLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
         textLabel!.font = UIFont(name: "Avenir Next", size: 14)
-        textLabel!.sizeToFit()
-        textLabel!.layoutIfNeeded()
+//      textLabel!.sizeToFit()
+//      textLabel!.layoutIfNeeded()
         textLabel!.text = message
         textLabel!.lineBreakMode = .byWordWrapping
         textLabel!.numberOfLines = 0;
@@ -230,8 +230,8 @@ class StatusViewController: UIViewController {
         textLabel!.backgroundColor = UIColor.white
         textLabel!.widthAnchor.constraint(equalToConstant: self.stackViewToShowFiles.frame.width).isActive = true
 //      textLabel!.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-        textLabel!.sizeToFit()
-        textLabel!.layoutIfNeeded()
+//      textLabel!.sizeToFit()
+//      textLabel!.layoutIfNeeded()
         textLabel!.numberOfLines = 1;
         
         // Add the Text Label to Stack View
@@ -256,8 +256,8 @@ class StatusViewController: UIViewController {
         let rightSwipeButton = UISwipeGestureRecognizer(target: self, action: #selector(rightSwipeButtonActionSingle))
         button!.addGestureRecognizer(rightSwipeButton)
         
-        button!.sizeToFit()
-        button!.layoutIfNeeded()
+//      button!.sizeToFit()
+//      button!.layoutIfNeeded()
         
         // Add the Button to Stack View
         stackViewToShowFiles.addArrangedSubview(button!)
@@ -330,8 +330,8 @@ class StatusViewController: UIViewController {
         let rightSwipeButton = UISwipeGestureRecognizer(target: self, action: #selector(rightSwipeButtonAction))
         button!.addGestureRecognizer(rightSwipeButton)
         
-        button!.sizeToFit()
-        button!.layoutIfNeeded()
+//      button!.sizeToFit()
+//      button!.layoutIfNeeded()
         
         // Add the Button to Stack View
         stackViewToShowFiles.addArrangedSubview(button!)

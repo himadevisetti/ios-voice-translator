@@ -26,6 +26,7 @@ struct Constants {
         static let signUpScreenTitle = "Sign up"
         static let homeScreenTitle = "Home"
         static let profileScreenTitle = "Profile"
+        static let recordScreenTitle = "Record Audio"
         static let translateScreenTitle = "Translate Audio File"
         static let messageScreenTitle = "Status"
         static let settingsScreenTitle = "Speech Settings"
