@@ -85,7 +85,7 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             recordingSession.requestRecordPermission() { (allowed) in
                 DispatchQueue.main.async {
                     if allowed {
-                        print("User has granted permission to record.")
+//                      print("User has granted permission to record.")
                         if let recordViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.recordViewController) as? RecordViewController {
                             self.navigationController?.pushViewController(recordViewController, animated: true)
                         }

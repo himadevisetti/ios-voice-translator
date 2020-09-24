@@ -101,7 +101,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         if Utilities.isValidPassword(cleanPassword) == false {
             
             // Password does not meet the criteria
-            return "Please esnure your password is atleast 8 characters, contains an alphabet, a number and a special character"
+            return "Please ensure your password is atleast 8 characters, contains an alphabet, a number and a special character"
         }
         
         return nil
@@ -152,8 +152,20 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                 
                 // Check for errors
                 if err != nil {
+                    let error = err! as NSError
+                    print(error.code)
                     // There's an error while signing in the user
-                    self.showError(err!.localizedDescription)
+                    switch error.code {
+                    case AuthErrorCode.wrongPassword.rawValue:
+                        self.showError("Wrong password")
+                    case AuthErrorCode.invalidEmail.rawValue:
+                        self.showError("Invalid email")
+                    case AuthErrorCode.accountExistsWithDifferentCredential.rawValue:
+                        self.showError("AccountExistsWithDifferentCredential")
+                    default:
+                        self.showError("Unknown error: \(error.localizedDescription)")
+                    }
+                    
                 }
                 else {
                     // Transition to landing screen

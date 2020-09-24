@@ -80,8 +80,15 @@ class RecordViewController: UIViewController, AVAudioRecorderDelegate {
     @IBAction func startRecordTapped(_ sender: Any) {
         
         if audioRecorder == nil {
+            recordingImage.alpha = 1.0
+            UIView.animate(withDuration: 0.5, delay: 0.0, options: [.curveEaseInOut, .repeat, .autoreverse], animations: {
+                self.recordingImage.alpha = 0.0
+            }, completion: nil)
             startRecording()
         } else {
+            UIView.animate(withDuration: 0.1, delay: 0.0, options: [.curveEaseInOut, .beginFromCurrentState], animations: {
+                self.recordingImage.alpha = 1.0
+            }, completion: nil)
             stopRecording(success: true)
         }
         
