@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import CryptoKit
 import Firebase
+import FirebaseFirestore
 
 class Utilities {
     
@@ -41,10 +42,23 @@ class Utilities {
         
     }
     
+    static func settingsStyleButton(_ button:UIButton) {
+        
+        button.backgroundColor = UIColor.init(red: 143/255, green: 161/255, blue: 255/255, alpha: 1)
+        button.layer.cornerRadius = 25.0
+        button.tintColor = UIColor.white
+        
+    }
+    
     static func styleFilledLeftButton(_ button:UIButton) {
         
-        button.roundedLeftButton()
-        
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.cornerRadius = 5
+        button.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        button.setTitleColor(.darkGray, for: .normal)
+        button.tintColor = UIColor.black
+        button.backgroundColor = UIColor.init(red: 188/255, green: 206/255, blue: 255/255, alpha: 1)
     }
     
     static func styleFilledRightButton(_ button:UIButton) {
@@ -285,7 +299,7 @@ extension UIButton{
     func roundedLeftButton() {
         let maskPath1 = UIBezierPath(roundedRect: bounds,
             byRoundingCorners: [.topLeft, .bottomLeft],
-            cornerRadii: CGSize(width: 25, height: 25))
+            cornerRadii: CGSize(width: 5, height: 5))
         let maskLayer1 = CAShapeLayer()
         maskLayer1.frame = bounds
         maskLayer1.path = maskPath1.cgPath
@@ -295,10 +309,56 @@ extension UIButton{
     func roundedRightButton() {
         let maskPath1 = UIBezierPath(roundedRect: bounds,
             byRoundingCorners: [.topRight, .bottomRight],
-            cornerRadii: CGSize(width: 25, height: 25))
+            cornerRadii: CGSize(width: 5, height: 5))
         let maskLayer1 = CAShapeLayer()
         maskLayer1.frame = bounds
         maskLayer1.path = maskPath1.cgPath
         layer.mask = maskLayer1
+    }
+}
+
+extension UIView {
+    func roundCorners(corners:UIRectCorner, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        mask.frame = self.bounds
+        self.layer.mask = mask
+    }
+}
+
+extension UIImage {
+
+    func addImagePadding(x: CGFloat, y: CGFloat) -> UIImage? {
+        let width: CGFloat = size.width + x
+        let height: CGFloat = size.height + y
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: height), false, 0)
+        let origin: CGPoint = CGPoint(x: (width - size.width) / 2, y: (height - size.height) / 2)
+        draw(at: origin)
+        let imageWithPadding = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return imageWithPadding
+    }
+    
+    func imageWithInsets(insetDimen: CGFloat) -> UIImage {
+        return imageWithInset(insets: UIEdgeInsets(top: insetDimen, left: insetDimen, bottom: insetDimen, right: insetDimen))
+    }
+        
+    func imageWithInset(insets: UIEdgeInsets) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(
+            CGSize(width: self.size.width + insets.left + insets.right,
+                   height: self.size.height + insets.top + insets.bottom), false, self.scale)
+        let origin = CGPoint(x: insets.left, y: insets.top)
+        self.draw(at: origin)
+        let imageWithInsets = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(self.renderingMode)
+        UIGraphicsEndImageContext()
+        return imageWithInsets!
+    }
+    
+    func resize(targetSize: CGSize) -> UIImage {
+        return UIGraphicsImageRenderer(size:targetSize).image { _ in
+            self.draw(in: CGRect(origin: .zero, size: targetSize))
+        }
     }
 }

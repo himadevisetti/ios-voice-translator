@@ -1,17 +1,9 @@
 //
-// Copyright 2019 Google Inc. All Rights Reserved.
+//  TextToSpeechRecognitionService.swift
+//  voice-translator
 //
-// Licensed under the Apache License, Version 2.0 (the "License")
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+//  Created by Hima Devisetti on 9/25/20.
+//  Copyright © 2020 Hima Bindu Devisetti. All rights reserved.
 //
 
 import Foundation
@@ -192,28 +184,58 @@ struct FormattedVoice {
   static func convertLanguageCodes(languageCode: String) -> String {
     var languageName = ""
     switch (languageCode) {
+    case "ar-XA":
+      languageName = "Arabic"
+    case "bn-IN":
+      languageName = "Bengali"
+    case "cmn-CN":
+      languageName = "Mandarin Chinese CN"
+    case "cmn-TW":
+      languageName = "Mandarin Chinese TW"
+    case "cs-CZ":
+      languageName = "Czech Republic"
     case "da-DK":
       languageName = "Danish"
     case "de-DE":
       languageName = "German"
+    case "el-GR":
+      languageName = "Greek"
     case "en-AU":
       languageName = "English AU"
     case "en-GB":
       languageName = "English UK"
+    case "en-IN":
+      languageName = "English IN"
     case "en-US":
       languageName = "English US"
     case "es-ES":
       languageName = "Spanish"
+    case "fi-FI":
+      languageName = "Finnish"
+    case "fil-PH":
+      languageName = "Filipino"
     case "fr-CA":
       languageName = "French CA"
     case "fr-FR":
       languageName = "French"
+    case "gu-IN":
+      languageName = "Gujarati"
+    case "hi-IN":
+      languageName = "Hindi"
+    case "hu-HU":
+      languageName = "Hungarian"
+    case "id-ID":
+      languageName = "Indonesian"
     case "it-IT":
       languageName = "Italian"
     case "ja-JP":
       languageName = "Japanese"
+    case "kn-IN":
+      languageName = "Kannada"
     case "ko-KR":
       languageName = "Korean"
+    case "ml-IN":
+      languageName = "Malayalam"
     case "nl-NL":
       languageName = "Dutch"
     case "nb-NO":
@@ -222,25 +244,28 @@ struct FormattedVoice {
       languageName = "Polish"
     case "pt-BR":
       languageName = "Portugese BR"
-      
     case "pt-PT":
       languageName = "Portugese"
-      
     case "ru-RU":
       languageName = "Russian"
-      
     case "sk-SK":
       languageName = "Slovak SK"
-      
     case "sv-SE":
       languageName = "Swedish"
-      
+    case "ta-IN":
+      languageName = "Tamil"
+    case "te-IN":
+      languageName = "Telugu"
+    case "th-TH":
+      languageName = "Thai"
     case "tr-TR":
       languageName = "Turkish"
-      
     case "uk-UA":
       languageName = "Ukrainian UA"
-      
+    case "vi-VN":
+      languageName = "Vietnamese"
+    case "yue-HK":
+      languageName = "Chinese HK"
     default:
       languageName = languageCode
     }

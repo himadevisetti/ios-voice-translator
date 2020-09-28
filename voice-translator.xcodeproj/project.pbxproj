@@ -25,6 +25,9 @@
 		A0C59A6A24EDF9B2004CAFE8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C59A6924EDF9B2004CAFE8 /* LoginViewController.swift */; };
 		A0E23CFF24F197A1000D6A13 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E23CFE24F197A1000D6A13 /* SharedData.swift */; };
 		A0EE923124F02CBA00C0A687 /* UploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE923024F02CBA00C0A687 /* UploadRequest.swift */; };
+		DC121501251EA1DB003B8832 /* DropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC121500251EA1DB003B8832 /* DropDownButton.swift */; };
+		DC121543251EB04F003B8832 /* LanguageOptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC121542251EB04F003B8832 /* LanguageOptionsTableViewController.swift */; };
+		DC12154925200B9E003B8832 /* LeftPaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC12154825200B9E003B8832 /* LeftPaddedLabel.swift */; };
 		DC54B247251BDD2A00F5BEF4 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */; };
 		DCA13B1B2515781F006DD9F3 /* SpeechRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B182515781E006DD9F3 /* SpeechRecognitionService.swift */; };
 		DCA13B1C2515781F006DD9F3 /* TextToSpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B192515781E006DD9F3 /* TextToSpeechService.swift */; };
@@ -64,6 +67,9 @@
 		A0E23CFE24F197A1000D6A13 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		A0EE923024F02CBA00C0A687 /* UploadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequest.swift; sourceTree = "<group>"; };
 		DB960D4345FD20A65B4384D6 /* Pods-voice-translator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voice-translator.release.xcconfig"; path = "Target Support Files/Pods-voice-translator/Pods-voice-translator.release.xcconfig"; sourceTree = "<group>"; };
+		DC121500251EA1DB003B8832 /* DropDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownButton.swift; sourceTree = "<group>"; };
+		DC121542251EB04F003B8832 /* LanguageOptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageOptionsTableViewController.swift; sourceTree = "<group>"; };
+		DC12154825200B9E003B8832 /* LeftPaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftPaddedLabel.swift; sourceTree = "<group>"; };
 		DC3B0B4C24FF739A006567F9 /* voice-translator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "voice-translator.entitlements"; sourceTree = "<group>"; };
 		DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 		DCA13B182515781E006DD9F3 /* SpeechRecognitionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechRecognitionService.swift; sourceTree = "<group>"; };
@@ -176,6 +182,7 @@
 				DCA13B1E2515A940006DD9F3 /* SpeechViewController.swift */,
 				DCC145F925199C3E0091124A /* ProfileViewController.swift */,
 				DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */,
+				DC121542251EB04F003B8832 /* LanguageOptionsTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -194,6 +201,8 @@
 			children = (
 				A06B3E7024EBB6970016233A /* Utilities.swift */,
 				A045E03C24EC621F00D9F3CF /* Constants.swift */,
+				DC121500251EA1DB003B8832 /* DropDownButton.swift */,
+				DC12154825200B9E003B8832 /* LeftPaddedLabel.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -348,6 +357,7 @@
 				A01B7EBF24F4D82200969DED /* StatusViewController.swift in Sources */,
 				A0E23CFF24F197A1000D6A13 /* SharedData.swift in Sources */,
 				DCA13B1C2515781F006DD9F3 /* TextToSpeechService.swift in Sources */,
+				DC12154925200B9E003B8832 /* LeftPaddedLabel.swift in Sources */,
 				DC54B247251BDD2A00F5BEF4 /* RecordViewController.swift in Sources */,
 				A01545D724F38C2C0081E3CB /* MessageViewController.swift in Sources */,
 				DCA13B1B2515781F006DD9F3 /* SpeechRecognitionService.swift in Sources */,
@@ -355,6 +365,7 @@
 				DCC145FA25199C3E0091124A /* ProfileViewController.swift in Sources */,
 				DCA13B1D2515781F006DD9F3 /* TranslationService.swift in Sources */,
 				A0957F3924EF5B6C00DB237A /* NetworkService.swift in Sources */,
+				DC121501251EA1DB003B8832 /* DropDownButton.swift in Sources */,
 				A06B3E7124EBB6970016233A /* Utilities.swift in Sources */,
 				A039597B24EB49C100EC77EE /* AppDelegate.swift in Sources */,
 				A0C59A6824EDE502004CAFE8 /* ResetPasswordViewController.swift in Sources */,
@@ -369,6 +380,7 @@
 				DCA13B1F2515A940006DD9F3 /* SpeechViewController.swift in Sources */,
 				A0B7552824EB4E2E004E04C1 /* LandingViewController.swift in Sources */,
 				A039597D24EB49C100EC77EE /* SceneDelegate.swift in Sources */,
+				DC121543251EB04F003B8832 /* LanguageOptionsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

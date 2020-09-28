@@ -20,6 +20,7 @@ struct Constants {
         static let statusViewController = "StatusVC"
         static let recordViewController = "RecordVC"
         static let settingsViewController = "SettingsVC"
+        static let languageOptionsTableViewController = "LanguageOptionsVC"
         static let speechViewController = "SpeechVC"
         static let resetPasswordViewController = "ResetPasswordVC"
         static let signUpViewController = "SignUpVC"
@@ -33,6 +34,7 @@ struct Constants {
         static let speechScreenTitle = "Speech"
         static let statusScreenTitle = "Status"
         static let resetPasswordScreenTitle = "Reset your password"
+        static let optionsScreenTitle = "Choose an option"
 
     }
     
