@@ -9,18 +9,16 @@
 import UIKit
 import AVFoundation
 import googleapis
-import MaterialComponents
 
 let SAMPLE_RATE = 16000
 
 class SpeechViewController : UIViewController, AudioControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var optionsCard: MDCCard!
+    @IBOutlet weak var optionsCard: CardView!
     @IBOutlet weak var audioButton: UIButton!
     
     var audioData = NSMutableData()
-    var appBar = MDCAppBar()
     var listening: Bool = false
     var tableViewDataSource = [[String: String]]()
     var isFirst = true
@@ -28,8 +26,6 @@ class SpeechViewController : UIViewController, AudioControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //  self.view.tintColor = .black
-        //  self.view.backgroundColor = ApplicationScheme.shared.colorScheme.surfaceColor
         
         setUpNavigationBarAndItems()
         optionsCard.cornerRadius = optionsCard.frame.height/2

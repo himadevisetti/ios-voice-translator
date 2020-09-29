@@ -788,7 +788,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="giJ-z8-aDp">
                                 <rect key="frame" x="0.0" y="559" width="375" height="64"/>
                                 <subviews>
-                                    <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="6UF-Fx-h1e" customClass="MDCCard">
+                                    <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="6UF-Fx-h1e" customClass="CardView" customModule="Voice_Translate" customModuleProvider="target">
                                         <rect key="frame" x="162.5" y="7" width="50" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vf0-ZR-48f">
@@ -831,7 +831,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rlf-fh-jfd" customClass="MDCCard">
+                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rlf-fh-jfd" customClass="CardView" customModule="Voice_Translate" customModuleProvider="target">
                                                     <rect key="frame" x="302" y="7" width="63" height="35.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IGE-p2-VU3">
@@ -869,7 +869,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Dh-eh-PYf" customClass="MDCCard">
+                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Dh-eh-PYf" customClass="CardView" customModule="Voice_Translate" customModuleProvider="target">
                                                     <rect key="frame" x="10" y="7" width="63" height="35.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MTK-FA-rQU">
@@ -925,7 +925,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="audioButton" destination="Vf0-ZR-48f" id="pdM-Up-QMc"/>
-                        <outlet property="optionsCard" destination="6UF-Fx-h1e" id="kP7-pj-oni"/>
+                        <outlet property="optionsCard" destination="6UF-Fx-h1e" id="891-Cv-2qm"/>
                         <outlet property="tableView" destination="9RG-hE-VXa" id="noR-wH-wM8"/>
                     </connections>
                 </viewController>

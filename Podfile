@@ -15,7 +15,7 @@ target 'voice-translator' do
     pod 'AuthLibrary', :git => 'https://github.com/googleapis/google-auth-library-swift.git'
     pod 'Firebase/Messaging'
     pod 'googleapis', :path => '.'
-    pod 'MaterialComponents'
+  # pod 'MaterialComponents'
 
 end
 

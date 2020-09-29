@@ -1,12 +1,11 @@
 
 import UIKit
-import MaterialComponents
 
 class ChatTableViewCell: UITableViewCell {
   
-  @IBOutlet weak var selfCardView: MDCCard!
+  @IBOutlet weak var selfCardView: CardView!
   @IBOutlet weak var selfText: UILabel!
-  @IBOutlet weak var botCardView: MDCCard!
+  @IBOutlet weak var botCardView: CardView!
   @IBOutlet weak var botResponseText: UILabel!
   
   override func awakeFromNib() {
