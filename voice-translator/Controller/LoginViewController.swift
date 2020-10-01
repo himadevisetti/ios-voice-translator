@@ -168,6 +168,23 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                     
                 }
                 else {
+                    // Fetch user's firstname and lastname from database to display on profile page
+                    let db = Firestore.firestore()
+                    db.collection("users").whereField("email", isEqualTo: email)
+                        .getDocuments() { (querySnapshot, err) in
+                            if let err = err {
+                                print("Error getting documents: \(err)")
+                            } else {
+                                for document in querySnapshot!.documents {
+                                    print("\(document.documentID) => \(document.data())")
+                                    let firstName = document.data()["firstname"] as? String
+                                    let lastName = document.data()["lastname"] as? String
+                                    SharedData.instance.userFirstName = firstName
+                                    SharedData.instance.userLastName = lastName
+                                }
+                            }
+                    }
+                    
                     // Transition to landing screen
                     self.transitionToLanding()
                 }
@@ -233,6 +250,11 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                     self.displayPrivacyPolicy(email: email!, givenName: givenName!, familyName: familyName!, userId: userId)
 
                 } else {
+                    
+                    // Save user's firstname and lastname in local cache to display on profile page
+                    SharedData.instance.userFirstName = givenName
+                    SharedData.instance.userLastName = familyName
+                    
                     // Transition to landing screen
                     self.transitionToLanding()
                 }
@@ -324,6 +346,9 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                 // write it to the application log and monitor such errors
                 print(errMessage!)
             }
+            // Save user's firstname and lastname in local cache to display on profile page
+            SharedData.instance.userFirstName = givenName
+            SharedData.instance.userLastName = familyName
             
             // Transition to landing screen
             self.transitionToLanding()
@@ -385,6 +410,10 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                         self.displayPrivacyPolicy(email: email!, givenName: givenName!, familyName: familyName!, userId: userId)
                         
                     } else {
+                        // Save user's firstname and lastname in local cache to display on profile page
+                        SharedData.instance.userFirstName = givenName
+                        SharedData.instance.userLastName = familyName
+                        
                         // Transition to landing screen
                         self.transitionToLanding()
                     }

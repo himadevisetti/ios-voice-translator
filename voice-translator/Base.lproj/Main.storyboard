@@ -125,6 +125,40 @@
             </objects>
             <point key="canvasLocation" x="-4901.6000000000004" y="285.60719640179911"/>
         </scene>
+        <!--Agreements View Controller-->
+        <scene sceneID="kea-8Y-0VU">
+            <objects>
+                <viewController storyboardIdentifier="AgreementsVC" id="iNZ-Wy-Wgq" customClass="AgreementsViewController" customModule="Voice_Translate" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5B5-iI-9Rv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TFq-gM-ZSV">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="S0v-4f-Diz"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="TFq-gM-ZSV" firstAttribute="leading" secondItem="S0v-4f-Diz" secondAttribute="leading" id="9N3-oX-nxT"/>
+                            <constraint firstItem="S0v-4f-Diz" firstAttribute="bottom" secondItem="TFq-gM-ZSV" secondAttribute="bottom" id="i9E-Nz-QaQ"/>
+                            <constraint firstItem="TFq-gM-ZSV" firstAttribute="top" secondItem="S0v-4f-Diz" secondAttribute="top" id="jpJ-Ke-i4e"/>
+                            <constraint firstItem="S0v-4f-Diz" firstAttribute="trailing" secondItem="TFq-gM-ZSV" secondAttribute="trailing" id="zth-Fp-F99"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="TFq-gM-ZSV" id="X82-Mp-uMK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vkd-7Z-7Zz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6451" y="-1849"/>
+        </scene>
         <!--Profile View Controller-->
         <scene sceneID="LZs-23-RJg">
             <objects>
@@ -132,26 +166,8 @@
                     <view key="view" contentMode="scaleToFill" id="y8t-Ha-tXy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DU3-0j-5BA">
-                                <rect key="frame" x="40" y="115" width="295" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="Are-Qh-j3I"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
-                                <state key="normal" title="Log out"/>
-                                <connections>
-                                    <action selector="LogOutTapped:" destination="1xo-pH-YTa" eventType="touchUpInside" id="akQ-UI-GYK"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="bOW-AQ-XVr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="DU3-0j-5BA" firstAttribute="leading" secondItem="bOW-AQ-XVr" secondAttribute="leading" constant="40" id="MS1-Rp-jPD"/>
-                            <constraint firstItem="DU3-0j-5BA" firstAttribute="top" secondItem="bOW-AQ-XVr" secondAttribute="top" constant="115" id="PJI-AK-bPE"/>
-                            <constraint firstItem="bOW-AQ-XVr" firstAttribute="trailing" secondItem="DU3-0j-5BA" secondAttribute="trailing" constant="40" id="kDN-et-YaD"/>
-                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qgn-gU-Uhi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -591,51 +607,79 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="7gP-Tb-LWO">
-                                <rect key="frame" x="40" y="115" width="295" height="199.5"/>
+                                <rect key="frame" x="40" y="115" width="295" height="180"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wjk-J1-vuf">
-                                        <rect key="frame" x="0.0" y="0.0" width="295" height="40"/>
-                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
-                                        <state key="normal" title="Speech">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="speechButtonTapped:" destination="OCX-kQ-Env" eventType="touchUpInside" id="AM6-qu-Zm4"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5D1-7I-PVV">
-                                        <rect key="frame" x="0.0" y="60" width="295" height="40"/>
-                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
-                                        <state key="normal" title="Audio">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="audioButtonTapped:" destination="OCX-kQ-Env" eventType="touchUpInside" id="KXv-cI-ejd"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cEg-eZ-QB8">
-                                        <rect key="frame" x="0.0" y="120" width="295" height="40"/>
-                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
-                                        <state key="normal" title="Check status">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="checkStatusForUser:" destination="OCX-kQ-Env" eventType="touchUpInside" id="9YC-Xc-gfR"/>
-                                        </connections>
-                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EoC-VT-fdb">
+                                        <rect key="frame" x="0.0" y="0.0" width="295" height="0.0"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eK-ek-xdW">
+                                        <rect key="frame" x="0.0" y="20" width="295" height="40"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wjk-J1-vuf">
+                                                <rect key="frame" x="0.0" y="0.0" width="206.5" height="40"/>
+                                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="tnd-YS-7Gc"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                                                <state key="normal" title="Speech">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="speechButtonTapped:" destination="OCX-kQ-Env" eventType="touchUpInside" id="AM6-qu-Zm4"/>
+                                                </connections>
+                                            </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9On-5e-ula" userLabel="Speech Image">
+                                                <rect key="frame" x="206.5" y="0.0" width="88.5" height="40"/>
+                                                <accessibility key="accessibilityConfiguration">
+                                                    <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
+                                                </accessibility>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Wjk-J1-vuf" firstAttribute="width" secondItem="0eK-ek-xdW" secondAttribute="width" multiplier="0.7" id="dII-Dq-2Os"/>
+                                            <constraint firstItem="9On-5e-ula" firstAttribute="height" secondItem="Wjk-J1-vuf" secondAttribute="height" id="n26-Bo-cr1"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w4L-dF-44F">
+                                        <rect key="frame" x="0.0" y="80" width="295" height="40"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5D1-7I-PVV">
+                                                <rect key="frame" x="0.0" y="0.0" width="206.5" height="40"/>
+                                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                                                <state key="normal" title="Audio">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="audioButtonTapped:" destination="OCX-kQ-Env" eventType="touchUpInside" id="KXv-cI-ejd"/>
+                                                </connections>
+                                            </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jlm-qN-1zE">
+                                                <rect key="frame" x="206.5" y="0.0" width="88.5" height="40"/>
+                                                <accessibility key="accessibilityConfiguration">
+                                                    <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
+                                                </accessibility>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="5D1-7I-PVV" firstAttribute="width" secondItem="w4L-dF-44F" secondAttribute="width" multiplier="0.7" id="Ix8-3A-Ssx"/>
+                                            <constraint firstItem="Jlm-qN-1zE" firstAttribute="height" secondItem="5D1-7I-PVV" secondAttribute="height" id="eA0-PR-Bhb"/>
+                                        </constraints>
+                                    </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FbT-FX-noq">
-                                        <rect key="frame" x="0.0" y="180" width="295" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="140" width="295" height="40"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                         <color key="textColor" systemColor="systemRedColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="cEg-eZ-QB8" firstAttribute="height" secondItem="5D1-7I-PVV" secondAttribute="height" id="dfb-Vd-1Ze"/>
-                                    <constraint firstItem="Wjk-J1-vuf" firstAttribute="height" secondItem="5D1-7I-PVV" secondAttribute="height" id="uPj-mT-npx"/>
+                                    <constraint firstItem="FbT-FX-noq" firstAttribute="height" secondItem="Wjk-J1-vuf" secondAttribute="height" id="AMU-89-kNq"/>
+                                    <constraint firstItem="5D1-7I-PVV" firstAttribute="height" secondItem="Wjk-J1-vuf" secondAttribute="height" id="zEW-wV-zjD"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -652,9 +696,11 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
                         <outlet property="audioButton" destination="5D1-7I-PVV" id="81C-Nb-mpQ"/>
-                        <outlet property="checkStatusButton" destination="cEg-eZ-QB8" id="ve3-mA-HlT"/>
+                        <outlet property="audioImage" destination="Jlm-qN-1zE" id="S3B-kM-I94"/>
                         <outlet property="errorLabel" destination="FbT-FX-noq" id="9Uj-44-N6u"/>
                         <outlet property="speechButton" destination="Wjk-J1-vuf" id="gC4-rR-Zpt"/>
+                        <outlet property="speechImage" destination="9On-5e-ula" id="oyz-wn-hXg"/>
+                        <outlet property="userPromptLabel" destination="EoC-VT-fdb" id="l9t-p8-onH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FtE-Yg-igD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

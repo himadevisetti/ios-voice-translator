@@ -19,7 +19,9 @@ class SharedData {
     
     private init() {}
     
-    var userName: String?
+    var userName: String? // email
+    var userFirstName: String?
+    var userLastName: String? 
     var fileName: String?
     var statusForUser: [String]?
     var statusCode: Int?

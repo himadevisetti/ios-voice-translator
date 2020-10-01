@@ -160,6 +160,10 @@ class SignUpViewController: UIViewController {
                     
                 } else {
                     
+                    // Save user's firstname and lastname in local cache to display on profile page
+                    SharedData.instance.userFirstName = firstName
+                    SharedData.instance.userLastName = lastName
+                    
                     // Display privacy policy
                     self.displayPrivacyPolicy(email: email, givenName: firstName, familyName: lastName, userId: result!.user.uid)
 

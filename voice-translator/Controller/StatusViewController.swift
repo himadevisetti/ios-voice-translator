@@ -53,12 +53,12 @@ class StatusViewController: UIViewController {
         self.navigationItem.title = Constants.Storyboard.statusScreenTitle
         
         // Hide the back button to avoid navigating back to upload screen
-        self.navigationItem.hidesBackButton = true
-        
-        // Add home button to navigation bar on the right-side
-        let homeButton = UIBarButtonItem(image: UIImage(systemName: "house")!.withRenderingMode(.alwaysOriginal),
-                                      style: .plain, target: self, action: #selector(homeButtonTapped))
-        self.navigationItem.rightBarButtonItem  = homeButton
+//        self.navigationItem.hidesBackButton = true
+//
+//        // Add home button to navigation bar on the right-side
+//        let homeButton = UIBarButtonItem(image: UIImage(systemName: "house")!.withRenderingMode(.alwaysOriginal),
+//                                      style: .plain, target: self, action: #selector(homeButtonTapped))
+//        self.navigationItem.rightBarButtonItem  = homeButton
         
     }
     
@@ -245,7 +245,7 @@ class StatusViewController: UIViewController {
         button = UIButton(type: .system)
         button!.setTitle(title, for: .normal)
         button!.setTitleColor(.black, for: .normal)
-        button!.titleLabel?.font =  UIFont(name: "Avenir Next", size: 14)
+        button!.titleLabel?.font = UIFont(name: "Avenir Next", size: 14)
         button!.titleLabel?.numberOfLines = 0; // Dynamic number of lines
         button!.titleLabel?.lineBreakMode = .byWordWrapping;
         button!.setImage(playButtonImage, for: .normal)
@@ -319,7 +319,7 @@ class StatusViewController: UIViewController {
         button = UIButton(type: .system)
         button!.setTitle(title, for: .normal)
         button!.setTitleColor(.black, for: .normal)
-        button!.titleLabel?.font =  UIFont(name: "Avenir Next", size: 14)
+        button!.titleLabel?.font = UIFont(name: "Avenir Next", size: 14)
         button!.titleLabel?.numberOfLines = 0; // Dynamic number of lines
         button!.titleLabel?.lineBreakMode = .byWordWrapping;
         button!.setImage(playButtonImage, for: .normal)
@@ -454,12 +454,12 @@ class StatusViewController: UIViewController {
         }
     }
     
-    @IBAction func homeButtonTapped(_ sender: Any) {
-        
-        if let landingViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.landingViewController) as? LandingViewController {
-          navigationController?.pushViewController(landingViewController, animated: true)
-        }
-        
-    }
+//    @IBAction func homeButtonTapped(_ sender: Any) {
+//
+//        if let landingViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.landingViewController) as? LandingViewController {
+//          navigationController?.pushViewController(landingViewController, animated: true)
+//        }
+//
+//    }
     
 }

@@ -24,6 +24,7 @@ struct Constants {
         static let speechViewController = "SpeechVC"
         static let resetPasswordViewController = "ResetPasswordVC"
         static let signUpViewController = "SignUpVC"
+        static let agreementsViewController = "AgreementsVC"
         static let signUpScreenTitle = "Sign up"
         static let homeScreenTitle = "Home"
         static let profileScreenTitle = "Profile"
@@ -35,6 +36,8 @@ struct Constants {
         static let statusScreenTitle = "Status"
         static let resetPasswordScreenTitle = "Reset your password"
         static let optionsScreenTitle = "Choose an option"
+        static let privacyPolicyScreenTitle = "Privacy Policy"
+        static let termsScreenTitle = "Terms and Conditions"
 
     }
     
