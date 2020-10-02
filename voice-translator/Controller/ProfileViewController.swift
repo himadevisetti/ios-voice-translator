@@ -11,6 +11,7 @@ import UIKit
 class ProfileViewController: UIViewController {
 
     private let reuseIdentifier = "ProfileCell"
+    var indicator = UIActivityIndicatorView(style: .large)
     
     var tableView: UITableView!
     var userInfoHeader: UserInfoHeader!
@@ -20,6 +21,9 @@ class ProfileViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         setUpNavigationBarAndItems()
+        
+        // Set up the activity indicator
+        setUpActivityIndicator()
     }
     
     func setUpNavigationBarAndItems() {
@@ -48,6 +52,21 @@ class ProfileViewController: UIViewController {
         userInfoHeader = UserInfoHeader(frame: frame)
         tableView.tableHeaderView = userInfoHeader
         tableView.tableFooterView = UIView()
+    }
+    
+    // Spinning wheel processing indicator to show while waiting for the GET API's response
+    func setUpActivityIndicator() {
+        // Set up the activity indicator
+        indicator.color = .gray
+        indicator.backgroundColor = .white
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(indicator)
+        let safeAreaGuide = self.view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor)
+        ])
     }
     
     // Call ios-checkstatus API to fetch upto 5 previously translated audio files for the current user
@@ -94,17 +113,6 @@ class ProfileViewController: UIViewController {
         }
         
     }
-    
-    var indicator = UIActivityIndicatorView()
-    
-    // Spinning wheel processing indicator to show while waiting for the GET API's response
-    func activityIndicator() {
-        indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-        indicator.style = UIActivityIndicatorView.Style.large
-        indicator.center = self.view.center
-        self.view.addSubview(indicator)
-    }
-
 
 }
 
@@ -188,10 +196,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             switch profile {
             case .checkStatus:
                 checkStatus()
-                activityIndicator()
-                indicator.center = self.view.center
                 indicator.startAnimating()
-                indicator.backgroundColor = .white
         //      checkStatusButton.isUserInteractionEnabled = false
             case .logOut:
                 if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.loginViewController) as? LoginViewController {

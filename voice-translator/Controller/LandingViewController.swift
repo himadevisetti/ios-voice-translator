@@ -85,8 +85,16 @@ class LandingViewController: UIViewController {
     
     @IBAction func speechButtonTapped(_ sender: Any) {
         
-        if let settingsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.settingsViewController) as? SettingsViewController {
-            navigationController?.pushViewController(settingsVC, animated: true)
+        let userPreference = UserDefaults.standard.value(forKey: Constants.userLanguagePreferences)
+        
+        if userPreference == nil {
+            if let settingsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.settingsViewController) as? SettingsViewController {
+                navigationController?.pushViewController(settingsVC, animated: true)
+            }
+        } else {
+            if let speechVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.speechViewController) as? SpeechViewController {
+                navigationController?.pushViewController(speechVC, animated: true)
+            }
         }
         
     }

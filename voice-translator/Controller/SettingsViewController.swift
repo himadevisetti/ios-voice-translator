@@ -178,6 +178,7 @@ class SettingsViewController: UIViewController {
         ttsTechLabel.roundCorners(corners: [.topRight, .bottomRight], radius: 5)
         ttsTechLabel.textColor = .black
         ttsTechLabel.text = synthNameOption
+        selectedSynthName = synthNameOption
         
     }
     
@@ -199,6 +200,7 @@ class SettingsViewController: UIViewController {
         voiceTypeLabel.roundCorners(corners: [.topRight, .bottomRight], radius: 5)
         voiceTypeLabel.textColor = .black
         voiceTypeLabel.text = voiceTypeOption
+        selectedVoiceType = voiceTypeOption
         
     }
     

@@ -24,7 +24,6 @@
 		A0C59A6824EDE502004CAFE8 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C59A6724EDE502004CAFE8 /* ResetPasswordViewController.swift */; };
 		A0C59A6A24EDF9B2004CAFE8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C59A6924EDF9B2004CAFE8 /* LoginViewController.swift */; };
 		A0E23CFF24F197A1000D6A13 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E23CFE24F197A1000D6A13 /* SharedData.swift */; };
-		A0EE923124F02CBA00C0A687 /* UploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE923024F02CBA00C0A687 /* UploadRequest.swift */; };
 		DC121501251EA1DB003B8832 /* DropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC121500251EA1DB003B8832 /* DropDownButton.swift */; };
 		DC121543251EB04F003B8832 /* LanguageOptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC121542251EB04F003B8832 /* LanguageOptionsTableViewController.swift */; };
 		DC12154925200B9E003B8832 /* LeftPaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC12154825200B9E003B8832 /* LeftPaddedLabel.swift */; };
@@ -69,7 +68,6 @@
 		A0C59A6724EDE502004CAFE8 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		A0C59A6924EDF9B2004CAFE8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A0E23CFE24F197A1000D6A13 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
-		A0EE923024F02CBA00C0A687 /* UploadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequest.swift; sourceTree = "<group>"; };
 		DB960D4345FD20A65B4384D6 /* Pods-voice-translator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voice-translator.release.xcconfig"; path = "Target Support Files/Pods-voice-translator/Pods-voice-translator.release.xcconfig"; sourceTree = "<group>"; };
 		DC121500251EA1DB003B8832 /* DropDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownButton.swift; sourceTree = "<group>"; };
 		DC121542251EB04F003B8832 /* LanguageOptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageOptionsTableViewController.swift; sourceTree = "<group>"; };
@@ -199,7 +197,6 @@
 		A039599124EB4B2800EC77EE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A0EE923024F02CBA00C0A687 /* UploadRequest.swift */,
 				A0E23CFE24F197A1000D6A13 /* SharedData.swift */,
 				DC6C9AA02524F2C40099CFB9 /* ProfileSection.swift */,
 			);
@@ -395,7 +392,6 @@
 				DC6C9A9C2524E5C20099CFB9 /* ProfileCell.swift in Sources */,
 				A0B7552624EB4DF8004E04C1 /* SignUpViewController.swift in Sources */,
 				DC6C9A9D2524E5C20099CFB9 /* UserInfoHeader.swift in Sources */,
-				A0EE923124F02CBA00C0A687 /* UploadRequest.swift in Sources */,
 				A0C59A6A24EDF9B2004CAFE8 /* LoginViewController.swift in Sources */,
 				DCA13B3A2516D7C2006DD9F3 /* SettingsViewController.swift in Sources */,
 				A0957F3724EED98C00DB237A /* TranslateViewController.swift in Sources */,

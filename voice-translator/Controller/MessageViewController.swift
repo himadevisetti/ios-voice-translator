@@ -22,6 +22,7 @@ class MessageViewController: UIViewController {
     let pauseButtonImage = Utilities.resizeImage(image: UIImage(systemName: "pause.rectangle.fill")!, targetSize: CGSize(width: 70.0, height: 50.0))
     
     var toolItems : [UIBarButtonItem] = []
+    var indicator = UIActivityIndicatorView(style: .large)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,7 @@ class MessageViewController: UIViewController {
         // Do any additional setup after loading the view.
         setUpNavigationBarAndItems()
         setUpElements()
+        setUpActivityIndicator()
         getStatus()
     }
     
@@ -70,9 +72,7 @@ class MessageViewController: UIViewController {
         
         // Style the UI Elements
         // Add spinning wheel and disable the controls on the screen to show processing
-        activityIndicator()
         indicator.startAnimating()
-        indicator.backgroundColor = .white
     }
     
     func getStatus() {
@@ -169,15 +169,19 @@ class MessageViewController: UIViewController {
         stoppedPlayerItem.seek(to: CMTime.zero, completionHandler: nil)
     }
     
-    
-    var indicator = UIActivityIndicatorView()
-    
     // Spinning wheel processing indicator to show while waiting for the GET API's response
-    func activityIndicator() {
-        indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-        indicator.style = UIActivityIndicatorView.Style.large
-        indicator.center = self.view.center
+    func setUpActivityIndicator() {
+        // Set up the activity indicator
+        indicator.color = .gray
+        indicator.backgroundColor = .white
+        indicator.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(indicator)
+        let safeAreaGuide = self.view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor)
+        ])
     }
     
     @IBAction func homeButtonTapped(_ sender: Any) {

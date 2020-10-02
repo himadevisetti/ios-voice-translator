@@ -39,16 +39,16 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
-                <key>NSExceptionDomains</key>
-        	<dict>
-            		<key>teak-mantis-279104.firebaseapp.com</key>
-            		<dict>
-               			<key>NSExceptionAllowsInsecureHTTPLoads</key>
-               			<true/>
-                		<key>NSIncludesSubdomains</key>
-                		<true/>
-            		</dict>
-        	</dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>teak-mantis-279104.firebaseapp.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+		</dict>
 	</dict>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_NAME) always microphone use</string>
@@ -86,8 +86,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

@@ -41,8 +41,23 @@ class SpeechViewController : UIViewController, AudioControllerDelegate {
         UINavigationBar.appearance().titleTextAttributes = attributes
         self.title = Constants.Storyboard.speechScreenTitle
         
+        // Hide the back button to avoid navigating back to login screen
+        self.navigationItem.hidesBackButton = true
+        
         // Hide bottom toolbar
         self.navigationController?.setToolbarHidden(true, animated: true)
+        
+        // Add settings button to navigation bar on the right-side
+        let settingsButton = UIBarButtonItem(image: UIImage(systemName: "gear")!.withRenderingMode(.alwaysOriginal),
+                                             style: .plain, target: self, action: #selector(settingsButtonTapped))
+        self.navigationItem.rightBarButtonItem  = settingsButton
+    }
+    
+    @IBAction func settingsButtonTapped(_ sender: Any) {
+        
+        if let settingsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.settingsViewController) as? SettingsViewController {
+            navigationController?.pushViewController(settingsVC, animated: true)
+        }
         
     }
     

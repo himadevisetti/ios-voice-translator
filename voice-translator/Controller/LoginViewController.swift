@@ -176,7 +176,6 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                                 print("Error getting documents: \(err)")
                             } else {
                                 for document in querySnapshot!.documents {
-                                    print("\(document.documentID) => \(document.data())")
                                     let firstName = document.data()["firstname"] as? String
                                     let lastName = document.data()["lastname"] as? String
                                     SharedData.instance.userFirstName = firstName

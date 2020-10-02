@@ -37,6 +37,7 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     //  var fileName: String = ""
     var mimeType: String = ""
     var fileSize: UInt64 = 0
+    var indicator = UIActivityIndicatorView(style: .large)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,7 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         toLanguagePickerOptions = Constants.languagePickerOptions
         
         setUpElements()
+        setUpActivityIndicator()
     }
     
     func setUpNavigationBarAndItems() {
@@ -59,11 +61,11 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         self.navigationItem.title = Constants.Storyboard.translateScreenTitle
         
         // Hide bottom toolbar
-//      self.navigationController?.setToolbarHidden(true, animated: true)
+        //      self.navigationController?.setToolbarHidden(true, animated: true)
         
         // Add record button to navigation bar on the right-side
         let recordButton = UIBarButtonItem(image: UIImage(systemName: "music.mic")!.withRenderingMode(.alwaysOriginal),
-                                      style: .plain, target: self, action: #selector(recordButtonTapped))
+                                           style: .plain, target: self, action: #selector(recordButtonTapped))
         self.navigationItem.rightBarButtonItem  = recordButton
         
     }
@@ -78,21 +80,21 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     func seekUserPermission() {
         
         recordingSession = AVAudioSession.sharedInstance()
-            
+        
         do {
             try recordingSession.setCategory(.playAndRecord, mode: .default)
             try recordingSession.setActive(true)
             recordingSession.requestRecordPermission() { (allowed) in
                 DispatchQueue.main.async {
                     if allowed {
-//                      print("User has granted permission to record.")
+                        //                      print("User has granted permission to record.")
                         if let recordViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.recordViewController) as? RecordViewController {
                             self.navigationController?.pushViewController(recordViewController, animated: true)
                         }
                     } else {
                         // failed to record!
                         self.showError("You did not grant permission to record. Please grant permission from settings for this app or upload an existing file from your storage")
-                     }
+                    }
                 }
             }
         } catch {
@@ -178,7 +180,9 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     @IBAction func chooseFileTapped(_ sender: Any) {
         
-        let documentPicker = UIDocumentPickerViewController(documentTypes: [kUTTypeAudio as String, kUTTypeMP3 as String, kUTTypeMPEG4Audio as String, kUTTypeAppleProtectedMPEG4Audio as String], in: .import)
+        let options = [kUTTypeAudio as String, kUTTypeMP3 as String, kUTTypeMPEG4Audio as String, kUTTypeAppleProtectedMPEG4Audio as String]
+        
+        let documentPicker = UIDocumentPickerViewController(documentTypes: options, in: .import)
         documentPicker.delegate = self
         documentPicker.allowsMultipleSelection = false
         present(documentPicker, animated: true, completion: nil)
@@ -192,7 +196,7 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     func upload(files: [NetworkService.FileInfo], toURL url: URL?) {
         if let uploadURL = url {
             
-     //     NetworkService.sharedNetworkService.requestHttpHeaders.add(value: "application/json", forKey: "Content-Type")
+            //     NetworkService.sharedNetworkService.requestHttpHeaders.add(value: "application/json", forKey: "Content-Type")
             NetworkService.sharedNetworkService.httpBodyParameters.add(value: SharedData.instance.userName!, forKey: "username")
             NetworkService.sharedNetworkService.httpBodyParameters.add(value: fromLanguageValue, forKey: "srclang")
             NetworkService.sharedNetworkService.httpBodyParameters.add(value: toLanguageValue, forKey: "tgtlang")
@@ -243,22 +247,25 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             
         } else {
             self.uploadSingleFile()
-            activityIndicator()
             indicator.startAnimating()
-            indicator.backgroundColor = .white
             uploadButton.isUserInteractionEnabled = false
         }
         
     }
     
-    var indicator = UIActivityIndicatorView()
-    
     // Spinning wheel processing indicator to show while waiting for the GET API's response
-    func activityIndicator() {
-        indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-        indicator.style = UIActivityIndicatorView.Style.large
-        indicator.center = self.view.center
+    func setUpActivityIndicator() {
+        // Set up the activity indicator
+        indicator.color = .gray
+        indicator.backgroundColor = .white
+        indicator.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(indicator)
+        let safeAreaGuide = self.view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor)
+        ])
     }
     
     func showError(_ message:String) {
@@ -314,10 +321,10 @@ extension TranslateViewController: UIDocumentPickerDelegate {
         do {
             let attr = try FileManager.default.attributesOfItem(atPath: selectedFileURL.path)
             fileSize = attr[FileAttributeKey.size] as! UInt64
-//          print("File size: + \(fileSize)")
+            //          print("File size: + \(fileSize)")
             
             try FileManager.default.copyItem(at: selectedFileURL, to: sandboxFileURL)
-//          print("Copied file")
+            //          print("Copied file")
         } catch {
             print("Error: \(error)")
         }

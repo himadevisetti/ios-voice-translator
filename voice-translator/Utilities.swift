@@ -219,9 +219,10 @@ class Utilities {
                         }
                     }
                 } else {
-                    for document in querySnapshot!.documents {
-                        print("\(document.documentID) => \(document.data())")
-                    }
+                    print("User data was saved successfully")
+//                  for document in querySnapshot!.documents {
+//                      print("\(document.documentID) => \(document.data())")
+//                  }
                 }
             }
         })
