@@ -34,6 +34,8 @@
 		DC6C9A9D2524E5C20099CFB9 /* UserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9A9B2524E5C20099CFB9 /* UserInfoHeader.swift */; };
 		DC6C9AA12524F2C40099CFB9 /* ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9AA02524F2C40099CFB9 /* ProfileSection.swift */; };
 		DC6C9AD525259D510099CFB9 /* AgreementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9AD425259D510099CFB9 /* AgreementsViewController.swift */; };
+		DC6C9B092527EB770099CFB9 /* UIViewController.extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9B082527EB770099CFB9 /* UIViewController.extension.swift */; };
+		DC6C9B0C2528F7B10099CFB9 /* AppDelegate.extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9B0B2528F7B00099CFB9 /* AppDelegate.extension.swift */; };
 		DCA13B1B2515781F006DD9F3 /* SpeechRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B182515781E006DD9F3 /* SpeechRecognitionService.swift */; };
 		DCA13B1C2515781F006DD9F3 /* TextToSpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B192515781E006DD9F3 /* TextToSpeechService.swift */; };
 		DCA13B1D2515781F006DD9F3 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B1A2515781E006DD9F3 /* TranslationService.swift */; };
@@ -80,6 +82,8 @@
 		DC6C9A9B2524E5C20099CFB9 /* UserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoHeader.swift; sourceTree = "<group>"; };
 		DC6C9AA02524F2C40099CFB9 /* ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSection.swift; sourceTree = "<group>"; };
 		DC6C9AD425259D510099CFB9 /* AgreementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementsViewController.swift; sourceTree = "<group>"; };
+		DC6C9B082527EB770099CFB9 /* UIViewController.extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.extension.swift; sourceTree = "<group>"; };
+		DC6C9B0B2528F7B00099CFB9 /* AppDelegate.extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.extension.swift; sourceTree = "<group>"; };
 		DCA13B182515781E006DD9F3 /* SpeechRecognitionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechRecognitionService.swift; sourceTree = "<group>"; };
 		DCA13B192515781E006DD9F3 /* TextToSpeechService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextToSpeechService.swift; sourceTree = "<group>"; };
 		DCA13B1A2515781E006DD9F3 /* TranslationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 				A039598524EB49C400EC77EE /* LaunchScreen.storyboard */,
 				A0683DCC24EC440F00318C58 /* GoogleService-Info.plist */,
 				A039598824EB49C400EC77EE /* Info.plist */,
+				DC6C9B0B2528F7B00099CFB9 /* AppDelegate.extension.swift */,
 			);
 			path = "voice-translator";
 			sourceTree = "<group>";
@@ -190,6 +195,7 @@
 				DC121542251EB04F003B8832 /* LanguageOptionsTableViewController.swift */,
 				DC6C9A962524E4420099CFB9 /* ProfileViewController.swift */,
 				DC6C9AD425259D510099CFB9 /* AgreementsViewController.swift */,
+				DC6C9B082527EB770099CFB9 /* UIViewController.extension.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -380,6 +386,7 @@
 				DCA13B1B2515781F006DD9F3 /* SpeechRecognitionService.swift in Sources */,
 				DCA13B2B2515AB64006DD9F3 /* ChatTableViewCell.swift in Sources */,
 				DCA13B1D2515781F006DD9F3 /* TranslationService.swift in Sources */,
+				DC6C9B092527EB770099CFB9 /* UIViewController.extension.swift in Sources */,
 				A0957F3924EF5B6C00DB237A /* NetworkService.swift in Sources */,
 				DC121501251EA1DB003B8832 /* DropDownButton.swift in Sources */,
 				A06B3E7124EBB6970016233A /* Utilities.swift in Sources */,
@@ -399,6 +406,7 @@
 				DCA13B1F2515A940006DD9F3 /* SpeechViewController.swift in Sources */,
 				A0B7552824EB4E2E004E04C1 /* LandingViewController.swift in Sources */,
 				DC6C9A972524E4420099CFB9 /* ProfileViewController.swift in Sources */,
+				DC6C9B0C2528F7B10099CFB9 /* AppDelegate.extension.swift in Sources */,
 				A039597D24EB49C100EC77EE /* SceneDelegate.swift in Sources */,
 				DC121543251EB04F003B8832 /* LanguageOptionsTableViewController.swift in Sources */,
 			);
