@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ProfileViewController: UIViewController {
 
@@ -199,6 +200,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 indicator.startAnimating()
         //      checkStatusButton.isUserInteractionEnabled = false
             case .logOut:
+                let firebaseAuth = Auth.auth()
+                do {
+                  try firebaseAuth.signOut()
+                } catch let signOutError as NSError {
+                    // Send this to logs
+                    print(signOutError.localizedDescription)
+                }
                 if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.loginViewController) as? LoginViewController {
                   navigationController?.pushViewController(loginViewController, animated: true)
                 }

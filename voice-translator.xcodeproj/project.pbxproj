@@ -28,6 +28,8 @@
 		DC121543251EB04F003B8832 /* LanguageOptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC121542251EB04F003B8832 /* LanguageOptionsTableViewController.swift */; };
 		DC12154925200B9E003B8832 /* LeftPaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC12154825200B9E003B8832 /* LeftPaddedLabel.swift */; };
 		DC12158E252296DC003B8832 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC12158D252296DC003B8832 /* CardView.swift */; };
+		DC1EA2382529630300869554 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA2372529630300869554 /* AudioController.swift */; };
+		DC1EA23B2529639400869554 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA23A2529639400869554 /* ChatTableViewCell.swift */; };
 		DC54B247251BDD2A00F5BEF4 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */; };
 		DC6C9A972524E4420099CFB9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9A962524E4420099CFB9 /* ProfileViewController.swift */; };
 		DC6C9A9C2524E5C20099CFB9 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9A9A2524E5C20099CFB9 /* ProfileCell.swift */; };
@@ -40,11 +42,6 @@
 		DCA13B1C2515781F006DD9F3 /* TextToSpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B192515781E006DD9F3 /* TextToSpeechService.swift */; };
 		DCA13B1D2515781F006DD9F3 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B1A2515781E006DD9F3 /* TranslationService.swift */; };
 		DCA13B1F2515A940006DD9F3 /* SpeechViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B1E2515A940006DD9F3 /* SpeechViewController.swift */; };
-		DCA13B232515AA3C006DD9F3 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B222515AA3C006DD9F3 /* AudioController.swift */; };
-		DCA13B2B2515AB64006DD9F3 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B292515AB63006DD9F3 /* ChatTableViewCell.swift */; };
-		DCA13B362515B518006DD9F3 /* Rubik-OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = DCA13B332515B518006DD9F3 /* Rubik-OFL.txt */; };
-		DCA13B372515B518006DD9F3 /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCA13B342515B518006DD9F3 /* Rubik-Regular.ttf */; };
-		DCA13B382515B518006DD9F3 /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCA13B352515B518006DD9F3 /* Rubik-Medium.ttf */; };
 		DCA13B3A2516D7C2006DD9F3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B392516D7C2006DD9F3 /* SettingsViewController.swift */; };
 		DCB023FC2516EB99007585ED /* Pods_voice_translator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB023FB2516EB99007585ED /* Pods_voice_translator.framework */; };
 /* End PBXBuildFile section */
@@ -75,6 +72,8 @@
 		DC121542251EB04F003B8832 /* LanguageOptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageOptionsTableViewController.swift; sourceTree = "<group>"; };
 		DC12154825200B9E003B8832 /* LeftPaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftPaddedLabel.swift; sourceTree = "<group>"; };
 		DC12158D252296DC003B8832 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		DC1EA2372529630300869554 /* AudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
+		DC1EA23A2529639400869554 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		DC3B0B4C24FF739A006567F9 /* voice-translator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "voice-translator.entitlements"; sourceTree = "<group>"; };
 		DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 		DC6C9A962524E4420099CFB9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -88,11 +87,6 @@
 		DCA13B192515781E006DD9F3 /* TextToSpeechService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextToSpeechService.swift; sourceTree = "<group>"; };
 		DCA13B1A2515781E006DD9F3 /* TranslationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
 		DCA13B1E2515A940006DD9F3 /* SpeechViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechViewController.swift; sourceTree = "<group>"; };
-		DCA13B222515AA3C006DD9F3 /* AudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AudioController.swift; path = "voice-translator/AudioController.swift"; sourceTree = SOURCE_ROOT; };
-		DCA13B292515AB63006DD9F3 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
-		DCA13B332515B518006DD9F3 /* Rubik-OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Rubik-OFL.txt"; sourceTree = "<group>"; };
-		DCA13B342515B518006DD9F3 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
-		DCA13B352515B518006DD9F3 /* Rubik-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Medium.ttf"; sourceTree = "<group>"; };
 		DCA13B392516D7C2006DD9F3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		DCB023FB2516EB99007585ED /* Pods_voice_translator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_voice_translator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -154,16 +148,13 @@
 				A039598F24EB4B1500EC77EE /* Controller */,
 				A039598E24EB4B0900EC77EE /* Services */,
 				A039597A24EB49C100EC77EE /* AppDelegate.swift */,
-				DCA13B2C2515B3F4006DD9F3 /* Fonts */,
+				DC6C9B0B2528F7B00099CFB9 /* AppDelegate.extension.swift */,
 				A039597C24EB49C100EC77EE /* SceneDelegate.swift */,
-				DCA13B222515AA3C006DD9F3 /* AudioController.swift */,
-				DCA13B292515AB63006DD9F3 /* ChatTableViewCell.swift */,
 				A039598024EB49C100EC77EE /* Main.storyboard */,
 				A039598324EB49C400EC77EE /* Assets.xcassets */,
 				A039598524EB49C400EC77EE /* LaunchScreen.storyboard */,
 				A0683DCC24EC440F00318C58 /* GoogleService-Info.plist */,
 				A039598824EB49C400EC77EE /* Info.plist */,
-				DC6C9B0B2528F7B00099CFB9 /* AppDelegate.extension.swift */,
 			);
 			path = "voice-translator";
 			sourceTree = "<group>";
@@ -182,6 +173,7 @@
 		A039598F24EB4B1500EC77EE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DC1EA2372529630300869554 /* AudioController.swift */,
 				DCA13B392516D7C2006DD9F3 /* SettingsViewController.swift */,
 				A0C59A6924EDF9B2004CAFE8 /* LoginViewController.swift */,
 				A0B7552524EB4DF8004E04C1 /* SignUpViewController.swift */,
@@ -224,20 +216,11 @@
 		DC6C9A992524E5270099CFB9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DC1EA23A2529639400869554 /* ChatTableViewCell.swift */,
 				DC6C9A9A2524E5C20099CFB9 /* ProfileCell.swift */,
 				DC6C9A9B2524E5C20099CFB9 /* UserInfoHeader.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		DCA13B2C2515B3F4006DD9F3 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				DCA13B352515B518006DD9F3 /* Rubik-Medium.ttf */,
-				DCA13B332515B518006DD9F3 /* Rubik-OFL.txt */,
-				DCA13B342515B518006DD9F3 /* Rubik-Regular.ttf */,
-			);
-			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,12 +285,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A039598724EB49C400EC77EE /* LaunchScreen.storyboard in Resources */,
-				DCA13B372515B518006DD9F3 /* Rubik-Regular.ttf in Resources */,
 				A0683DCD24EC441000318C58 /* GoogleService-Info.plist in Resources */,
 				A039598424EB49C400EC77EE /* Assets.xcassets in Resources */,
-				DCA13B362515B518006DD9F3 /* Rubik-OFL.txt in Resources */,
 				A039598224EB49C100EC77EE /* Main.storyboard in Resources */,
-				DCA13B382515B518006DD9F3 /* Rubik-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,8 +363,8 @@
 				DC12154925200B9E003B8832 /* LeftPaddedLabel.swift in Sources */,
 				DC54B247251BDD2A00F5BEF4 /* RecordViewController.swift in Sources */,
 				A01545D724F38C2C0081E3CB /* MessageViewController.swift in Sources */,
+				DC1EA2382529630300869554 /* AudioController.swift in Sources */,
 				DCA13B1B2515781F006DD9F3 /* SpeechRecognitionService.swift in Sources */,
-				DCA13B2B2515AB64006DD9F3 /* ChatTableViewCell.swift in Sources */,
 				DCA13B1D2515781F006DD9F3 /* TranslationService.swift in Sources */,
 				DC6C9B092527EB770099CFB9 /* UIViewController.extension.swift in Sources */,
 				A0957F3924EF5B6C00DB237A /* NetworkService.swift in Sources */,
@@ -395,10 +375,10 @@
 				DC12158E252296DC003B8832 /* CardView.swift in Sources */,
 				A0C59A6824EDE502004CAFE8 /* ResetPasswordViewController.swift in Sources */,
 				DC6C9AA12524F2C40099CFB9 /* ProfileSection.swift in Sources */,
-				DCA13B232515AA3C006DD9F3 /* AudioController.swift in Sources */,
 				DC6C9A9C2524E5C20099CFB9 /* ProfileCell.swift in Sources */,
 				A0B7552624EB4DF8004E04C1 /* SignUpViewController.swift in Sources */,
 				DC6C9A9D2524E5C20099CFB9 /* UserInfoHeader.swift in Sources */,
+				DC1EA23B2529639400869554 /* ChatTableViewCell.swift in Sources */,
 				A0C59A6A24EDF9B2004CAFE8 /* LoginViewController.swift in Sources */,
 				DCA13B3A2516D7C2006DD9F3 /* SettingsViewController.swift in Sources */,
 				A0957F3724EED98C00DB237A /* TranslateViewController.swift in Sources */,

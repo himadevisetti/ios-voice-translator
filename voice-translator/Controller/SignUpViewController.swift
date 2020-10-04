@@ -187,8 +187,8 @@ class SignUpViewController: UIViewController {
     func displayPrivacyPolicy(email: String, givenName: String, familyName: String, userId: String) {
         
         // Create alert
-        let alert = UIAlertController(title: "License Agreement", message: "", preferredStyle: .alert)
-        alert.setValue(Utilities.formattedLicenseAgreement(), forKey: "attributedMessage")
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        alert.setValue(Utilities.licensedAgreementFromHtmlString(), forKey: "attributedMessage")
         
         // Create Decline button
         let declineAction = UIAlertAction(title: "Decline" , style: .destructive) { (action) -> Void in

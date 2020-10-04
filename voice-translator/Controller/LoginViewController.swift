@@ -331,8 +331,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     func displayPrivacyPolicy(email: String, givenName: String, familyName: String, userId: String) {
         
         // Create alert
-        let alert = UIAlertController(title: "License Agreement", message: "", preferredStyle: .alert)
-        alert.setValue(Utilities.formattedLicenseAgreement(), forKey: "attributedMessage")
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        alert.setValue(Utilities.licensedAgreementFromHtmlString(), forKey: "attributedMessage")
         
         // Create Agree button
         let agreeAction = UIAlertAction(title: "Agree", style: .default) { (action) -> Void in

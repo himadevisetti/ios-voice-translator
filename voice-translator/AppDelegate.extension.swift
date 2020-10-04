@@ -20,16 +20,16 @@ extension AppDelegate {
         // With swizzling disabled you must let Messaging know about the message, for Analytics
         Messaging.messaging().appDidReceiveMessage(userInfo)
         // Print message ID.
-        if let messageID = userInfo[gcmMessageIDKey] {
-            print("Message ID: \(messageID)")
-        }
+//      if let messageID = userInfo[gcmMessageIDKey] {
+//          print("Message ID: \(messageID)")
+//      }
         if let aps = userInfo["aps"] as? [String: Any], let alert = aps["alert"] as? [String: Any], let token = alert["body"] as? String , let expiryTime = alert["title"] as? String {
             let tokenData = [Constants.accessToken: token, Constants.expireTime: expiryTime]
             FCMTokenProvider.tokenFromAppDelegate(tokenDict: tokenData)
             NotificationCenter.default.post(name: NSNotification.Name(Constants.tokenReceived), object: tokenData)
         }
         // Print full message.
-        //    print(userInfo)
+        //  print(userInfo)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
@@ -41,14 +41,14 @@ extension AppDelegate {
         // With swizzling disabled you must let Messaging know about the message, for Analytics
         Messaging.messaging().appDidReceiveMessage(userInfo)
         // Print message ID.
-        if let messageID = userInfo[gcmMessageIDKey] {
-            print("Message ID: \(messageID)")
-        }
+//      if let messageID = userInfo[gcmMessageIDKey] {
+//          print("Message ID: \(messageID)")
+//      }
         guard let tokenData = userInfo as? [String: Any] else {return}
         
         NotificationCenter.default.post(name: NSNotification.Name(Constants.tokenReceived), object: tokenData)
         // Print full message.
-        print(userInfo)
+        //  print(userInfo)
         
         // Clear remote push notifications
         clearNotifications()
@@ -92,8 +92,9 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         // With swizzling disabled you must let Messaging know about the message, for Analytics
         Messaging.messaging().appDidReceiveMessage(userInfo)
         // Print message ID.
-        if let messageID = userInfo[gcmMessageIDKey], let aps = userInfo["aps"] as? [String: Any], let alert = aps["alert"] as? [String: Any], let token = alert["body"] as? String , let expiryTime = alert["title"] as? String {
-            print("Message ID: \(messageID)")
+//      if let messageID = userInfo[gcmMessageIDKey], let aps = userInfo["aps"] as? [String: Any], let alert
+        if let aps = userInfo["aps"] as? [String: Any], let alert = aps["alert"] as? [String: Any], let token = alert["body"] as? String , let expiryTime = alert["title"] as? String {
+//          print("Message ID: \(messageID)")
             let tokenData = [Constants.accessToken: token, Constants.expireTime: expiryTime]
             //UserDefaults.standard.set(tokenData, forKey: ApplicationConstants.token)
             FCMTokenProvider.tokenFromAppDelegate(tokenDict: tokenData)
@@ -111,13 +112,14 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         // Print message ID.
-        if let messageID = userInfo[gcmMessageIDKey], let aps = userInfo["aps"] as? [String: Any], let alert = aps["alert"] as? [String: Any], let token = alert["body"] as? String , let expiryTime = alert["title"] as? String {
-            print("Message ID: \(messageID)")
+//      if let messageID = userInfo[gcmMessageIDKey], let aps = userInfo["aps"] as? [String: Any], let alert
+        if let aps = userInfo["aps"] as? [String: Any], let alert = aps["alert"] as? [String: Any], let token = alert["body"] as? String , let expiryTime = alert["title"] as? String {
+//          print("Message ID: \(messageID)")
             let tokenData = [Constants.accessToken: token, Constants.expireTime: expiryTime]
             NotificationCenter.default.post(name: NSNotification.Name(Constants.tokenReceived), object: tokenData)
         }
         // Print full message.
-        print(userInfo)
+        //  print(userInfo)
         completionHandler()
     }
 }

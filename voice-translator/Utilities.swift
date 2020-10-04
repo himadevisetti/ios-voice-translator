@@ -230,23 +230,6 @@ class Utilities {
         return errMessage
     }
     
-    // return formatted License Agreement
-    static func formattedLicenseAgreement() -> NSAttributedString {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .left
-        let messageText = NSAttributedString(
-            string: Constants.licenseAgreement,
-            attributes: [
-                NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                NSAttributedString.Key.foregroundColor : UIColor.black,
-                NSAttributedString.Key.font : UIFont(name: "Avenir Next", size: 14)!
-            ]
-        )
-        
-        return messageText
-    }
-    
-    // Not using this currently because of the way html is formatted to show both Privacy Policy and Terms
     static func licensedAgreementFromHtmlString() -> NSAttributedString {
         
         var htmlString: String = ""

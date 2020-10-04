@@ -99,7 +99,7 @@ class LanguageOptionsTableViewController: UITableViewController, UISearchBarDele
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let selectedCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
-        print("Selected Option: \(selectedCell.textLabel!.text!)")
+//      print("Selected Option: \(selectedCell.textLabel!.text!)")
         
         //      delegate.updateTranslateFrom(fromLanguageOption: selectedCell.textLabel!.text!)
         switch index {
