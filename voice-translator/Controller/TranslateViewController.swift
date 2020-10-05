@@ -10,27 +10,25 @@ import UIKit
 import MobileCoreServices
 import AVFoundation
 
-class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class TranslateViewController: UIViewController {
     
     @IBOutlet weak var recordPromptLabel: UILabel!
-    @IBOutlet weak var fromLanguagePicker: UITextField!
-    @IBOutlet weak var toLanguagePicker: UITextField!
+    
+    @IBOutlet weak var translateFrom: DropDownButton!
+    @IBOutlet weak var translateFromLabel: LeftPaddedLabel!
+    
+    @IBOutlet weak var translateTo: DropDownButton!
+    @IBOutlet weak var translateToLabel: LeftPaddedLabel!
+    
     @IBOutlet weak var chooseFileButton: UIButton!
     @IBOutlet weak var fileName: UITextField!
     @IBOutlet weak var uploadButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     
     var recordingSession: AVAudioSession!
+    var fromLanguageValue = ""
+    var toLanguageValue = ""
     
-    var currentTextField = UITextField()
-    var pickerView = UIPickerView()
-    
-    // var languagePickerOptions:[String] = []
-    var fromLanguagePickerOptions:[(languageText: String, languageValue: String)] = []
-    var toLanguagePickerOptions:[(languageText: String, languageValue: String)] = []
-    
-    var fromLanguageValue: String = ""
-    var toLanguageValue: String = ""
     let uploadURL: String = Constants.Api.URL_BASE + Constants.Api.URL_UPLOAD
     var fileURL: URL?
     var fileContents: NSMutableData = NSMutableData()
@@ -39,17 +37,44 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     var fileSize: UInt64 = 0
     var indicator = UIActivityIndicatorView(style: .large)
     
+    lazy var alert : UIAlertController = {
+        let alert = UIAlertController(title: Constants.tokenFetchingAlertTitle, message: Constants.tokenFetchingAlertMessage, preferredStyle: .alert)
+        return alert
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissAlert), name: NSNotification.Name(Constants.tokenReceived), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(presentAlert), name: NSNotification.Name(Constants.retreivingToken), object: nil)
+        
         setUpNavigationBarAndItems()
-        
-        fromLanguagePickerOptions = Constants.languagePickerOptions
-        toLanguagePickerOptions = Constants.languagePickerOptions
-        
         setUpElements()
         setUpActivityIndicator()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let appD = UIApplication.shared.delegate as? AppDelegate, appD.voiceLists?.isEmpty ?? true {
+            
+            presentAlert()
+            appD.fetchVoiceList()
+            NotificationCenter.default.addObserver(self, selector: #selector(dismissAlert), name: NSNotification.Name("FetchVoiceList"), object: nil)
+            
+        }
+        
+    }
+    
+    @objc func presentAlert() {
+        //Showing the alert until token is received
+        if alert.isViewLoaded == false {
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func dismissAlert() {
+        alert.dismiss(animated: true, completion: nil)
     }
     
     func setUpNavigationBarAndItems() {
@@ -115,68 +140,54 @@ class TranslateViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         // Style the UI Elements
         recordPromptLabel.text = "Want to record? Click on record icon at the top-right corner"
+        Utilities.styleFilledLeftButton(translateFrom)
+        Utilities.styleFilledLeftButton(translateTo)
         Utilities.styleHollowButton(chooseFileButton)
         Utilities.styleFilledButton(uploadButton)
         
     }
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    /* func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-     return 36.0
-     } */
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    @IBAction func translateFromTapped(_ sender: Any) {
         
-        // return languagePickerOptions.count
-        if currentTextField == fromLanguagePicker {
-            return fromLanguagePickerOptions.count
-        } else if currentTextField == toLanguagePicker {
-            return toLanguagePickerOptions.count
-        } else {
-            return 0
+        if let translateLanguageOptionsTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.translateLanguageOptionsTableViewController) as? TranslateLanguageOptionsTableViewController {
+            translateLanguageOptionsTableViewController.index = 0
+            translateLanguageOptionsTableViewController.delegate = self
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            navigationController?.pushViewController(translateLanguageOptionsTableViewController, animated: true)
         }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        if currentTextField == fromLanguagePicker {
-            return fromLanguagePickerOptions[row].languageText
-        } else if currentTextField == toLanguagePicker {
-            return toLanguagePickerOptions[row].languageText
-        } else {
-            return ""
-        }
     }
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func updateTranslateFrom(fromLanguageOption: String) {
         
-        if currentTextField == fromLanguagePicker {
-            fromLanguagePicker.text = fromLanguagePickerOptions[row].languageText
-            fromLanguageValue = fromLanguagePickerOptions[row].languageValue
-            self.view.endEditing(true)
-        } else if currentTextField == toLanguagePicker {
-            toLanguagePicker.text = toLanguagePickerOptions[row].languageText
-            toLanguageValue = toLanguagePickerOptions[row].languageValue
-            self.view.endEditing(true)
-        }
-    }
-    
-    // Textfield Delegate
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+        translateFromLabel.roundCorners(corners: [.topRight, .bottomRight], radius: 5)
+        translateFromLabel.textColor = .black
+        translateFromLabel.text = fromLanguageOption
+        print("From Language: \(String(describing: fromLanguageOption.slice(from: "(", to: ")")))")
+        fromLanguageValue = fromLanguageOption.slice(from: "(", to: ")") ?? ""
         
-        self.pickerView.delegate = self
-        self.pickerView.dataSource = self
-        currentTextField = textField
-        if currentTextField == fromLanguagePicker {
-            currentTextField.inputView = pickerView
-        } else if currentTextField == toLanguagePicker {
-            currentTextField.inputView = pickerView
-        }
     }
     
+    @IBAction func translateToTapped(_ sender: Any) {
+        
+        if let translateLanguageOptionsTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.translateLanguageOptionsTableViewController) as? TranslateLanguageOptionsTableViewController {
+            translateLanguageOptionsTableViewController.index = 1
+            translateLanguageOptionsTableViewController.delegate = self
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            navigationController?.pushViewController(translateLanguageOptionsTableViewController, animated: true)
+        }
+        
+    }
+    
+    func updateTranslateTo(toLanguageOption: String) {
+        
+        translateToLabel.roundCorners(corners: [.topRight, .bottomRight], radius: 5)
+        translateToLabel.textColor = .black
+        translateToLabel.text = toLanguageOption
+        print("To Language: \(String(describing: toLanguageOption.slice(from: "(", to: ")")))")
+        toLanguageValue = toLanguageOption.slice(from: "(", to: ")") ?? ""
+        
+    }
     
     @IBAction func chooseFileTapped(_ sender: Any) {
         

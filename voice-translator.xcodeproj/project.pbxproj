@@ -30,6 +30,7 @@
 		DC12158E252296DC003B8832 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC12158D252296DC003B8832 /* CardView.swift */; };
 		DC1EA2382529630300869554 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA2372529630300869554 /* AudioController.swift */; };
 		DC1EA23B2529639400869554 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA23A2529639400869554 /* ChatTableViewCell.swift */; };
+		DC1EA23E252A8FFE00869554 /* TranslateLanguageOptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA23D252A8FFE00869554 /* TranslateLanguageOptionsTableViewController.swift */; };
 		DC54B247251BDD2A00F5BEF4 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */; };
 		DC6C9A972524E4420099CFB9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9A962524E4420099CFB9 /* ProfileViewController.swift */; };
 		DC6C9A9C2524E5C20099CFB9 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9A9A2524E5C20099CFB9 /* ProfileCell.swift */; };
@@ -74,6 +75,7 @@
 		DC12158D252296DC003B8832 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		DC1EA2372529630300869554 /* AudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
 		DC1EA23A2529639400869554 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
+		DC1EA23D252A8FFE00869554 /* TranslateLanguageOptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateLanguageOptionsTableViewController.swift; sourceTree = "<group>"; };
 		DC3B0B4C24FF739A006567F9 /* voice-translator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "voice-translator.entitlements"; sourceTree = "<group>"; };
 		DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 		DC6C9A962524E4420099CFB9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				DC6C9A962524E4420099CFB9 /* ProfileViewController.swift */,
 				DC6C9AD425259D510099CFB9 /* AgreementsViewController.swift */,
 				DC6C9B082527EB770099CFB9 /* UIViewController.extension.swift */,
+				DC1EA23D252A8FFE00869554 /* TranslateLanguageOptionsTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				DCA13B1B2515781F006DD9F3 /* SpeechRecognitionService.swift in Sources */,
 				DCA13B1D2515781F006DD9F3 /* TranslationService.swift in Sources */,
 				DC6C9B092527EB770099CFB9 /* UIViewController.extension.swift in Sources */,
+				DC1EA23E252A8FFE00869554 /* TranslateLanguageOptionsTableViewController.swift in Sources */,
 				A0957F3924EF5B6C00DB237A /* NetworkService.swift in Sources */,
 				DC121501251EA1DB003B8832 /* DropDownButton.swift in Sources */,
 				A06B3E7124EBB6970016233A /* Utilities.swift in Sources */,

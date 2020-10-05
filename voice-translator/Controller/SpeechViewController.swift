@@ -66,14 +66,14 @@ class SpeechViewController : UIViewController, AudioControllerDelegate {
             _ = AudioController.sharedInstance.stop()
             SpeechRecognitionService.sharedInstance.stopStreaming()
             listening = false
-            audioButton.setImage(UIImage(systemName: "mic.fill"), for: .normal)
+            audioButton.setImage(UIImage(systemName: "mic.slash.fill"), for: .normal)
         } else {//Record the audio
             audioData = NSMutableData()
             _ = AudioController.sharedInstance.prepare(specifiedSampleRate: SAMPLE_RATE)
             SpeechRecognitionService.sharedInstance.sampleRate = SAMPLE_RATE
             _ = AudioController.sharedInstance.start()
             listening = true
-            audioButton.setImage(UIImage(systemName: "mic.slash.fill"), for: .normal)
+            audioButton.setImage(UIImage(systemName: "mic.fill"), for: .normal)
         }
     }
     func processSampleData(_ data: Data) -> Void {
