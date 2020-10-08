@@ -14,6 +14,9 @@ class ResetPasswordViewController: UIViewController {
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var resetPasswordButton: UIButton!
+    @IBOutlet weak var rememberPasswordLabel: UILabel!
+    
+    var index = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,13 +26,28 @@ class ResetPasswordViewController: UIViewController {
         setUpElements()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
     func setUpNavigationBarAndItems() {
         
         // Set the screen title
         self.navigationController?.navigationBar.isTranslucent = false
         let attributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 17)!]
         UINavigationBar.appearance().titleTextAttributes = attributes
-        self.navigationItem.title = Constants.Storyboard.resetPasswordScreenTitle
+        
+        switch index {
+        case 0:
+            self.navigationItem.title = Constants.Storyboard.signUpScreenTitle
+            rememberPasswordLabel.text = "Have an account?"
+        case 1:
+            self.navigationItem.title = Constants.Storyboard.resetPasswordScreenTitle
+            resetPasswordButton.setTitle("Reset password", for: .normal)
+        default:
+            break
+        }
+        
         
         // Hide the back button to avoid navigating back to login screen
         self.navigationItem.hidesBackButton = true
@@ -73,14 +91,6 @@ class ResetPasswordViewController: UIViewController {
         errorLabel.alpha = 1
     }
     
-    func showMessage(_ message:String) {
-        
-        errorLabel.text = message
-        errorLabel.textColor = UIColor.black
-        errorLabel.alpha = 1
-    }
-    
-    
     @IBAction func resetPasswordTapped(_ sender: Any) {
         
         // Validate the input
@@ -94,26 +104,86 @@ class ResetPasswordViewController: UIViewController {
             
             // Create clean versions of input data
             let email = emailText.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            Auth.auth().sendPasswordReset(withEmail: email) { (err) in
-                
-                // Check for errors
-                if err != nil {
-                    // There's an error while signing in the user
-                    self.showError(err!.localizedDescription)
-                }
-                else {
-                    self.showSuccessAlert()
-                }
+            
+            switch index {
+            case 0:
+                signUp(email: email)
+            case 1:
+                resetPassword(email: email)
+            default:
+                break
             }
             
         }
 
     }
     
-    func showSuccessAlert() {
-        let alert = UIAlertController(title: "Reset Password", message: "An email has been sent to the email address provided by you. Please follow the instructions specified in the email.", preferredStyle: UIAlertController.Style.alert)
+    func generateActionCodeSettings(email: String) -> ActionCodeSettings {
+        
+        let actionCodeSettings = ActionCodeSettings()
 
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
+        let scheme = InfoPlistParser.getStringValue(forKey: Constants.Setup.kFirebaseOpenAppScheme)
+        let uriPrefix = InfoPlistParser.getStringValue(forKey: Constants.Setup.kFirebaseOpenAppURIPrefix)
+        let queryItemEmailName = InfoPlistParser.getStringValue(forKey: Constants.Setup.kFirebaseOpenAppQueryItemEmailName)
+        
+        var components = URLComponents()
+        components.scheme = scheme
+        components.host = uriPrefix
+        
+        let emailURLQueryItem = URLQueryItem(name: queryItemEmailName, value: email)
+        components.queryItems = [emailURLQueryItem]
+        
+        let linkParameter = components.url
+        
+        actionCodeSettings.url = linkParameter
+        actionCodeSettings.handleCodeInApp = true
+        actionCodeSettings.setIOSBundleID(Bundle.main.bundleIdentifier!)
+        
+        return actionCodeSettings
+    }
+    
+    func signUp(email: String) {
+        
+        let actionCodeSettings = generateActionCodeSettings(email: email)
+
+        // Send email for verification
+        Auth.auth().sendSignInLink(toEmail: email, actionCodeSettings: actionCodeSettings) { (err) in
+            if let err = err {
+                self.showError(err.localizedDescription)
+            }
+        }
+        
+        UserDefaults.standard.set(email, forKey: Constants.Setup.kEmail)
+
+        let title = "Account verification"
+        let message = "Verification link sent to your email \(email). Please check your email and complete sign up."
+        self.showSuccessAlert(title: title, message: message)
+        
+    }
+    
+    func resetPassword(email: String) {
+        
+        let actionCodeSettings = generateActionCodeSettings(email: email)
+        
+        // Send password reset link
+        Auth.auth().sendPasswordReset(withEmail: email, actionCodeSettings: actionCodeSettings) { (err) in
+            if let err = err {
+                self.showError(err.localizedDescription)
+            }
+        }
+        
+        UserDefaults.standard.set(email, forKey: Constants.Setup.kEmail)
+        
+        let title = "Reset password"
+        let message = "Password reset link sent to email \(email). Please follow the instructions specified in the email to reset your password."
+        self.showSuccessAlert(title: title, message: message)
+        
+    }
+    
+    func showSuccessAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
             self.emailText.text = ""
         }))
         

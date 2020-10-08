@@ -39,6 +39,16 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
 
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//            super.viewWillAppear(animated)
+//
+//    }
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//            super.viewWillDisappear(animated)
+//
+//    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
@@ -116,15 +126,17 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     @IBAction func forgotPasswordTapped(_ sender: Any) {
         
         if let resetPasswordViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.resetPasswordViewController) as? ResetPasswordViewController {
+          resetPasswordViewController.index = 1
           navigationController?.pushViewController(resetPasswordViewController, animated: true)
         }
         
     }
     
     @IBAction func signUpTapped(_ sender: Any) {
-        
-        if let signUpViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.signUpViewController) as? SignUpViewController {
-          navigationController?.pushViewController(signUpViewController, animated: true)
+
+        if let resetPasswordViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.resetPasswordViewController) as? ResetPasswordViewController {
+          resetPasswordViewController.index = 0
+          navigationController?.pushViewController(resetPasswordViewController, animated: true)
         }
         
     }
@@ -315,11 +327,6 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     
     // Transition to landing screen
     func transitionToLanding() {
-        
-//        let landingViewController = storyboard?.instantiateViewController(identifier: Constants.Storyboard.landingViewController) as? LandingViewController
-        
-//        view.window?.rootViewController = landingViewController
-//        view.window?.makeKeyAndVisible()
         
         if let landingViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.landingViewController) as? LandingViewController {
           navigationController?.pushViewController(landingViewController, animated: true)

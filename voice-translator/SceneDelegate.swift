@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseDynamicLinks
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -18,8 +19,82 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        guard let userActivity = connectionOptions.userActivities.first(where: { $0.webpageURL != nil }) else { return }
+        
+        if let incomingURL = userActivity.webpageURL {
+            _ = fetchIncomingURL(url: incomingURL)
+        }
     }
 
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        
+        if let incomingURL = userActivity.webpageURL {
+            _ = fetchIncomingURL(url: incomingURL)
+        }
+    }
+    
+    func fetchIncomingURL(url: URL) -> Bool {
+        
+        let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(url) { (dynamicLink, error) in
+            guard error == nil else {
+                print("Found an error: \(error!.localizedDescription)")
+                return
+            }
+            if let dynamicLink = dynamicLink {
+                _ = self.handleIncomingDynamicLink(dynamicLink)
+            }
+        }
+        
+        if linkHandled {
+            return true
+        } else {
+            // Do other things with the incoming URL
+            return false
+        }
+    }
+    
+    func handleIncomingDynamicLink(_ dynamicLink: DynamicLink) -> Bool {
+        
+        guard let url = dynamicLink.url else {
+            print("Dynamic link object has no URL")
+            return false
+        }
+        
+        let dynamicLinkURL = url.absoluteString
+        print("Dynamic link is: \(dynamicLinkURL)")
+        
+        let mode = url.queryParameters["mode"]
+        let oobCode = url.queryParameters["oobCode"]
+//      let continueUrl = url.queryParameters["continueUrl"]
+//      let language = url.queryParameters["lang"]
+        
+        let email = UserDefaults.standard.value(forKey: Constants.Setup.kEmail)
+        
+        switch mode {
+        case "signIn":
+            if let rootViewController = self.window?.rootViewController as? UINavigationController {
+                if let signUpViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.signUpViewController) as? SignUpViewController {
+                    signUpViewController.email = email as? String
+                    signUpViewController.actionCode = oobCode
+                    rootViewController.pushViewController(signUpViewController, animated: true)
+                }
+            }
+        case "resetPassword":
+            if let rootViewController = self.window?.rootViewController as? UINavigationController {
+                if let confirmPasswordViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.confirmPasswordViewController) as? ConfirmPasswordViewController {
+                    confirmPasswordViewController.email = email as? String
+                    confirmPasswordViewController.actionCode = oobCode
+                    rootViewController.pushViewController(confirmPasswordViewController, animated: true)
+                }
+            }
+        default:
+            break
+        }
+    
+        return false
+    }
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.

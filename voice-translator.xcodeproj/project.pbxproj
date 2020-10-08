@@ -31,6 +31,9 @@
 		DC1EA2382529630300869554 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA2372529630300869554 /* AudioController.swift */; };
 		DC1EA23B2529639400869554 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA23A2529639400869554 /* ChatTableViewCell.swift */; };
 		DC1EA23E252A8FFE00869554 /* TranslateLanguageOptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA23D252A8FFE00869554 /* TranslateLanguageOptionsTableViewController.swift */; };
+		DC1EA241252BA79500869554 /* InfoPlistParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA240252BA79500869554 /* InfoPlistParser.swift */; };
+		DC1EA27F252D324100869554 /* QueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA27E252D324100869554 /* QueryParameters.swift */; };
+		DC1EA282252D3A0200869554 /* ConfirmPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA281252D3A0200869554 /* ConfirmPasswordViewController.swift */; };
 		DC54B247251BDD2A00F5BEF4 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */; };
 		DC6C9A972524E4420099CFB9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9A962524E4420099CFB9 /* ProfileViewController.swift */; };
 		DC6C9A9C2524E5C20099CFB9 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9A9A2524E5C20099CFB9 /* ProfileCell.swift */; };
@@ -76,6 +79,9 @@
 		DC1EA2372529630300869554 /* AudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
 		DC1EA23A2529639400869554 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		DC1EA23D252A8FFE00869554 /* TranslateLanguageOptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateLanguageOptionsTableViewController.swift; sourceTree = "<group>"; };
+		DC1EA240252BA79500869554 /* InfoPlistParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPlistParser.swift; sourceTree = "<group>"; };
+		DC1EA27E252D324100869554 /* QueryParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParameters.swift; sourceTree = "<group>"; };
+		DC1EA281252D3A0200869554 /* ConfirmPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPasswordViewController.swift; sourceTree = "<group>"; };
 		DC3B0B4C24FF739A006567F9 /* voice-translator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "voice-translator.entitlements"; sourceTree = "<group>"; };
 		DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 		DC6C9A962524E4420099CFB9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +197,7 @@
 				DC6C9AD425259D510099CFB9 /* AgreementsViewController.swift */,
 				DC6C9B082527EB770099CFB9 /* UIViewController.extension.swift */,
 				DC1EA23D252A8FFE00869554 /* TranslateLanguageOptionsTableViewController.swift */,
+				DC1EA281252D3A0200869554 /* ConfirmPasswordViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -212,6 +219,8 @@
 				DC121500251EA1DB003B8832 /* DropDownButton.swift */,
 				DC12154825200B9E003B8832 /* LeftPaddedLabel.swift */,
 				DC12158D252296DC003B8832 /* CardView.swift */,
+				DC1EA240252BA79500869554 /* InfoPlistParser.swift */,
+				DC1EA27E252D324100869554 /* QueryParameters.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -366,11 +375,13 @@
 				DC12154925200B9E003B8832 /* LeftPaddedLabel.swift in Sources */,
 				DC54B247251BDD2A00F5BEF4 /* RecordViewController.swift in Sources */,
 				A01545D724F38C2C0081E3CB /* MessageViewController.swift in Sources */,
+				DC1EA282252D3A0200869554 /* ConfirmPasswordViewController.swift in Sources */,
 				DC1EA2382529630300869554 /* AudioController.swift in Sources */,
 				DCA13B1B2515781F006DD9F3 /* SpeechRecognitionService.swift in Sources */,
 				DCA13B1D2515781F006DD9F3 /* TranslationService.swift in Sources */,
 				DC6C9B092527EB770099CFB9 /* UIViewController.extension.swift in Sources */,
 				DC1EA23E252A8FFE00869554 /* TranslateLanguageOptionsTableViewController.swift in Sources */,
+				DC1EA241252BA79500869554 /* InfoPlistParser.swift in Sources */,
 				A0957F3924EF5B6C00DB237A /* NetworkService.swift in Sources */,
 				DC121501251EA1DB003B8832 /* DropDownButton.swift in Sources */,
 				A06B3E7124EBB6970016233A /* Utilities.swift in Sources */,
@@ -378,6 +389,7 @@
 				A039597B24EB49C100EC77EE /* AppDelegate.swift in Sources */,
 				DC12158E252296DC003B8832 /* CardView.swift in Sources */,
 				A0C59A6824EDE502004CAFE8 /* ResetPasswordViewController.swift in Sources */,
+				DC1EA27F252D324100869554 /* QueryParameters.swift in Sources */,
 				DC6C9AA12524F2C40099CFB9 /* ProfileSection.swift in Sources */,
 				DC6C9A9C2524E5C20099CFB9 /* ProfileCell.swift in Sources */,
 				A0B7552624EB4DF8004E04C1 /* SignUpViewController.swift in Sources */,

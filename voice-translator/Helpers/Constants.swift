@@ -25,6 +25,7 @@ struct Constants {
         static let speechViewController = "SpeechVC"
         static let resetPasswordViewController = "ResetPasswordVC"
         static let signUpViewController = "SignUpVC"
+        static let confirmPasswordViewController = "ConfirmPasswordVC"
         static let agreementsViewController = "AgreementsVC"
         static let signUpScreenTitle = "Sign up"
         static let homeScreenTitle = "Home"
@@ -39,6 +40,7 @@ struct Constants {
         static let optionsScreenTitle = "Choose an option"
         static let privacyPolicyScreenTitle = "Privacy Policy"
         static let termsScreenTitle = "Terms and Conditions"
+        static let confirmPasswordScreenTitle = "Confirm your password"
 
     }
     
@@ -53,6 +55,16 @@ struct Constants {
         
     }
     
+    struct Setup {
+        
+        static let kFirebaseOpenAppScheme = "FirebaseOpenAppScheme"
+        static let kFirebaseOpenAppURIPrefix = "FirebaseOpenAppURIPrefix"
+        static let kFirebaseOpenAppQueryItemEmailName = "FirebaseOpenAppQueryItemEmailName"
+        static let kEmail = "Email"
+//      static var shouldOpenMailApp = false
+        
+    }
+    
     static let TTS_Host = "texttospeech.googleapis.com"
     // authtoken-service is the GCP project name for Token Service
     // Deployed firebase functions for token-service to GCP project teak-mantis-279104
@@ -64,7 +76,6 @@ struct Constants {
 }
 
 extension Constants {
-  static let SettingsScreenTtitle = "Settings"
   static let selfKey = "Self"
   static let botKey = "Bot"
   static let selectedTransFrom = "selectedTransFrom"

@@ -213,16 +213,22 @@ class Utilities {
                 let numDocs = querySnapshot?.documents.count
                 
                 if numDocs == 0 {
-                    docRef.addDocument(data: ["email": email,  "firstname": firstName, "lastname": lastName, "uid": uid]) { (error) in
-                        if error != nil {
-                            errMessage = "Error saving user data"
+                    let data = [
+                        "uid": uid,
+                        "email": email,
+                        "firstname": firstName,
+                        "lastname": lastName,
+                        "created": FieldValue.serverTimestamp()
+                    ] as [String : Any]
+                    
+                    docRef.document(uid).setData(data) { (err) in
+                        if let err = err {
+                            errMessage = "Error saving user data: \(err.localizedDescription)"
                         }
                     }
+                    
                 } else {
-                    print("User data was saved successfully")
-//                  for document in querySnapshot!.documents {
-//                      print("\(document.documentID) => \(document.data())")
-//                  }
+                    errMessage = "User email already exists in the database"
                 }
             }
         })
@@ -250,8 +256,6 @@ class Utilities {
             let errorAttrString = NSAttributedString(string: error, attributes: errorAttribute)
             return errorAttrString
         }
-        
-        print(htmlString)
         
         let data = htmlString.data(using: String.Encoding.unicode)!
         let mattrStr = try! NSMutableAttributedString(

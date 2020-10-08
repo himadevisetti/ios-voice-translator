@@ -9,9 +9,10 @@
 import UIKit
 import AuthLibrary
 import FirebaseMessaging
+import FirebaseDynamicLinks
 
 extension AppDelegate {
-
+    
     // [START receive_message]
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         // If you are receiving a notification message while your app is in the background,
@@ -20,9 +21,9 @@ extension AppDelegate {
         // With swizzling disabled you must let Messaging know about the message, for Analytics
         Messaging.messaging().appDidReceiveMessage(userInfo)
         // Print message ID.
-//      if let messageID = userInfo[gcmMessageIDKey] {
-//          print("Message ID: \(messageID)")
-//      }
+        //      if let messageID = userInfo[gcmMessageIDKey] {
+        //          print("Message ID: \(messageID)")
+        //      }
         if let aps = userInfo["aps"] as? [String: Any], let alert = aps["alert"] as? [String: Any], let token = alert["body"] as? String , let expiryTime = alert["title"] as? String {
             let tokenData = [Constants.accessToken: token, Constants.expireTime: expiryTime]
             FCMTokenProvider.tokenFromAppDelegate(tokenDict: tokenData)
@@ -41,9 +42,9 @@ extension AppDelegate {
         // With swizzling disabled you must let Messaging know about the message, for Analytics
         Messaging.messaging().appDidReceiveMessage(userInfo)
         // Print message ID.
-//      if let messageID = userInfo[gcmMessageIDKey] {
-//          print("Message ID: \(messageID)")
-//      }
+        //      if let messageID = userInfo[gcmMessageIDKey] {
+        //          print("Message ID: \(messageID)")
+        //      }
         guard let tokenData = userInfo as? [String: Any] else {return}
         
         NotificationCenter.default.post(name: NSNotification.Name(Constants.tokenReceived), object: tokenData)
@@ -63,10 +64,10 @@ extension AppDelegate {
     // If swizzling is disabled then this function must be implemented so that the APNs token can be paired to
     // the FCM registration token.
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-//      print("APNs token retrieved: \(deviceToken)")
+        //      print("APNs token retrieved: \(deviceToken)")
         //Call firebase function to store device token in the data base.
         // With swizzling disabled you must set the APNs token here.
-//      let deviceTokenString = deviceToken.base64EncodedString()
+        //      let deviceTokenString = deviceToken.base64EncodedString()
         Messaging.messaging().apnsToken = deviceToken
         fetchToken()
         //fetchVoiceList()
@@ -77,6 +78,70 @@ extension AppDelegate {
         let notifications =  UNUserNotificationCenter.current()
         notifications.removeAllPendingNotificationRequests()
         notifications.removeAllDeliveredNotifications()
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+
+        if let incomingURL = userActivity.webpageURL {
+            let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(incomingURL) { (dynamicLink, error) in
+                guard error == nil else {
+                    print("Found an error: \(error!.localizedDescription)")
+                    return
+                }
+                if let dynamicLink = dynamicLink {
+                    _ = self.handleIncomingDynamicLink(dynamicLink)
+                }
+            }
+            print("Link Handled: \(linkHandled)")
+            if linkHandled {
+                return true
+            } else {
+                // Do other things with the incoming URL
+                return false
+            }
+        }
+        return false
+    }
+    
+    func handleIncomingDynamicLink(_ dynamicLink: DynamicLink) -> Bool {
+        
+        guard let url = dynamicLink.url else {
+            print("Dynamic link object has no URL")
+            return false
+        }
+        
+        let dynamicLinkURL = url.absoluteString
+        print("Dynamic link is: \(dynamicLinkURL)")
+        
+        let mode = url.queryParameters["mode"]
+        let oobCode = url.queryParameters["oobCode"]
+//      let continueUrl = url.queryParameters["continueUrl"]
+//      let language = url.queryParameters["lang"]
+        
+        let email = UserDefaults.standard.value(forKey: Constants.Setup.kEmail)
+        
+        switch mode {
+        case "signIn":
+            if let rootViewController = self.window?.rootViewController as? UINavigationController {
+                if let signUpViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.signUpViewController) as? SignUpViewController {
+                    signUpViewController.email = email as? String
+                    signUpViewController.actionCode = oobCode
+                    rootViewController.pushViewController(signUpViewController, animated: true)
+                }
+            }
+        case "resetPassword":
+            if let rootViewController = self.window?.rootViewController as? UINavigationController {
+                if let confirmPasswordViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.confirmPasswordViewController) as? ConfirmPasswordViewController {
+                    confirmPasswordViewController.email = email as? String
+                    confirmPasswordViewController.actionCode = oobCode
+                    rootViewController.pushViewController(confirmPasswordViewController, animated: true)
+                }
+            }
+        default:
+            break
+        }
+    
+        return false
     }
     
 }
@@ -92,9 +157,9 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         // With swizzling disabled you must let Messaging know about the message, for Analytics
         Messaging.messaging().appDidReceiveMessage(userInfo)
         // Print message ID.
-//      if let messageID = userInfo[gcmMessageIDKey], let aps = userInfo["aps"] as? [String: Any], let alert
+        //      if let messageID = userInfo[gcmMessageIDKey], let aps = userInfo["aps"] as? [String: Any], let alert
         if let aps = userInfo["aps"] as? [String: Any], let alert = aps["alert"] as? [String: Any], let token = alert["body"] as? String , let expiryTime = alert["title"] as? String {
-//          print("Message ID: \(messageID)")
+            //          print("Message ID: \(messageID)")
             let tokenData = [Constants.accessToken: token, Constants.expireTime: expiryTime]
             //UserDefaults.standard.set(tokenData, forKey: ApplicationConstants.token)
             FCMTokenProvider.tokenFromAppDelegate(tokenDict: tokenData)
@@ -112,9 +177,9 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         // Print message ID.
-//      if let messageID = userInfo[gcmMessageIDKey], let aps = userInfo["aps"] as? [String: Any], let alert
+        //      if let messageID = userInfo[gcmMessageIDKey], let aps = userInfo["aps"] as? [String: Any], let alert
         if let aps = userInfo["aps"] as? [String: Any], let alert = aps["alert"] as? [String: Any], let token = alert["body"] as? String , let expiryTime = alert["title"] as? String {
-//          print("Message ID: \(messageID)")
+            //          print("Message ID: \(messageID)")
             let tokenData = [Constants.accessToken: token, Constants.expireTime: expiryTime]
             NotificationCenter.default.post(name: NSNotification.Name(Constants.tokenReceived), object: tokenData)
         }
@@ -128,7 +193,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
 extension AppDelegate : MessagingDelegate {
     // [START refresh_token]
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-//      print("Firebase registration token: \(fcmToken)")
+        //      print("Firebase registration token: \(fcmToken)")
         let dataDict:[String: String] = ["token": fcmToken]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
         // TODO: If necessary send token to application server.

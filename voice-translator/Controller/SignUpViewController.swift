@@ -21,6 +21,9 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     
+    var email: String?
+    var actionCode: String? // oobCode from account verification link
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,25 +60,16 @@ class SignUpViewController: UIViewController {
         Utilities.styleTextField(emailText)
         Utilities.styleTextField(passwordText)
         Utilities.styleFilledButton(signUpButton)
+        emailText.text = email
         
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
     // Validate the input fields
     // If valid, returns nil
     // If invalid, return an error string
     func validateFields() -> String? {
         
-        // Esnure that all mandatory fields are filled in
+        // Ensure that all mandatory fields are filled in
         if firstNameText.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
             || lastNameText.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
             || emailText.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
@@ -96,7 +90,7 @@ class SignUpViewController: UIViewController {
         if Utilities.isValidPassword(cleanPassword) == false {
             
             // Password does not meet the criteria
-            return "Please esnure your password is atleast 8 characters, contains an alphabet, a number and a special character"
+            return "Please ensure your password is atleast 8 characters, contains an alphabet, a number and a special character"
         }
         
         return nil
@@ -111,7 +105,7 @@ class SignUpViewController: UIViewController {
     @IBAction func loginTapped(_ sender: Any) {
         
         if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.loginViewController) as? LoginViewController {
-          navigationController?.pushViewController(loginViewController, animated: true)
+            navigationController?.pushViewController(loginViewController, animated: true)
         }
         
     }
@@ -159,14 +153,13 @@ class SignUpViewController: UIViewController {
                     }
                     
                 } else {
-                    
                     // Save user's firstname and lastname in local cache to display on profile page
                     SharedData.instance.userFirstName = firstName
                     SharedData.instance.userLastName = lastName
                     
                     // Display privacy policy
                     self.displayPrivacyPolicy(email: email, givenName: firstName, familyName: lastName, userId: result!.user.uid)
-
+                    
                 }
                 
             }
@@ -179,7 +172,7 @@ class SignUpViewController: UIViewController {
     func transitionToLanding() {
         
         if let landingViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.landingViewController) as? LandingViewController {
-          navigationController?.pushViewController(landingViewController, animated: true)
+            navigationController?.pushViewController(landingViewController, animated: true)
         }
         
     }
@@ -194,13 +187,13 @@ class SignUpViewController: UIViewController {
         let declineAction = UIAlertAction(title: "Decline" , style: .destructive) { (action) -> Void in
             let user = Auth.auth().currentUser
             user?.delete { error in
-              if let error = error {
-                // An error happened.
-                self.showError(error.localizedDescription)
-              } else {
-                // Account deleted.
-                print("Account was deleted")
-              }
+                if let error = error {
+                    // An error happened.
+                    self.showError(error.localizedDescription)
+                } else {
+                    // Account deleted.
+                    print("Account was deleted")
+                }
             }
             
             self.showError("Please accept privacy policy in order to access the app")

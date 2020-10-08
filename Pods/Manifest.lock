@@ -254,6 +254,9 @@ PODS:
     - FirebaseAnalytics (= 6.8.3)
   - Firebase/CoreOnly (6.33.0):
     - FirebaseCore (= 6.10.3)
+  - Firebase/DynamicLinks (6.33.0):
+    - Firebase/CoreOnly
+    - FirebaseDynamicLinks (~> 4.3.1)
   - Firebase/Firestore (6.33.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 1.18.0)
@@ -286,6 +289,8 @@ PODS:
     - GoogleUtilities/Environment (~> 6.7)
     - GoogleUtilities/Logger (~> 6.7)
     - nanopb (~> 1.30906.0)
+  - FirebaseDynamicLinks (4.3.1):
+    - FirebaseCore (~> 6.10)
   - FirebaseFirestore (1.18.0):
     - abseil/algorithm (= 0.20200225.0)
     - abseil/base (= 0.20200225.0)
@@ -447,6 +452,7 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
+  - Firebase/DynamicLinks
   - Firebase/Firestore
   - Firebase/Messaging
   - googleapis (from `.`)
@@ -470,6 +476,7 @@ SPEC REPOS:
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
+    - FirebaseDynamicLinks
     - FirebaseFirestore
     - FirebaseFunctions
     - FirebaseInstallations
@@ -524,6 +531,7 @@ SPEC CHECKSUMS:
   FirebaseAuth: c92d49ada7948d1a23466e3db17bc4c2039dddc3
   FirebaseCore: d889d9e12535b7f36ac8bfbf1713a0836a3012cd
   FirebaseCoreDiagnostics: 770ac5958e1372ce67959ae4b4f31d8e127c3ac1
+  FirebaseDynamicLinks: 6eac37d86910382eafb6315d952cc44c9e176094
   FirebaseFirestore: adff4877869ca91a11250cc0989a6cd56bad163f
   FirebaseFunctions: 27518fdd14d8b3a849e2443f921cd1b471ab7acd
   FirebaseInstallations: 466c7b4d1f58fe16707693091da253726a731ed2
@@ -550,6 +558,6 @@ SPEC CHECKSUMS:
   SwiftNIOConcurrencyHelpers: a79f8bb5ae0f342107b2f33b1764eb78891dcf54
   SwiftyBase64: 8de4de96a08454e742fdda614dff12d2c62ecbe9
 
-PODFILE CHECKSUM: 59c3a7089af6fd91058dd817bef1c7031264b5b6
+PODFILE CHECKSUM: 8636cb20594606ee3e26e7750cc4d73c402bd518
 
 COCOAPODS: 1.9.3
