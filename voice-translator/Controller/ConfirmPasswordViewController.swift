@@ -57,6 +57,11 @@ class ConfirmPasswordViewController: UIViewController {
         Utilities.styleTextField(confirmPasswordText)
         Utilities.styleFilledButton(confirmPasswordButton)
         emailText.text = email
+        
+        emailText.textContentType = .oneTimeCode
+        passwordText.textContentType = .oneTimeCode
+        confirmPasswordText.textContentType = .oneTimeCode
+        
     }
     
     // Validate the input fields

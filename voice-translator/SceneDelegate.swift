@@ -8,25 +8,30 @@
 
 import UIKit
 import FirebaseDynamicLinks
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
-
-
+    
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
         
-        guard let userActivity = connectionOptions.userActivities.first(where: { $0.webpageURL != nil }) else { return }
+        self.scene(scene, openURLContexts: connectionOptions.urlContexts)
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         
-        if let incomingURL = userActivity.webpageURL {
+        if let incomingURL = URLContexts.first?.url {
             _ = fetchIncomingURL(url: incomingURL)
         }
+        
     }
-
+    
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         
         if let incomingURL = userActivity.webpageURL {
@@ -61,8 +66,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return false
         }
         
-        let dynamicLinkURL = url.absoluteString
-        print("Dynamic link is: \(dynamicLinkURL)")
+//      let dynamicLinkURL = url.absoluteString
+//      print("Dynamic link is: \(dynamicLinkURL)")
         
         let mode = url.queryParameters["mode"]
         let oobCode = url.queryParameters["oobCode"]
@@ -72,12 +77,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let email = UserDefaults.standard.value(forKey: Constants.Setup.kEmail)
         
         switch mode {
-        case "signIn":
-            if let rootViewController = self.window?.rootViewController as? UINavigationController {
-                if let signUpViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.signUpViewController) as? SignUpViewController {
-                    signUpViewController.email = email as? String
-                    signUpViewController.actionCode = oobCode
-                    rootViewController.pushViewController(signUpViewController, animated: true)
+        case "verifyEmail":
+            let rootViewController = self.window?.rootViewController as! UINavigationController
+            Auth.auth().applyActionCode(oobCode!) { (err) in
+                if let err = err {
+                    let error = err as NSError
+                    // There's an error while validating the action code for email verification
+                    switch error.code {
+                    case AuthErrorCode.expiredActionCode.rawValue:
+                        print("Code expired. Click 'Sign In' -> 'Forgot password' and get the password reset link sent again")
+                    case AuthErrorCode.invalidActionCode.rawValue:
+                        print("Invalid code. Code is expired or has already been used")
+                    default:
+                        print("Unknown error: \(error.localizedDescription)")
+                    }
+                } else {
+                    // Email has been verified. Prompt user to login
+                    let alert = UIAlertController(title: "Account verified", message: "Your account has been verified. Please sign in", preferredStyle: .alert)
+                    // Create agree button
+                    let agreeAction = UIAlertAction(title: "Ok", style: .default) { (action) -> Void in
+                        print("Account has been verified")
+                        if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.loginViewController) as? LoginViewController {
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.hasAlreadyLaunched = false
+                            rootViewController.pushViewController(loginViewController, animated: true)
+                        }
+                    }
+                    
+                    // Add agree button to the alert
+                    alert.addAction(agreeAction)
+                    rootViewController.present(alert, animated: true, completion: nil)
                 }
             }
         case "resetPassword":
@@ -91,7 +120,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         default:
             break
         }
-    
+        
         return false
     }
     
@@ -101,28 +130,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not neccessarily discarded (see `application:didDiscardSceneSessions` instead).
     }
-
+    
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
     }
-
+    
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
     }
-
+    
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
     }
-
+    
     func sceneDidEnterBackground(_ scene: UIScene) {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
+    
+    
 }
 

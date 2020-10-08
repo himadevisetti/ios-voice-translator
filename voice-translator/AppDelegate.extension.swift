@@ -10,6 +10,7 @@ import UIKit
 import AuthLibrary
 import FirebaseMessaging
 import FirebaseDynamicLinks
+import FirebaseAuth
 
 extension AppDelegate {
     
@@ -81,7 +82,7 @@ extension AppDelegate {
     }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-
+        
         if let incomingURL = userActivity.webpageURL {
             let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(incomingURL) { (dynamicLink, error) in
                 guard error == nil else {
@@ -115,18 +116,42 @@ extension AppDelegate {
         
         let mode = url.queryParameters["mode"]
         let oobCode = url.queryParameters["oobCode"]
-//      let continueUrl = url.queryParameters["continueUrl"]
-//      let language = url.queryParameters["lang"]
+        //      let continueUrl = url.queryParameters["continueUrl"]
+        //      let language = url.queryParameters["lang"]
         
         let email = UserDefaults.standard.value(forKey: Constants.Setup.kEmail)
         
         switch mode {
-        case "signIn":
-            if let rootViewController = self.window?.rootViewController as? UINavigationController {
-                if let signUpViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.signUpViewController) as? SignUpViewController {
-                    signUpViewController.email = email as? String
-                    signUpViewController.actionCode = oobCode
-                    rootViewController.pushViewController(signUpViewController, animated: true)
+        case "verifyEmail":
+            let rootViewController = self.window?.rootViewController as! UINavigationController
+            Auth.auth().applyActionCode(oobCode!) { (err) in
+                if let err = err {
+                    let error = err as NSError
+                    // There's an error while validating the action code for email verification
+                    switch error.code {
+                    case AuthErrorCode.expiredActionCode.rawValue:
+                        print("Code expired. Click 'Sign In' -> 'Forgot password' and get the password reset link sent again")
+                    case AuthErrorCode.invalidActionCode.rawValue:
+                        print("Invalid code. Code is expired or has already been used")
+                    default:
+                        print("Unknown error: \(error.localizedDescription)")
+                    }
+                } else {
+                    // Email has been verified. Prompt user to login
+                    let alert = UIAlertController(title: "Account verified", message: "Your account has been verified. Please sign in", preferredStyle: .alert)
+                    // Create agree button
+                    let agreeAction = UIAlertAction(title: "Ok", style: .default) { (action) -> Void in
+                        print("Account has been verified")
+                        if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.loginViewController) as? LoginViewController {
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.hasAlreadyLaunched = false
+                            rootViewController.pushViewController(loginViewController, animated: true)
+                        }
+                    }
+                    
+                    // Add agree button to the alert
+                    alert.addAction(agreeAction)
+                    rootViewController.present(alert, animated: true, completion: nil)
                 }
             }
         case "resetPassword":
@@ -140,7 +165,7 @@ extension AppDelegate {
         default:
             break
         }
-    
+        
         return false
     }
     

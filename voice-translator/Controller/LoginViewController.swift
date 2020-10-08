@@ -36,18 +36,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         
         setupNavigationBarItems()
         setUpElements()
-
+        
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//            super.viewWillAppear(animated)
-//
-//    }
-//
-//    override func viewWillDisappear(_ animated: Bool) {
-//            super.viewWillDisappear(animated)
-//
-//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -79,6 +69,10 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         Utilities.styleTextField(emailText)
         Utilities.styleTextField(passwordText)
         Utilities.styleFilledButton(logInButton)
+        
+        // Disable autofill accessory to save password
+        emailText.textContentType = .oneTimeCode
+        passwordText.textContentType = .oneTimeCode
         
         // Align the social buttons in the horizontal stack
         stackToShowSocialButtons.distribution = .fillEqually
@@ -126,17 +120,15 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     @IBAction func forgotPasswordTapped(_ sender: Any) {
         
         if let resetPasswordViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.resetPasswordViewController) as? ResetPasswordViewController {
-          resetPasswordViewController.index = 1
-          navigationController?.pushViewController(resetPasswordViewController, animated: true)
+            navigationController?.pushViewController(resetPasswordViewController, animated: true)
         }
         
     }
     
     @IBAction func signUpTapped(_ sender: Any) {
-
-        if let resetPasswordViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.resetPasswordViewController) as? ResetPasswordViewController {
-          resetPasswordViewController.index = 0
-          navigationController?.pushViewController(resetPasswordViewController, animated: true)
+        
+        if let signUpViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.signUpViewController) as? SignUpViewController {
+            navigationController?.pushViewController(signUpViewController, animated: true)
         }
         
     }
@@ -180,6 +172,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                     
                 }
                 else {
+                    
                     // Fetch user's firstname and lastname from database to display on profile page
                     let db = Firestore.firestore()
                     db.collection("users").whereField("email", isEqualTo: email)
@@ -194,10 +187,25 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                                     SharedData.instance.userLastName = lastName
                                 }
                             }
-                    }
+                        }
                     
-                    // Transition to landing screen
-                    self.transitionToLanding()
+                    // detect user coming from verifyEmail flow (hasAlreadyLaunched == false)
+                    if(!self.appDelegate.hasAlreadyLaunched) {
+                        
+                        //set hasAlreadyLaunched to false
+                        self.appDelegate.sethasAlreadyLaunched()
+                        
+                        let givenName = UserDefaults.standard.value(forKey: Constants.Setup.kFirstName)
+                        let familyName = UserDefaults.standard.value(forKey: Constants.Setup.kLastName)
+                        let userId = UserDefaults.standard.value(forKey: Constants.Setup.kUid)
+                        
+                        // display privacy policy
+                        self.displayPrivacyPolicy(email: email, givenName: givenName as! String, familyName: familyName as! String, userId: userId as! String)
+                        
+                    } else {
+                        // Transition to landing screen
+                        self.transitionToLanding()
+                    }
                 }
             }
         }
@@ -224,7 +232,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
             if (error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
                 print("The user has not signed in before or they have since signed out.")
             } else {
-                print("\(error.localizedDescription)")
+                showError("\(error.localizedDescription)")
             }
             return
         }
@@ -259,8 +267,21 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                     
                     // display privacy policy
                     self.displayPrivacyPolicy(email: email!, givenName: givenName!, familyName: familyName!, userId: userId)
-
+                    
                 } else {
+                    
+                    // User does not exist in firestore database
+                    // Happens when user logs into the app using google signin from a device that has already launched the app
+                    if !Utilities.checkUserExistsInFirestore(email: email!) {
+                        // first-time user and hence save user info to firestore
+                        let errMessage = Utilities.saveUserToFirestore(email: email!, firstName: givenName!, lastName: familyName!, uid: userId)
+                        
+                        if errMessage != nil {
+                            // user doesn't need to know that there's an error while saving their data to DB
+                            // write it to the application log and monitor such errors
+                            print(errMessage!)
+                        }
+                    }
                     
                     // Save user's firstname and lastname in local cache to display on profile page
                     SharedData.instance.userFirstName = givenName
@@ -279,14 +300,14 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         GIDSignIn.sharedInstance().signOut()
         let firebaseAuth = Auth.auth()
         do {
-          try firebaseAuth.signOut()
+            try firebaseAuth.signOut()
         } catch let signOutError as NSError {
             showError(signOutError.localizedDescription)
         }
     }
     
     func setupAppleButton() {
-//      let appleButton = ASAuthorizationAppleIDButton(authorizationButtonType: .signIn, authorizationButtonStyle: .white)
+        //      let appleButton = ASAuthorizationAppleIDButton(authorizationButtonType: .signIn, authorizationButtonStyle: .white)
         let appleButton = UIButton(frame: CGRect(x: 0,y: 0,width: 48,height: 48))
         let appleButtonImage = Utilities.resizeImage(image: UIImage(named: "apple_logo_custom.png")!, targetSize: CGSize(width: 48, height: 48.0))
         appleButton.setImage(appleButtonImage, for: .normal)
@@ -329,7 +350,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     func transitionToLanding() {
         
         if let landingViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.landingViewController) as? LandingViewController {
-          navigationController?.pushViewController(landingViewController, animated: true)
+            navigationController?.pushViewController(landingViewController, animated: true)
         }
         
     }
@@ -343,7 +364,6 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         
         // Create Agree button
         let agreeAction = UIAlertAction(title: "Agree", style: .default) { (action) -> Void in
-            print("License agreement accepted")
             // first-time user and hence save user info to firestore
             let errMessage = Utilities.saveUserToFirestore(email: email, firstName: givenName, lastName: familyName, uid: userId)
             
@@ -397,10 +417,10 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                 if let user = authDataResult?.user {
                     let email = user.email
                     let userId = user.uid
-                    let givenName = appleIDCredential.fullName?.givenName
-                    let familyName = appleIDCredential.fullName?.familyName
+                    let givenName = appleIDCredential.fullName?.givenName ?? "Favorite"
+                    let familyName = appleIDCredential.fullName?.familyName ?? "User"
                     
-//                  print("User \(givenName!), \(familyName!) signed in as \(userId), email: \(email ?? "unknown email")")
+                    //                  print("User \(givenName!), \(familyName!) signed in as \(userId), email: \(email ?? "unknown email")")
                     print("User signed in as \(userId), email: \(email ?? "unknown email")")
                     
                     // Save email for later use
@@ -413,7 +433,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                         self.appDelegate.sethasAlreadyLaunched()
                         
                         // display privacy policy
-                        self.displayPrivacyPolicy(email: email!, givenName: givenName!, familyName: familyName!, userId: userId)
+                        self.displayPrivacyPolicy(email: email!, givenName: givenName, familyName: familyName, userId: userId)
                         
                     } else {
                         // Save user's firstname and lastname in local cache to display on profile page

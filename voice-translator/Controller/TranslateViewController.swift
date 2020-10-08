@@ -159,7 +159,6 @@ class TranslateViewController: UIViewController {
         translateFromLabel.roundCorners(corners: [.topRight, .bottomRight], radius: 5)
         translateFromLabel.textColor = .black
         translateFromLabel.text = fromLanguageOption
-        print("From Language: \(String(describing: fromLanguageOption.slice(from: "(", to: ")")))")
         fromLanguageValue = fromLanguageOption.slice(from: "(", to: ")") ?? ""
         
     }
@@ -180,7 +179,6 @@ class TranslateViewController: UIViewController {
         translateToLabel.roundCorners(corners: [.topRight, .bottomRight], radius: 5)
         translateToLabel.textColor = .black
         translateToLabel.text = toLanguageOption
-        print("To Language: \(String(describing: toLanguageOption.slice(from: "(", to: ")")))")
         toLanguageValue = toLanguageOption.slice(from: "(", to: ")") ?? ""
         
     }

@@ -759,7 +759,7 @@
                                         <rect key="frame" x="0.0" y="60" width="295" height="40"/>
                                         <color key="backgroundColor" systemColor="systemBlueColor"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
-                                        <state key="normal" title="Verify email">
+                                        <state key="normal" title="Reset password">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -822,7 +822,6 @@
                     <connections>
                         <outlet property="emailText" destination="XG0-C1-fHp" id="yUv-2k-8n5"/>
                         <outlet property="errorLabel" destination="acv-5w-vNy" id="yNT-t3-onx"/>
-                        <outlet property="rememberPasswordLabel" destination="qcw-1m-gL9" id="DjG-wo-vuJ"/>
                         <outlet property="resetPasswordButton" destination="NWV-c1-6cr" id="c8J-AN-VcH"/>
                     </connections>
                 </viewController>

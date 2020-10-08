@@ -21,9 +21,6 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     
-    var email: String?
-    var actionCode: String? // oobCode from account verification link
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,7 +57,12 @@ class SignUpViewController: UIViewController {
         Utilities.styleTextField(emailText)
         Utilities.styleTextField(passwordText)
         Utilities.styleFilledButton(signUpButton)
-        emailText.text = email
+        
+        // Disable autofill accessory to save password
+        firstNameText.textContentType = .oneTimeCode
+        lastNameText.textContentType = .oneTimeCode
+        emailText.textContentType = .oneTimeCode
+        passwordText.textContentType = .oneTimeCode
         
     }
     
@@ -153,70 +155,43 @@ class SignUpViewController: UIViewController {
                     }
                     
                 } else {
-                    // Save user's firstname and lastname in local cache to display on profile page
                     SharedData.instance.userFirstName = firstName
                     SharedData.instance.userLastName = lastName
+                    UserDefaults.standard.set(email, forKey: Constants.Setup.kEmail)
+                    UserDefaults.standard.set(firstName, forKey: Constants.Setup.kFirstName)
+                    UserDefaults.standard.set(lastName, forKey: Constants.Setup.kLastName)
+                    UserDefaults.standard.set(result!.user.uid, forKey: Constants.Setup.kUid)
                     
-                    // Display privacy policy
-                    self.displayPrivacyPolicy(email: email, givenName: firstName, familyName: lastName, userId: result!.user.uid)
+                    let actionCodeSettings = Utilities.generateActionCodeSettings(email: email)
                     
-                }
-                
-            }
-            
-        }
-        
-    }
-    
-    // Transition to landing screen
-    func transitionToLanding() {
-        
-        if let landingViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.landingViewController) as? LandingViewController {
-            navigationController?.pushViewController(landingViewController, animated: true)
-        }
-        
-    }
-    
-    func displayPrivacyPolicy(email: String, givenName: String, familyName: String, userId: String) {
-        
-        // Create alert
-        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
-        alert.setValue(Utilities.licensedAgreementFromHtmlString(), forKey: "attributedMessage")
-        
-        // Create Decline button
-        let declineAction = UIAlertAction(title: "Decline" , style: .destructive) { (action) -> Void in
-            let user = Auth.auth().currentUser
-            user?.delete { error in
-                if let error = error {
-                    // An error happened.
-                    self.showError(error.localizedDescription)
-                } else {
-                    // Account deleted.
-                    print("Account was deleted")
+                    result?.user.sendEmailVerification(with: actionCodeSettings, completion: { error in
+                        if let error = error as NSError? {
+                            self.showError(error.localizedDescription)
+                        } else {
+                            // inform user about sending verification email
+                            let title = "Account verification"
+                            let message = "Verification link sent to your email \(email). Please check your email and complete sign up."
+                            self.showSuccessAlert(title: title, message: message)
+                        }
+                    })
                 }
             }
-            
-            self.showError("Please accept privacy policy in order to access the app")
         }
+    }
+    
+    func showSuccessAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        // Create Accept button
-        let acceptAction = UIAlertAction(title: "Accept", style: .default) { (action) -> Void in
-            // first-time user and hence save user info to firestore
-            let errMessage = Utilities.saveUserToFirestore(email: email, firstName: givenName, lastName: familyName, uid: userId)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+            self.emailText.text = ""
+            self.passwordText.text = ""
+            self.firstNameText.text = ""
+            self.lastNameText.text = ""
             
-            if errMessage != nil {
-                // user doesn't need to know that there's an error while saving their data to DB
-                // write it to the application log and monitor such errors
-                print(errMessage!)
-            }
-            // Transition to landing screen
-            self.transitionToLanding()
-        }
-        
-        // Add task to tableview buttons
-        alert.addAction(declineAction)
-        alert.addAction(acceptAction)
+//          self.loginTapped(self)
+        }))
         
         self.present(alert, animated: true, completion: nil)
     }
+    
 }

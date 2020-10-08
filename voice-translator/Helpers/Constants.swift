@@ -61,6 +61,9 @@ struct Constants {
         static let kFirebaseOpenAppURIPrefix = "FirebaseOpenAppURIPrefix"
         static let kFirebaseOpenAppQueryItemEmailName = "FirebaseOpenAppQueryItemEmailName"
         static let kEmail = "Email"
+        static let kFirstName = "FirstName"
+        static let kLastName = "LastName"
+        static let kUid = "uid"
 //      static var shouldOpenMailApp = false
         
     }

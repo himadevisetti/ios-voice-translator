@@ -194,6 +194,59 @@ class Utilities {
       return hashString
     }
     
+    static func generateActionCodeSettings(email: String) -> ActionCodeSettings {
+        
+        let actionCodeSettings = ActionCodeSettings()
+
+        let scheme = InfoPlistParser.getStringValue(forKey: Constants.Setup.kFirebaseOpenAppScheme)
+        let uriPrefix = InfoPlistParser.getStringValue(forKey: Constants.Setup.kFirebaseOpenAppURIPrefix)
+        let queryItemEmailName = InfoPlistParser.getStringValue(forKey: Constants.Setup.kFirebaseOpenAppQueryItemEmailName)
+        
+        var components = URLComponents()
+        components.scheme = scheme
+        components.host = uriPrefix
+        
+        let emailURLQueryItem = URLQueryItem(name: queryItemEmailName, value: email)
+        components.queryItems = [emailURLQueryItem]
+        
+        let linkParameter = components.url
+        
+        actionCodeSettings.url = linkParameter
+        actionCodeSettings.handleCodeInApp = true
+        actionCodeSettings.setIOSBundleID(Bundle.main.bundleIdentifier!)
+        
+        return actionCodeSettings
+    }
+    
+    // Check if user exists in firestore database
+    static func checkUserExistsInFirestore(email: String) -> Bool {
+
+        let db = Firestore.firestore()
+        var userExists: Bool = false
+        
+        // Create a reference to the users collection
+        let docRef = db.collection("users")
+
+        // Create a query against the collection.
+        let query = docRef.whereField("email", isEqualTo: email)
+        
+        query.getDocuments(completion: { (querySnapshot, err) in
+            if let err = err {
+                print("Error while checking if user exists in firestore: \(err.localizedDescription)")
+            } else {
+                let numDocs = querySnapshot?.documents.count
+                
+                if numDocs == 0 {
+                    userExists = false
+                } else {
+                    userExists = true
+                }
+            }
+        })
+        
+        return userExists
+    }
+    
     // save users to firestore
     static func saveUserToFirestore(email: String, firstName: String, lastName: String, uid: String) -> String? {
         // User was created successfully. Store the firstname, lastname and email in Firestore
