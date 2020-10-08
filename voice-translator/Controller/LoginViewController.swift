@@ -23,6 +23,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     @IBOutlet weak var stackToShowSocialButtons: UIStackView!
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var verifyEmailFlow: Bool = false
+    var indicator = UIActivityIndicatorView(style: .large)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +38,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         
         setupNavigationBarItems()
         setUpElements()
-        
+        setUpActivityIndicator()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -117,6 +119,21 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         errorLabel.alpha = 1
     }
     
+    // Spinning wheel processing indicator to show while waiting for the GET API's response
+    func setUpActivityIndicator() {
+        // Set up the activity indicator
+        indicator.color = .gray
+        indicator.backgroundColor = .white
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(indicator)
+        let safeAreaGuide = self.view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor)
+        ])
+    }
+    
     @IBAction func forgotPasswordTapped(_ sender: Any) {
         
         if let resetPasswordViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.resetPasswordViewController) as? ResetPasswordViewController {
@@ -143,6 +160,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
             showError(error!)
             
         } else {
+            
+            indicator.startAnimating()
             
             // Create clean versions of input data
             let email = emailText.text!.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -189,11 +208,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                             }
                         }
                     
-                    // detect user coming from verifyEmail flow (hasAlreadyLaunched == false)
-                    if(!self.appDelegate.hasAlreadyLaunched) {
-                        
-                        //set hasAlreadyLaunched to false
-                        self.appDelegate.sethasAlreadyLaunched()
+                    // detect user coming from verifyEmail flow (verifyEmailFlow == true)
+                    if (self.verifyEmailFlow) {
                         
                         let givenName = UserDefaults.standard.value(forKey: Constants.Setup.kFirstName)
                         let familyName = UserDefaults.standard.value(forKey: Constants.Setup.kLastName)
@@ -203,6 +219,9 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                         self.displayPrivacyPolicy(email: email, givenName: givenName as! String, familyName: familyName as! String, userId: userId as! String)
                         
                     } else {
+                        self.indicator.stopAnimating()
+                        self.indicator.hidesWhenStopped = true
+                        
                         // Transition to landing screen
                         self.transitionToLanding()
                     }
@@ -236,6 +255,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
             }
             return
         }
+        
+        indicator.startAnimating()
         
         guard let authentication = user.authentication else { return }
         let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
@@ -286,6 +307,9 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                     // Save user's firstname and lastname in local cache to display on profile page
                     SharedData.instance.userFirstName = givenName
                     SharedData.instance.userLastName = familyName
+                    
+                    self.indicator.stopAnimating()
+                    self.indicator.hidesWhenStopped = true
                     
                     // Transition to landing screen
                     self.transitionToLanding()
@@ -376,6 +400,9 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
             SharedData.instance.userFirstName = givenName
             SharedData.instance.userLastName = familyName
             
+            self.indicator.stopAnimating()
+            self.indicator.hidesWhenStopped = true
+            
             // Transition to landing screen
             self.transitionToLanding()
         }
@@ -390,6 +417,9 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
 
 extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        
+        indicator.startAnimating()
+        
         var errMessage: String
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
@@ -439,6 +469,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                         // Save user's firstname and lastname in local cache to display on profile page
                         SharedData.instance.userFirstName = givenName
                         SharedData.instance.userLastName = familyName
+                        
+                        self.indicator.stopAnimating()
+                        self.indicator.hidesWhenStopped = true
                         
                         // Transition to landing screen
                         self.transitionToLanding()

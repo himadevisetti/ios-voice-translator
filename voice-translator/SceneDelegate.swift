@@ -98,8 +98,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     let agreeAction = UIAlertAction(title: "Ok", style: .default) { (action) -> Void in
                         print("Account has been verified")
                         if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.loginViewController) as? LoginViewController {
-                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                            appDelegate.hasAlreadyLaunched = false
+                            loginViewController.verifyEmailFlow = true
                             rootViewController.pushViewController(loginViewController, animated: true)
                         }
                     }

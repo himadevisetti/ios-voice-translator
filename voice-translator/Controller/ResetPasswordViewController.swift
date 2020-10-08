@@ -96,33 +96,9 @@ class ResetPasswordViewController: UIViewController {
 
     }
     
-    func generateActionCodeSettings(email: String) -> ActionCodeSettings {
-        
-        let actionCodeSettings = ActionCodeSettings()
-
-        let scheme = InfoPlistParser.getStringValue(forKey: Constants.Setup.kFirebaseOpenAppScheme)
-        let uriPrefix = InfoPlistParser.getStringValue(forKey: Constants.Setup.kFirebaseOpenAppURIPrefix)
-        let queryItemEmailName = InfoPlistParser.getStringValue(forKey: Constants.Setup.kFirebaseOpenAppQueryItemEmailName)
-        
-        var components = URLComponents()
-        components.scheme = scheme
-        components.host = uriPrefix
-        
-        let emailURLQueryItem = URLQueryItem(name: queryItemEmailName, value: email)
-        components.queryItems = [emailURLQueryItem]
-        
-        let linkParameter = components.url
-        
-        actionCodeSettings.url = linkParameter
-        actionCodeSettings.handleCodeInApp = true
-        actionCodeSettings.setIOSBundleID(Bundle.main.bundleIdentifier!)
-        
-        return actionCodeSettings
-    }
-    
     func resetPassword(email: String) {
         
-        let actionCodeSettings = generateActionCodeSettings(email: email)
+        let actionCodeSettings = Utilities.generateActionCodeSettings(email: email)
         
         // Send password reset link
         Auth.auth().sendPasswordReset(withEmail: email, actionCodeSettings: actionCodeSettings) { (err) in
