@@ -55,7 +55,8 @@ class TranslationServices {
         translateRequest.parent = Constants.translateParent
         self.call = self.client.rpcToTranslateText(with: translateRequest, handler: { (translateResponse, error) in
             if error != nil {
-                print(error?.localizedDescription ?? "No eror description found")
+//              print(error?.localizedDescription ?? "No eror description found")
+                Log(self).error("\(String(describing: error?.localizedDescription)) ?? 'No error description available'", includeCodeLocation: true)
                 completionHandler(nil, error?.localizedDescription)
                 return
             }

@@ -53,7 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // If the user is already logged into firebase
         if let user = Auth.auth().currentUser {
-            print("You're signed in as \(user.uid), email: \(String(describing: user.email))")
+//          print("You're signed in as \(user.uid), email: \(String(describing: user.email))")
+            Log(self).info("You're signed in as \(user.uid)", includeCodeLocation: true)
         }
         
         //retrieve value from local store, if value doesn't exist then false is returned
@@ -106,7 +107,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FCMTokenProvider.getToken(deviceID: deviceID) { (shouldWait, token, error) in
                 //          print("shouldWait: \(shouldWait), token: \(String(describing: token)), error: \(error?.localizedDescription ?? "")")
                 if error != nil {
-                    print("error: \(error?.localizedDescription ?? "")")
+//                  print("error: \(error?.localizedDescription ?? "")")
+                    Log(self).error("\(String(describing: error?.localizedDescription)) ?? 'No error description available'", includeCodeLocation: true)
                 }
             }
         }

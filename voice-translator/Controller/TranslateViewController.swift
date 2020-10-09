@@ -25,6 +25,8 @@ class TranslateViewController: UIViewController {
     @IBOutlet weak var uploadButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     
+    var logCategory = "Upload"
+    
     var recordingSession: AVAudioSession!
     var fromLanguageValue = ""
     var toLanguageValue = ""
@@ -112,19 +114,23 @@ class TranslateViewController: UIViewController {
             recordingSession.requestRecordPermission() { (allowed) in
                 DispatchQueue.main.async {
                     if allowed {
-                        //                      print("User has granted permission to record.")
+//                      print("User has granted permission to record.")
                         if let recordViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.recordViewController) as? RecordViewController {
                             self.navigationController?.pushViewController(recordViewController, animated: true)
                         }
                     } else {
                         // failed to record!
-                        self.showError("You did not grant permission to record. Please grant permission from settings for this app or upload an existing file from your storage")
+                        let errorMessage = "You did not grant permission to record. Please grant permission from settings for this app or upload an existing file from your storage"
+                        Log(self).error(errorMessage, includeCodeLocation: true)
+                        self.showError(errorMessage)
                     }
                 }
             }
         } catch {
             // failed to record!
-            showError("Error occured while trying to record.")
+            let errorMessage = "Error occured while trying to record."
+            Log(self).error(errorMessage, includeCodeLocation: true)
+            showError(errorMessage)
         }
     }
     
@@ -211,25 +217,28 @@ class TranslateViewController: UIViewController {
                 DispatchQueue.main.async {
                     
                     let statusCode = results.response?.httpStatusCode
-                    print("HTTP status code:", statusCode ?? 0)
+//                  print("HTTP status code:", statusCode ?? 0)
                     
                     // Response returned from the API, disable spinning wheel and re-enable the controls on the screen
                     self.indicator.stopAnimating()
                     self.indicator.hidesWhenStopped = true
                     
                     if let error = results.error {
-                        print(error)
+//                      print(error)
+                        Log(self).error("API error during file upload: \(error)", includeCodeLocation: true)
                     }
                     
                     if let data = results.data {
                         if let toDictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) {
-                            print(toDictionary)
+//                          print(toDictionary)
+                            Log(self).info("Response from upload API: \(toDictionary)")
                         }
                     }
                     
                     if let failedFiles = failedFilesList {
                         for file in failedFiles {
-                            print(file)
+//                          print(file)
+                            Log(self).error("File that failed during upload: \(file)", includeCodeLocation: true)
                         }
                     }
                     
@@ -326,12 +335,13 @@ extension TranslateViewController: UIDocumentPickerDelegate {
         do {
             let attr = try FileManager.default.attributesOfItem(atPath: selectedFileURL.path)
             fileSize = attr[FileAttributeKey.size] as! UInt64
-            //          print("File size: + \(fileSize)")
+//          print("File size: + \(fileSize)")
             
             try FileManager.default.copyItem(at: selectedFileURL, to: sandboxFileURL)
-            //          print("Copied file")
+//          print("Copied file")
         } catch {
-            print("Error: \(error)")
+//          print("Error: \(error)")
+            Log(self).error("Error while copying the file: \(error)")
         }
         
         SharedData.instance.fileName = sandboxFileURL.lastPathComponent

@@ -18,6 +18,8 @@ class SpeechViewController : UIViewController, AudioControllerDelegate {
     @IBOutlet weak var optionsCard: CardView!
     @IBOutlet weak var audioButton: UIButton!
     
+    var logCategory = "Speech"
+    
     var audioData = NSMutableData()
     var listening: Bool = false
     var tableViewDataSource = [[String: String]]()
@@ -115,7 +117,8 @@ extension SpeechViewController {
                 }
                 
             } catch let error {
-                print("Error occurred while playing audio: \(error.localizedDescription)")
+                Log(self).error("Error occurred while playing audio: \(error.localizedDescription)", includeCodeLocation: true)
+//              print("Error occurred while playing audio: \(error.localizedDescription)")
             }
         }
     }
@@ -158,6 +161,7 @@ extension SpeechViewController: SpeechRecognitionServiceProtocol {
                     
                     TranslationServices.sharedInstance.translateText(text: text, completionHandler: {(response, errorString) in
                         if let error = errorString {
+                            Log(self).error("Error during translation : \(error)", includeCodeLocation: true)
                             self.showErrorAlert(message: error)
                         } else if let response = response {
                             guard let translatedObj = response.translationsArray.firstObject as? Translation, let translatedText = translatedObj.translatedText else {return}
@@ -167,6 +171,7 @@ extension SpeechViewController: SpeechRecognitionServiceProtocol {
                             //MARK:- Call STT API
                             TextToSpeechRecognitionService.sharedInstance.textToSpeech(text: translatedText, completionHandler: {(audioData, errorString) in
                                 if let error = errorString {
+                                    Log(self).error("Error during text-to-speech conversion : \(error)", includeCodeLocation: true)
                                     self.showErrorAlert(message: error)
                                 } else if let audioData = audioData {
                                     self.audioPlayerFor(audioData: audioData)

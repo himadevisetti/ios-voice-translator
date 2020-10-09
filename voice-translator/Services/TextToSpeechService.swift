@@ -28,7 +28,8 @@ class TextToSpeechRecognitionService {
     func getDeviceID(callBack: @escaping (String)->Void) {
         InstanceID.instanceID().instanceID { (result, error) in
             if let error = error {
-                print("Error fetching remote instance ID: \(error)")
+//              print("Error fetching remote instance ID: \(error)")
+                Log(self).error("Error fetching remote instance ID: \(error)", includeCodeLocation: true)
                 callBack( "")
             } else if let result = result {
                 //      print("Remote instance ID token: \(result.token)")
@@ -83,17 +84,20 @@ class TextToSpeechRecognitionService {
         
         self.call = self.client.rpcToSynthesizeSpeech(with: speechRequest, handler: { (synthesizeSpeechResponse, error) in
             if error != nil {
-                print(error?.localizedDescription ?? "No error description available")
-                completionHandler(nil, error?.localizedDescription )
+//              print(error?.localizedDescription ?? "No error description available")
+                Log(self).error("\(String(describing: error?.localizedDescription)) ?? 'No error description available'", includeCodeLocation: true)
+                completionHandler(nil, error?.localizedDescription)
                 return
             }
             guard let response = synthesizeSpeechResponse else {
-                print("No response received")
+//              print("No response received")
+                Log(self).error("No response received")
                 return
             }
             //    print("Text to speech response\(response)")
             guard let audioData =  response.audioContent else {
-                print("no audio data received")
+//              print("no audio data received")
+                Log(self).error("No audio data received")
                 return
             }
             completionHandler(audioData, nil)

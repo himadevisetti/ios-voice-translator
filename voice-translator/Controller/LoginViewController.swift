@@ -12,7 +12,7 @@ import FirebaseAuth
 import GoogleSignIn
 import AuthenticationServices
 
-class LoginViewController: UIViewController, GIDSignInDelegate {
+class LoginViewController: UIViewController, GIDSignInDelegate, Loggable {
     
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
@@ -21,6 +21,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
     @IBOutlet weak var signUpLink: UIButton!
     @IBOutlet weak var forgotPasswordLink: UIButton!
     @IBOutlet weak var stackToShowSocialButtons: UIStackView!
+    
+    var logCategory = "Login"
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var verifyEmailFlow: Bool = false
@@ -173,10 +175,14 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
             // Sign in the user
             Auth.auth().signIn(withEmail: email, password: password) { (result, err) in
                 
+                self.indicator.stopAnimating()
+                self.indicator.hidesWhenStopped = true
+                
                 // Check for errors
                 if err != nil {
                     let error = err! as NSError
-                    print(error.code)
+//                  print(error.code)
+                    Log(self).error("Error logging in the user : \(err!.localizedDescription)")
                     // There's an error while signing in the user
                     switch error.code {
                     case AuthErrorCode.wrongPassword.rawValue:
@@ -197,7 +203,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                     db.collection("users").whereField("email", isEqualTo: email)
                         .getDocuments() { (querySnapshot, err) in
                             if let err = err {
-                                print("Error getting documents: \(err)")
+//                              print("Error getting documents: \(err.localizedDescription)")
+                                Log(self).error("Error fetching user's name from firestore for profile display: \(err.localizedDescription)")
                             } else {
                                 for document in querySnapshot!.documents {
                                     let firstName = document.data()["firstname"] as? String
@@ -219,8 +226,6 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                         self.displayPrivacyPolicy(email: email, givenName: givenName as! String, familyName: familyName as! String, userId: userId as! String)
                         
                     } else {
-                        self.indicator.stopAnimating()
-                        self.indicator.hidesWhenStopped = true
                         
                         // Transition to landing screen
                         self.transitionToLanding()
@@ -249,8 +254,10 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
               withError error: Error!) {
         if let error = error {
             if (error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
-                print("The user has not signed in before or they have since signed out.")
+//              print("The user has not signed in before or they have since signed out from their google account.")
+                Log(self).error("The user has not signed in before or they have since signed out from their google account.")
             } else {
+                Log(self).error("Error while logging in with google signin: \(error.localizedDescription)")
                 showError("\(error.localizedDescription)")
             }
             return
@@ -263,8 +270,13 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                                                        accessToken: authentication.accessToken)
         
         Auth.auth().signIn(with: credential) { (authDataResult, error) in
+            
+            self.indicator.stopAnimating()
+            self.indicator.hidesWhenStopped = true
+            
             if let error = error {
                 let authError = error as NSError
+                Log(self).error("Auth error while logging in with google signin: \(authError.localizedDescription)")
                 self.showError(authError.localizedDescription)
                 return
             }
@@ -273,9 +285,9 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                 let userId = authorizedUser.uid
                 let givenName = user.profile.givenName
                 let familyName = user.profile.familyName
-                
-//              print("User \(givenName!), \(familyName!) signed in as \(userId), email: \(email ?? "unknown email")")
-                print("User signed in as \(userId), email: \(email ?? "unknown email")")
+
+//              print("User signed in as \(userId), email: \(email ?? "unknown email")")
+                Log(self).info("User signed in as \(userId)")
                 
                 // Save email for later use
                 SharedData.instance.userName = email
@@ -300,16 +312,14 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
                         if errMessage != nil {
                             // user doesn't need to know that there's an error while saving their data to DB
                             // write it to the application log and monitor such errors
-                            print(errMessage!)
+//                          print(errMessage!)
+                            Log(self).error("Error saving user to firestore: \(errMessage!)", includeCodeLocation: true)
                         }
                     }
                     
                     // Save user's firstname and lastname in local cache to display on profile page
                     SharedData.instance.userFirstName = givenName
                     SharedData.instance.userLastName = familyName
-                    
-                    self.indicator.stopAnimating()
-                    self.indicator.hidesWhenStopped = true
                     
                     // Transition to landing screen
                     self.transitionToLanding()
@@ -326,6 +336,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
         do {
             try firebaseAuth.signOut()
         } catch let signOutError as NSError {
+            Log(self).error("Error while signing out the user from firebase: \(signOutError.localizedDescription)")
             showError(signOutError.localizedDescription)
         }
     }
@@ -394,7 +405,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate {
             if errMessage != nil {
                 // user doesn't need to know that there's an error while saving their data to DB
                 // write it to the application log and monitor such errors
-                print(errMessage!)
+//              print(errMessage!)
+                Log(self).error("Error saving user to firestore: \(errMessage!)", includeCodeLocation: true)
             }
             // Save user's firstname and lastname in local cache to display on profile page
             SharedData.instance.userFirstName = givenName
@@ -423,24 +435,32 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
         var errMessage: String
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
-                errMessage = "Invalid state: A login callback was received, but no login request was sent"
+                errMessage = "Invalid state: A login callback was received, but no login request was sent while logging in with apple signin"
+                Log(self).error(errMessage)
                 fatalError(errMessage)
             }
             guard let appleIDToken = appleIDCredential.identityToken else {
-                errMessage = "Unable to fetch identity token"
-                print(errMessage)
+                errMessage = "Unable to fetch identity token while logging in with apple signin"
+//              print(errMessage)
+                Log(self).error(errMessage)
                 return
             }
             guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                errMessage = "Unable to serialize token string from data: \(appleIDToken.debugDescription)"
+                errMessage = "Unable to serialize token string from data while logging in with apple signin: \(appleIDToken.debugDescription)"
+                Log(self).error(errMessage)
                 return
             }
             
             let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
             
             Auth.auth().signIn(with: credential) { (authDataResult, error) in
+                
+                self.indicator.stopAnimating()
+                self.indicator.hidesWhenStopped = true
+                
                 if let error = error {
                     let authError = error as NSError
+                    Log(self).error("Error logging in the user with apple signin: \(authError.localizedDescription)", includeCodeLocation: true)
                     self.showError(authError.localizedDescription)
                     return
                 }
@@ -450,8 +470,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     let givenName = appleIDCredential.fullName?.givenName ?? "Favorite"
                     let familyName = appleIDCredential.fullName?.familyName ?? "User"
                     
-                    //                  print("User \(givenName!), \(familyName!) signed in as \(userId), email: \(email ?? "unknown email")")
-                    print("User signed in as \(userId), email: \(email ?? "unknown email")")
+//                  print("User signed in as \(userId), email: \(email ?? "unknown email")")
+                    Log(self).info("User signed in as \(userId)")
                     
                     // Save email for later use
                     SharedData.instance.userName = email
@@ -469,9 +489,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                         // Save user's firstname and lastname in local cache to display on profile page
                         SharedData.instance.userFirstName = givenName
                         SharedData.instance.userLastName = familyName
-                        
-                        self.indicator.stopAnimating()
-                        self.indicator.hidesWhenStopped = true
                         
                         // Transition to landing screen
                         self.transitionToLanding()

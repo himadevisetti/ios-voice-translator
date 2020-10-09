@@ -13,6 +13,8 @@ class StatusViewController: UIViewController {
     
     @IBOutlet weak var stackViewToShowFiles: UIStackView!
     
+    var logCategory = "CheckStatus"
+    
     var messageString: String?
     var textLabel: UILabel?
     var buttonTitle: String?
@@ -281,7 +283,8 @@ class StatusViewController: UIViewController {
 
         let swipedButton = recognizer.view as! UIButton
         let buttonTitle = swipedButton.titleLabel!.text!
-        print("Button to be deleted: \(buttonTitle)")
+//      print("Button to be deleted: \(buttonTitle)")
+        Log(self).info("Button to be deleted: \(buttonTitle)")
         let deleteURL = playerValues?.url
 //      print("URL to be deleted: \(deleteURL!.absoluteString)")
         showDeleteAlertSingle(deleteURL!.absoluteString)
@@ -306,7 +309,8 @@ class StatusViewController: UIViewController {
             self.setUpEmptyLabel()
         })
         let noButton = UIAlertAction(title: "No", style: .default, handler: {(_ action: UIAlertAction) -> Void in
-            print("You pressed 'No' button")
+//          print("You pressed 'No' button")
+            Log(self).info("You pressed 'No' button while trying to delete the file")
         })
         alert.addAction(yesButton)
         alert.addAction(noButton)
@@ -422,7 +426,8 @@ class StatusViewController: UIViewController {
         let noButton = UIAlertAction(title: "No", style: .default, handler: {(_ action: UIAlertAction) -> Void in
 //          print("You pressed 'No' button")
             if let buttonIndex = self.stackViewToShowFiles.arrangedSubviews.firstIndex(of: swipedButton) {
-                print("Index of the button to be removed: \(buttonIndex)")
+//              print("Index of the button to be removed: \(buttonIndex)")
+                Log(self).info("Index of the button to be removed: \(buttonIndex)")
             }
         })
         alert.addAction(yesButton)
@@ -448,7 +453,8 @@ class StatusViewController: UIViewController {
             
             DispatchQueue.main.async {
                 statusCode = results.response?.httpStatusCode
-                print("HTTP status code:", statusCode ?? 0)
+//              print("HTTP status code:", statusCode ?? 0)
+                Log(self).info("HTTP status code from deletefile API: \(statusCode ?? 0)")
                 SharedData.instance.statusCode = statusCode
             }
         }

@@ -13,6 +13,8 @@ class MessageViewController: UIViewController {
     
     @IBOutlet weak var messageView: UIStackView!
     
+    var logCategory = "Upload"
+    
     let viewStatusUrl: String = Constants.Api.URL_BASE + Constants.Api.URL_VIEWSTATUS
     var player: AVPlayer?
     var playerItem: AVPlayerItem?
@@ -84,7 +86,8 @@ class MessageViewController: UIViewController {
             
             DispatchQueue.main.async {
                 let statusCode = results.response?.httpStatusCode
-                print("HTTP status code:", statusCode ?? 0)
+//              print("HTTP status code:", statusCode ?? 0)
+                Log(self).info("HTTP status code from viewstatus API: \(statusCode ?? 0)")
                 
                 // Response returned from the API, disable spinning wheel and re-enable the controls on the screen
                 self.indicator.stopAnimating()
@@ -212,7 +215,8 @@ class MessageViewController: UIViewController {
             try FileManager.default.createDirectory(atPath: soundDirPathString, withIntermediateDirectories: true, attributes:nil)
 //          print("directory created at \(soundDirPathString)")
         } catch let error as NSError {
-            print("error while creating dir : \(error.localizedDescription)");
+//          print("error while creating dir : \(error.localizedDescription)");
+            Log(self).error("Error while creating dir to save file: \(error.localizedDescription)", includeCodeLocation: true)
         }
         
         if let audioUrl = URL(string: audioFile) {
@@ -224,7 +228,8 @@ class MessageViewController: UIViewController {
 //          print(destinationUrl)
             // check if it exists before downloading it
             if FileManager().fileExists(atPath: destinationUrl.path) {
-                print("The file already exists at path")
+//              print("The file already exists at path")
+                Log(self).info("The file already exists at path")
                 completion(destinationUrl.absoluteString)
             } else {
                 //  if the file doesn't exist
@@ -233,10 +238,12 @@ class MessageViewController: UIViewController {
                     if let myAudioDataFromUrl = try? Data(contentsOf: audioUrl){
                         // after downloading your data you need to save it to your destination url
                         if (try? myAudioDataFromUrl.write(to: destinationUrl, options: [.atomic])) != nil {
-                            print("file saved at \(destinationUrl)")
+//                          print("file saved at \(destinationUrl)")
+                            Log(self).info("File saved at \(destinationUrl)")
                             completion(destinationUrl.absoluteString)
                         } else {
-                            print("error saving file")
+//                          print("error saving file")
+                            Log(self).error("Error saving file")
                             completion("")
                         }
                     }

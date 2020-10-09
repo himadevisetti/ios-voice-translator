@@ -34,7 +34,8 @@ class SpeechRecognitionService {
     func getDeviceID(callBack: @escaping (String)->Void) {
         InstanceID.instanceID().instanceID { (result, error) in
             if let error = error {
-                print("Error fetching remote instance ID: \(error)")
+//              print("Error fetching remote instance ID: \(error)")
+                Log(self).error("Error fetching remote instance ID: \(error)", includeCodeLocation: true)
                 callBack( "")
             } else if let result = result {
                 //      print("Remote instance ID token: \(result.token)")

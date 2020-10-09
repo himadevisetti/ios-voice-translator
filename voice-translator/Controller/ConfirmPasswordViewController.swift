@@ -18,6 +18,8 @@ class ConfirmPasswordViewController: UIViewController {
     @IBOutlet weak var confirmPasswordButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     
+    var logCategory = "ResetPassword"
+    
     var email: String?
     var actionCode: String? // oobCode from reset password link
     
@@ -134,10 +136,13 @@ class ConfirmPasswordViewController: UIViewController {
                     // There's an error while validating the action code for password reset
                     switch error.code {
                     case AuthErrorCode.expiredActionCode.rawValue:
+                        Log("resetPassword").error("Code expired. Click 'Sign In' -> 'Forgot password' and get the password reset link sent again")
                         self.showError("Code expired. Click 'Sign In' -> 'Forgot password' and get the password reset link sent again")
                     case AuthErrorCode.invalidActionCode.rawValue:
+                        Log("resetPassword").error("Invalid code. Code is expired or has already been used")
                         self.showError("Invalid code. Code is expired or has already been used")
                     default:
+                        Log("resetPassword").error("Unknown error: \(error.localizedDescription)")
                         self.showError("Unknown error: \(error.localizedDescription)")
                     }
                 } else {
@@ -147,7 +152,8 @@ class ConfirmPasswordViewController: UIViewController {
                     db.collection("users").whereField("email", isEqualTo: email)
                         .getDocuments() { (querySnapshot, err) in
                             if let err = err {
-                                print("Error getting documents: \(err)")
+//                              print("Error getting documents: \(err)")
+                                Log(self).error("Error fetching user's name from firestore for profile display: \(err.localizedDescription)")
                             } else {
                                 for document in querySnapshot!.documents {
                                     let firstName = document.data()["firstname"] as? String

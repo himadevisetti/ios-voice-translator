@@ -34,6 +34,7 @@
 		DC1EA241252BA79500869554 /* InfoPlistParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA240252BA79500869554 /* InfoPlistParser.swift */; };
 		DC1EA27F252D324100869554 /* QueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA27E252D324100869554 /* QueryParameters.swift */; };
 		DC1EA282252D3A0200869554 /* ConfirmPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1EA281252D3A0200869554 /* ConfirmPasswordViewController.swift */; };
+		DC31B8F22530B97100100B1E /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31B8F12530B97100100B1E /* Log.swift */; };
 		DC54B247251BDD2A00F5BEF4 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */; };
 		DC6C9A972524E4420099CFB9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9A962524E4420099CFB9 /* ProfileViewController.swift */; };
 		DC6C9A9C2524E5C20099CFB9 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9A9A2524E5C20099CFB9 /* ProfileCell.swift */; };
@@ -82,6 +83,7 @@
 		DC1EA240252BA79500869554 /* InfoPlistParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPlistParser.swift; sourceTree = "<group>"; };
 		DC1EA27E252D324100869554 /* QueryParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParameters.swift; sourceTree = "<group>"; };
 		DC1EA281252D3A0200869554 /* ConfirmPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPasswordViewController.swift; sourceTree = "<group>"; };
+		DC31B8F12530B97100100B1E /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		DC3B0B4C24FF739A006567F9 /* voice-translator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "voice-translator.entitlements"; sourceTree = "<group>"; };
 		DC54B246251BDD2A00F5BEF4 /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 		DC6C9A962524E4420099CFB9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				DC12158D252296DC003B8832 /* CardView.swift */,
 				DC1EA240252BA79500869554 /* InfoPlistParser.swift */,
 				DC1EA27E252D324100869554 /* QueryParameters.swift */,
+				DC31B8F12530B97100100B1E /* Log.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC31B8F22530B97100100B1E /* Log.swift in Sources */,
 				A01B7EBF24F4D82200969DED /* StatusViewController.swift in Sources */,
 				A0E23CFF24F197A1000D6A13 /* SharedData.swift in Sources */,
 				DCA13B1C2515781F006DD9F3 /* TextToSpeechService.swift in Sources */,

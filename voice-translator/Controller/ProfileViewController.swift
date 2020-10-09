@@ -11,6 +11,8 @@ import FirebaseAuth
 
 class ProfileViewController: UIViewController {
 
+    var logCategory = "Profile"
+    
     private let reuseIdentifier = "ProfileCell"
     var indicator = UIActivityIndicatorView(style: .large)
     
@@ -80,7 +82,8 @@ class ProfileViewController: UIViewController {
             
             DispatchQueue.main.async {
                 let statusCode = results.response?.httpStatusCode
-                print("HTTP status code:", statusCode ?? 0)
+//              print("HTTP status code:", statusCode ?? 0)
+                Log(self).info("HTTP status code from checkstatus API: \(statusCode ?? 0)")
                 
                 // Response returned from the API, disable spinning wheel and re-enable the controls on the screen
                 self.indicator.stopAnimating()
@@ -205,7 +208,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                   try firebaseAuth.signOut()
                 } catch let signOutError as NSError {
                     // Send this to logs
-                    print(signOutError.localizedDescription)
+//                  print(signOutError.localizedDescription)
+                    Log(self).info("Error while signing out the user from firebase: \(signOutError.localizedDescription)")
                 }
                 if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.loginViewController) as? LoginViewController {
                   navigationController?.pushViewController(loginViewController, animated: true)

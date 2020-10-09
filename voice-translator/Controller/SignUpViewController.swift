@@ -21,6 +21,8 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     
+    var logCategory = "Sign up"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -138,7 +140,8 @@ class SignUpViewController: UIViewController {
                 // Check for errors
                 if err != nil {
                     let error = err! as NSError
-                    print(error.code)
+//                  print(error.code)
+                    Log(self).error("Error creating the user : \(err!.localizedDescription)")
                     // There's an error while creating user
 //                  self.showError("Error creating user")
                     switch error.code {
@@ -166,11 +169,13 @@ class SignUpViewController: UIViewController {
                     
                     result?.user.sendEmailVerification(with: actionCodeSettings, completion: { error in
                         if let error = error as NSError? {
+                            Log(self).error("Error while sending verification email to \(email): \(error.localizedDescription)")
                             self.showError(error.localizedDescription)
                         } else {
                             // inform user about sending verification email
                             let title = "Account verification"
                             let message = "Verification link sent to your email \(email). Please check your email and complete sign up."
+                            Log(self).info(message)
                             self.showSuccessAlert(title: title, message: message)
                         }
                     })

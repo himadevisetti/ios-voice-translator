@@ -232,7 +232,8 @@ class Utilities {
         
         query.getDocuments(completion: { (querySnapshot, err) in
             if let err = err {
-                print("Error while checking if user exists in firestore: \(err.localizedDescription)")
+//              print("Error while checking if user exists in firestore: \(err.localizedDescription)")
+                Log(self).error("Error while checking if user exists in firestore: \(err.localizedDescription)")
             } else {
                 let numDocs = querySnapshot?.documents.count
                 
@@ -261,7 +262,9 @@ class Utilities {
         
         query.getDocuments(completion: { (querySnapshot, err) in
             if let err = err {
-                print("Error getting documents: \(err)")
+//              print("Error checking if user exists in firestore: \(err)")
+                errMessage = "Error checking if user exists in firestore: \(err.localizedDescription)"
+                Log(self).error(errMessage!)
             } else {
                 let numDocs = querySnapshot?.documents.count
                 

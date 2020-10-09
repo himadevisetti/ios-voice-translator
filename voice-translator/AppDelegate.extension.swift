@@ -86,14 +86,15 @@ extension AppDelegate {
         if let incomingURL = userActivity.webpageURL {
             let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(incomingURL) { (dynamicLink, error) in
                 guard error == nil else {
-                    print("Found an error: \(error!.localizedDescription)")
+//                  print("Found an error: \(error!.localizedDescription)")
+                    Log(self).error("Found an error: \(error!.localizedDescription)", includeCodeLocation: true)
                     return
                 }
                 if let dynamicLink = dynamicLink {
                     _ = self.handleIncomingDynamicLink(dynamicLink)
                 }
             }
-            print("Link Handled: \(linkHandled)")
+//          print("Link Handled: \(linkHandled)")
             if linkHandled {
                 return true
             } else {
@@ -107,12 +108,13 @@ extension AppDelegate {
     func handleIncomingDynamicLink(_ dynamicLink: DynamicLink) -> Bool {
         
         guard let url = dynamicLink.url else {
-            print("Dynamic link object has no URL")
+//          print("Dynamic link object has no URL")
+            Log(self).error("Dynamic link object has no URL", includeCodeLocation: true)
             return false
         }
         
-        let dynamicLinkURL = url.absoluteString
-        print("Dynamic link is: \(dynamicLinkURL)")
+//      let dynamicLinkURL = url.absoluteString
+//      print("Dynamic link is: \(dynamicLinkURL)")
         
         let mode = url.queryParameters["mode"]
         let oobCode = url.queryParameters["oobCode"]
@@ -130,18 +132,18 @@ extension AppDelegate {
                     // There's an error while validating the action code for email verification
                     switch error.code {
                     case AuthErrorCode.expiredActionCode.rawValue:
-                        print("Code expired. Click 'Sign In' -> 'Forgot password' and get the password reset link sent again")
+                        Log("verifyEmail").error("Code expired. Click 'Sign up' and get the verify email link sent again")
                     case AuthErrorCode.invalidActionCode.rawValue:
-                        print("Invalid code. Code is expired or has already been used")
+                        Log("verifyEmail").error("Invalid code. Code is expired or has already been used")
                     default:
-                        print("Unknown error: \(error.localizedDescription)")
+                        Log("verifyEmail").error("Unknown error: \(error.localizedDescription)")
                     }
                 } else {
                     // Email has been verified. Prompt user to login
                     let alert = UIAlertController(title: "Account verified", message: "Your account has been verified. Please sign in", preferredStyle: .alert)
                     // Create agree button
                     let agreeAction = UIAlertAction(title: "Ok", style: .default) { (action) -> Void in
-                        print("Account has been verified")
+                        Log("verifyEmail").info("Account has been verified")
                         if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.loginViewController) as? LoginViewController {
                             let appDelegate = UIApplication.shared.delegate as! AppDelegate
                             appDelegate.hasAlreadyLaunched = false

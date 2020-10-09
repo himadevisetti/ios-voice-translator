@@ -113,7 +113,8 @@ class RecordViewController: UIViewController, AVAudioRecorderDelegate {
             try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
             
         } catch {
-            print("Failed to set audio session properties.")
+//          print("Failed to set audio session properties.")
+            Log(self).error("Failed to set audio session properties for recording.", includeCodeLocation: true)
         }
         
         let settings = [
@@ -151,6 +152,7 @@ class RecordViewController: UIViewController, AVAudioRecorderDelegate {
             startRecordButton.setTitle("Tap to Record", for: .normal)
             setStartRecordingImage()
             // recording failed
+            Log(self).error("Recording failed for some reason.")
             showError("Recording failed for some reason.")
         }
     }

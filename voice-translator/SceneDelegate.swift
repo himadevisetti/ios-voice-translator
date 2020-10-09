@@ -43,7 +43,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(url) { (dynamicLink, error) in
             guard error == nil else {
-                print("Found an error: \(error!.localizedDescription)")
+//              print("Found an error: \(error!.localizedDescription)")
+                Log(self).error("Found an error: \(error!.localizedDescription)", includeCodeLocation: true)
                 return
             }
             if let dynamicLink = dynamicLink {
@@ -62,7 +63,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func handleIncomingDynamicLink(_ dynamicLink: DynamicLink) -> Bool {
         
         guard let url = dynamicLink.url else {
-            print("Dynamic link object has no URL")
+//          print("Dynamic link object has no URL")
+            Log(self).error("Dynamic link object has no URL", includeCodeLocation: true)
             return false
         }
         
@@ -85,18 +87,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     // There's an error while validating the action code for email verification
                     switch error.code {
                     case AuthErrorCode.expiredActionCode.rawValue:
-                        print("Code expired. Click 'Sign In' -> 'Forgot password' and get the password reset link sent again")
+                        Log("verifyEmail").error("Code expired. Click 'Sign up' and get the verify email link sent again")
                     case AuthErrorCode.invalidActionCode.rawValue:
-                        print("Invalid code. Code is expired or has already been used")
+                        Log("verifyEmail").error("Invalid code. Code is expired or has already been used")
                     default:
-                        print("Unknown error: \(error.localizedDescription)")
+                        Log("verifyEmail").error("Unknown error: \(error.localizedDescription)")
                     }
                 } else {
                     // Email has been verified. Prompt user to login
                     let alert = UIAlertController(title: "Account verified", message: "Your account has been verified. Please sign in", preferredStyle: .alert)
                     // Create agree button
                     let agreeAction = UIAlertAction(title: "Ok", style: .default) { (action) -> Void in
-                        print("Account has been verified")
+                        Log("verifyEmail").info("Account has been verified")
                         if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.loginViewController) as? LoginViewController {
                             loginViewController.verifyEmailFlow = true
                             rootViewController.pushViewController(loginViewController, animated: true)

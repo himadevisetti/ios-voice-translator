@@ -103,6 +103,7 @@ class ResetPasswordViewController: UIViewController {
         // Send password reset link
         Auth.auth().sendPasswordReset(withEmail: email, actionCodeSettings: actionCodeSettings) { (err) in
             if let err = err {
+                Log(self).error("Error while sending reset password email to \(email): \(err.localizedDescription)")
                 self.showError(err.localizedDescription)
             }
         }
