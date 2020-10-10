@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class StatusViewController: UIViewController {
+class StatusViewController: UIViewController, Loggable {
     
     @IBOutlet weak var stackViewToShowFiles: UIStackView!
     

@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-class ConfirmPasswordViewController: UIViewController {
+class ConfirmPasswordViewController: UIViewController, Loggable {
     
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
@@ -136,13 +136,13 @@ class ConfirmPasswordViewController: UIViewController {
                     // There's an error while validating the action code for password reset
                     switch error.code {
                     case AuthErrorCode.expiredActionCode.rawValue:
-                        Log("resetPassword").error("Code expired. Click 'Sign In' -> 'Forgot password' and get the password reset link sent again")
+                        Log(self).error("Code expired. Click 'Sign In' -> 'Forgot password' and get the password reset link sent again")
                         self.showError("Code expired. Click 'Sign In' -> 'Forgot password' and get the password reset link sent again")
                     case AuthErrorCode.invalidActionCode.rawValue:
-                        Log("resetPassword").error("Invalid code. Code is expired or has already been used")
+                        Log(self).error("Invalid code. Code is expired or has already been used")
                         self.showError("Invalid code. Code is expired or has already been used")
                     default:
-                        Log("resetPassword").error("Unknown error: \(error.localizedDescription)")
+                        Log(self).error("Unknown error: \(error.localizedDescription)")
                         self.showError("Unknown error: \(error.localizedDescription)")
                     }
                 } else {

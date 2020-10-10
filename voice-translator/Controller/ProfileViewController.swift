@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, Loggable {
 
     var logCategory = "Profile"
     

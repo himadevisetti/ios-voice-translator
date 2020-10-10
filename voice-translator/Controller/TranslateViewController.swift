@@ -10,7 +10,7 @@ import UIKit
 import MobileCoreServices
 import AVFoundation
 
-class TranslateViewController: UIViewController {
+class TranslateViewController: UIViewController, Loggable {
     
     @IBOutlet weak var recordPromptLabel: UILabel!
     

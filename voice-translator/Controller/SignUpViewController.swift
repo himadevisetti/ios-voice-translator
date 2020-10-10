@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 //import FirebaseFirestore
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, Loggable {
     
     
     @IBOutlet weak var firstNameText: UITextField!

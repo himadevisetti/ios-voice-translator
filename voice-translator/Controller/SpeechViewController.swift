@@ -12,7 +12,7 @@ import googleapis
 
 let SAMPLE_RATE = 16000
 
-class SpeechViewController : UIViewController, AudioControllerDelegate {
+class SpeechViewController : UIViewController, AudioControllerDelegate, Loggable {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var optionsCard: CardView!

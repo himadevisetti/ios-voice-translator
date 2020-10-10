@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class MessageViewController: UIViewController {
+class MessageViewController: UIViewController, Loggable {
     
     @IBOutlet weak var messageView: UIStackView!
     
