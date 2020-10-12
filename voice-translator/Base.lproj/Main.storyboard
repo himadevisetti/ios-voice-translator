@@ -411,10 +411,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Dog-QA-jfv">
-                                <rect key="frame" x="0.0" y="159" width="375" height="130"/>
+                                <rect key="frame" x="10" y="119" width="355" height="130"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Edz-6B-Yam">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="130"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="130" id="wgs-qi-cr1"/>
                                         </constraints>
@@ -429,9 +429,9 @@
                         <viewLayoutGuide key="safeArea" id="qcT-e5-aNU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Dog-QA-jfv" firstAttribute="top" secondItem="qcT-e5-aNU" secondAttribute="top" constant="115" id="S6s-lf-IiZ"/>
-                            <constraint firstItem="qcT-e5-aNU" firstAttribute="trailing" secondItem="Dog-QA-jfv" secondAttribute="trailing" id="wlr-H8-Shp"/>
-                            <constraint firstItem="Dog-QA-jfv" firstAttribute="leading" secondItem="qcT-e5-aNU" secondAttribute="leading" id="yNI-yI-cZp"/>
+                            <constraint firstItem="Dog-QA-jfv" firstAttribute="top" secondItem="qcT-e5-aNU" secondAttribute="top" constant="75" id="S6s-lf-IiZ"/>
+                            <constraint firstItem="qcT-e5-aNU" firstAttribute="trailing" secondItem="Dog-QA-jfv" secondAttribute="trailing" constant="10" id="wlr-H8-Shp"/>
+                            <constraint firstItem="Dog-QA-jfv" firstAttribute="leading" secondItem="qcT-e5-aNU" secondAttribute="leading" constant="10" id="yNI-yI-cZp"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="wBP-80-MUz"/>

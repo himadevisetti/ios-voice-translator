@@ -9,6 +9,7 @@
 import UIKit
 import MobileCoreServices
 import AVFoundation
+import MediaPlayer
 
 class TranslateViewController: UIViewController, Loggable {
     
@@ -36,7 +37,7 @@ class TranslateViewController: UIViewController, Loggable {
     var fileContents: NSMutableData = NSMutableData()
     //  var fileName: String = ""
     var mimeType: String = ""
-    var fileSize: UInt64 = 0
+    var fileSize: Double = 0
     var indicator = UIActivityIndicatorView(style: .large)
     
     lazy var alert : UIAlertController = {
@@ -191,15 +192,60 @@ class TranslateViewController: UIViewController, Loggable {
     
     @IBAction func chooseFileTapped(_ sender: Any) {
         
-        let options = [kUTTypeAudio as String, kUTTypeMP3 as String, kUTTypeMPEG4Audio as String, kUTTypeAppleProtectedMPEG4Audio as String]
+        let actionSheetAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let documentPicker = UIDocumentPickerViewController(documentTypes: options, in: .import)
-        documentPicker.delegate = self
-        documentPicker.allowsMultipleSelection = false
-        present(documentPicker, animated: true, completion: nil)
+        let mediaAction = UIAlertAction(title: " Media", style: .default) { (action) -> Void in
+            
+            let mediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.anyAudio)
+            mediaPicker.delegate = self
+            mediaPicker.allowsPickingMultipleItems = false
+            self.present(mediaPicker, animated: true, completion: nil)
+            
+        }
+        
+        let mediaImage = UIImage(systemName: "music.note.list")?.withRenderingMode(.alwaysOriginal).withTintColor(.systemBlue)
+        mediaAction.setValue(mediaImage, forKey: "image")
+        mediaAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+//      mediaAction.setValue(UIColor.black, forKey: "titleTextColor")
+        actionSheetAlertController.addAction(mediaAction)
+        
+        let documentAction = UIAlertAction(title: "  Document", style: .default) { (action) -> Void in
+            
+            let options = [kUTTypeAudio as String, kUTTypeMP3 as String, kUTTypeMPEG4Audio as String, kUTTypeAppleProtectedMPEG4Audio as String]
+            let documentPicker = UIDocumentPickerViewController(documentTypes: options, in: .import)
+            documentPicker.delegate = self
+            documentPicker.allowsMultipleSelection = false
+            self.present(documentPicker, animated: true, completion: nil)
+            
+        }
+        
+        let documentImage = UIImage(systemName: "doc")?.withRenderingMode(.alwaysOriginal).withTintColor(.systemBlue)
+        documentAction.setValue(documentImage, forKey: "image")
+        documentAction.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+//      documentAction.setValue(UIColor.black, forKey: "titleTextColor")
+        actionSheetAlertController.addAction(documentAction)
+       
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        cancelAction.setValue(UIColor.systemBlue, forKey: "titleTextColor")
+        actionSheetAlertController.addAction(cancelAction)
+        
+        actionSheetAlertController.pruneNegativeWidthConstraints()
+        actionSheetAlertController.view.layer.cornerRadius = 25
+        actionSheetAlertController.view.tintColor = .black
+        self.present(actionSheetAlertController, animated: true, completion: nil)
+        
     }
     
     func uploadSingleFile() {
+        if fileURL == nil {
+            showError("Please choose a file to upload")
+            DispatchQueue.main.async {
+                self.indicator.stopAnimating()
+                self.indicator.hidesWhenStopped = true
+                self.uploadButton.isUserInteractionEnabled = true
+            }
+            return
+        }
         let fileInfo = NetworkService.FileInfo(withFileURL: fileURL, filename: SharedData.instance.fileName!, name: "file", mimetype: mimeType)
         upload(files: [fileInfo], toURL: URL(string: uploadURL))
     }
@@ -302,21 +348,129 @@ class TranslateViewController: UIViewController, Loggable {
             return "Please choose a value from 'To Language' dropdown."
         }
         
-        // Validate that a file was uploaded
-        let filename = fileName.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        if Utilities.isValidFile(filename) == false {
-            
-            // File is invalid
-            return "Please upload a valid file"
-        }
+        // Disabled filename validation as music library doesn't have those restrictions
+        // Validate filename
+//      let filename = fileName.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+//      if Utilities.isValidFile(filename) == false {
+//
+//          // File is invalid
+//          return "File name is invalid. Cannot contain spaces or braces"
+//      }
         
         // Validate that the file size is not greater than 100MB
-        let oneHundredMB = 100 * 1024 * 1024
+        let oneHundredMB = Double(100 * 1024 * 1024)
         if fileSize > oneHundredMB {
             return "File too big, please upload a file less than 100MB"
         }
         
         return nil
+    }
+    
+    func checkForMusicLibraryAccess(pathURL: URL, title: String) {
+        
+        let status = MPMediaLibrary.authorizationStatus()
+        switch status {
+        case .authorized:
+            Log(self).info("Access to media library is authorized")
+            exportFileToAppSandbox(pathURL, title: title) { sandboxFileURL, error in
+                guard let sandboxFileURL = sandboxFileURL, error == nil else {
+                    Log(self).error("Export failed: \(error!)", includeCodeLocation: true)
+                    return
+                }
+                
+                SharedData.instance.fileName = sandboxFileURL.lastPathComponent
+                self.fileURL = URL(fileURLWithPath: sandboxFileURL.path)
+                
+                DispatchQueue.main.async {
+                    // Export completed. Hide spinning wheel
+                    self.indicator.stopAnimating()
+                    self.indicator.hidesWhenStopped = true
+                    
+                    // Setting the fileName to the fileName outlet in the view
+                    self.fileName.text = sandboxFileURL.lastPathComponent
+                    self.fileName.alpha = 1
+                }
+                
+            }
+        case .notDetermined:
+            Log(self).info("Access to media library is not determined")
+            MPMediaLibrary.requestAuthorization() { status in
+                if status == .authorized {
+                    DispatchQueue.main.async {
+                        Log(self).info("Access to media library is authorized")
+                        self.exportFileToAppSandbox(pathURL, title: title) { sandboxFileURL, error in
+                            guard let sandboxFileURL = sandboxFileURL, error == nil else {
+                                Log(self).error("Export failed: \(error!)", includeCodeLocation: true)
+                                return
+                            }
+                            
+                            SharedData.instance.fileName = sandboxFileURL.lastPathComponent
+                            self.fileURL = URL(fileURLWithPath: sandboxFileURL.path)
+                            
+                            DispatchQueue.main.async {
+                                // Export completed. Hide spinning wheel
+                                self.indicator.stopAnimating()
+                                self.indicator.hidesWhenStopped = true
+                                
+                                // Setting the fileName to the fileName outlet in the view
+                                self.fileName.text = sandboxFileURL.lastPathComponent
+                                self.fileName.alpha = 1
+                            }
+                        }
+                    }
+                }
+            }
+        case .restricted:
+            // do nothing
+            Log(self).info("Access to media library is restricted")
+            break
+        case .denied:
+            // do nothing, or beg the user to authorize us in Settings
+            Log(self).info("Access to media library is denied")
+            break
+        default: fatalError()
+        }
+        
+    }
+    
+    func exportFileToAppSandbox(_ assetURL: URL, title: String, completionHandler: @escaping (_ fileURL: URL?, _ error: Error?) -> ()) {
+        let asset = AVURLAsset(url: assetURL)
+        mimeType = assetURL.mimeType()
+        
+        guard let exporter = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetAppleM4A) else {
+            completionHandler(nil, ExportError.unableToCreateExporter)
+            return
+        }
+        
+        exporter.timeRange = CMTimeRange(start: CMTime.zero, duration: asset.duration)
+        let estimatedFileSize = Double(exporter.estimatedOutputFileLength)
+        let doubleBytes = Double(1048576)
+        let fileSizeInMB = estimatedFileSize / doubleBytes
+        fileSize = round(fileSizeInMB * 100) / 100 // round off to 2 decimal places
+        
+        // Export process takes a while. Show spinning wheel
+        indicator.startAnimating()
+        
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let sandboxFileURL = dir.appendingPathComponent(title).appendingPathExtension("m4a")
+        
+        //Delete Existing file
+        do {
+            try FileManager.default.removeItem(at: sandboxFileURL)
+        } catch let error as NSError {
+            Log(self).error("File could not be deleted from sandbox: \(error.debugDescription)")
+        }
+        
+        exporter.outputURL = sandboxFileURL
+        exporter.outputFileType = .m4a
+        
+        exporter.exportAsynchronously {
+            if exporter.status == .completed {
+                completionHandler(sandboxFileURL, nil)
+            } else {
+                completionHandler(nil, exporter.error)
+            }
+        }
     }
     
 }
@@ -334,7 +488,7 @@ extension TranslateViewController: UIDocumentPickerDelegate {
         
         do {
             let attr = try FileManager.default.attributesOfItem(atPath: selectedFileURL.path)
-            fileSize = attr[FileAttributeKey.size] as! UInt64
+            fileSize = attr[FileAttributeKey.size] as! Double
 //          print("File size: + \(fileSize)")
             
             try FileManager.default.copyItem(at: selectedFileURL, to: sandboxFileURL)
@@ -359,4 +513,32 @@ extension TranslateViewController: UIDocumentPickerDelegate {
         
     }
     
+}
+
+extension TranslateViewController: MPMediaPickerControllerDelegate {
+    
+    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+
+        guard let item: MPMediaItem = mediaItemCollection.items.first else {
+            return
+        }
+        let pathURL: URL? = item.value(forProperty: MPMediaItemPropertyAssetURL) as? URL
+        if pathURL == nil {
+            self.showError("Unable to read DRM protected file.")
+            return
+        }
+        let title = item.value(forProperty: MPMediaItemPropertyTitle) as? String ?? "Unknown Title"
+        checkForMusicLibraryAccess(pathURL: pathURL!, title: title)
+        
+        self.dismiss(animated:true)
+    }
+    
+    func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
+        self.dismiss(animated:true)
+    }
+    
+}
+
+enum ExportError: Error {
+    case unableToCreateExporter
 }

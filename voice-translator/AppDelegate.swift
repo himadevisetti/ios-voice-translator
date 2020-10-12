@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If the user is already logged into firebase
         if let user = Auth.auth().currentUser {
 //          print("You're signed in as \(user.uid), email: \(String(describing: user.email))")
-            Log(self).info("You're signed in as \(user.uid)", includeCodeLocation: true)
+            Log(self).info("You're signed in as \(user.uid)")
         }
         
         //retrieve value from local store, if value doesn't exist then false is returned

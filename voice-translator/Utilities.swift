@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import CryptoKit
 import Firebase
+import AVFoundation
+import MobileCoreServices
 //import FirebaseFirestore
 
 class Utilities {
@@ -414,5 +416,57 @@ extension String {
             String(self[substringFrom..<substringTo])
             }
         }
+    }
+}
+
+extension UIAlertController {
+    func pruneNegativeWidthConstraints() {
+        for subView in self.view.subviews {
+            for constraint in subView.constraints where constraint.debugDescription.contains("width == - 16") {
+                subView.removeConstraint(constraint)
+            }
+        }
+    }
+}
+
+extension URL {
+    func mimeType() -> String {
+        let pathExtension = self.pathExtension
+        if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension as NSString, nil)?.takeRetainedValue() {
+            if let mimetype = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType)?.takeRetainedValue() {
+                return mimetype as String
+            }
+        }
+        return "application/octet-stream"
+    }
+    var containsImage: Bool {
+        let mimeType = self.mimeType()
+        guard let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mimeType as CFString, nil)?.takeRetainedValue() else {
+            return false
+        }
+        return UTTypeConformsTo(uti, kUTTypeImage)
+    }
+    var containsAudio: Bool {
+        let mimeType = self.mimeType()
+        guard let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mimeType as CFString, nil)?.takeRetainedValue() else {
+            return false
+        }
+        return UTTypeConformsTo(uti, kUTTypeAudio)
+    }
+    var containsVideo: Bool {
+        let mimeType = self.mimeType()
+        guard  let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mimeType as CFString, nil)?.takeRetainedValue() else {
+            return false
+        }
+        return UTTypeConformsTo(uti, kUTTypeMovie)
+    }
+    
+}
+
+extension AVURLAsset {
+    var fileSize: Int? {
+        let keys: Set<URLResourceKey> = [.totalFileSizeKey, .fileSizeKey]
+        let resourceValues = try? url.resourceValues(forKeys: keys)
+        return resourceValues?.fileSize ?? resourceValues?.totalFileSize
     }
 }
