@@ -15,7 +15,6 @@
 		A039598424EB49C400EC77EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A039598324EB49C400EC77EE /* Assets.xcassets */; };
 		A039598724EB49C400EC77EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A039598524EB49C400EC77EE /* LaunchScreen.storyboard */; };
 		A045E03D24EC621F00D9F3CF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A045E03C24EC621F00D9F3CF /* Constants.swift */; };
-		A0683DCD24EC441000318C58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0683DCC24EC440F00318C58 /* GoogleService-Info.plist */; };
 		A06B3E7124EBB6970016233A /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B3E7024EBB6970016233A /* Utilities.swift */; };
 		A0957F3724EED98C00DB237A /* TranslateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0957F3624EED98C00DB237A /* TranslateViewController.swift */; };
 		A0957F3924EF5B6C00DB237A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0957F3824EF5B6C00DB237A /* NetworkService.swift */; };
@@ -49,6 +48,7 @@
 		DCA13B1F2515A940006DD9F3 /* SpeechViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B1E2515A940006DD9F3 /* SpeechViewController.swift */; };
 		DCA13B3A2516D7C2006DD9F3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B392516D7C2006DD9F3 /* SettingsViewController.swift */; };
 		DCB023FC2516EB99007585ED /* Pods_voice_translator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB023FB2516EB99007585ED /* Pods_voice_translator.framework */; };
+		DCE773B925361CC500EDE22E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCE773B825361CC500EDE22E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,7 +63,6 @@
 		A039598624EB49C400EC77EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A039598824EB49C400EC77EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A045E03C24EC621F00D9F3CF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		A0683DCC24EC440F00318C58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A06B3E7024EBB6970016233A /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = ../Utilities.swift; sourceTree = "<group>"; };
 		A0957F3624EED98C00DB237A /* TranslateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateViewController.swift; sourceTree = "<group>"; };
 		A0957F3824EF5B6C00DB237A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -99,6 +98,7 @@
 		DCA13B1E2515A940006DD9F3 /* SpeechViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechViewController.swift; sourceTree = "<group>"; };
 		DCA13B392516D7C2006DD9F3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		DCB023FB2516EB99007585ED /* Pods_voice_translator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_voice_translator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCE773B825361CC500EDE22E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,7 +163,7 @@
 				A039598024EB49C100EC77EE /* Main.storyboard */,
 				A039598324EB49C400EC77EE /* Assets.xcassets */,
 				A039598524EB49C400EC77EE /* LaunchScreen.storyboard */,
-				A0683DCC24EC440F00318C58 /* GoogleService-Info.plist */,
+				DCE773B825361CC500EDE22E /* GoogleService-Info.plist */,
 				A039598824EB49C400EC77EE /* Info.plist */,
 			);
 			path = "voice-translator";
@@ -251,6 +251,7 @@
 				A039597524EB49C100EC77EE /* Resources */,
 				1C765A793B5175C4011A08AE /* [CP] Embed Pods Frameworks */,
 				E1E5B6276A18CEC9CC348986 /* [CP] Copy Pods Resources */,
+				DCE773B625360FA300EDE22E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -300,7 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A039598724EB49C400EC77EE /* LaunchScreen.storyboard in Resources */,
-				A0683DCD24EC441000318C58 /* GoogleService-Info.plist in Resources */,
+				DCE773B925361CC500EDE22E /* GoogleService-Info.plist in Resources */,
 				A039598424EB49C400EC77EE /* Assets.xcassets in Resources */,
 				A039598224EB49C100EC77EE /* Main.storyboard in Resources */,
 			);
@@ -347,6 +348,25 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		DCE773B625360FA300EDE22E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		E1E5B6276A18CEC9CC348986 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -558,6 +578,7 @@
 				CODE_SIGN_ENTITLEMENTS = "voice-translator/voice-translator.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 83AJSFCSHH;
 				INFOPLIST_FILE = "voice-translator/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

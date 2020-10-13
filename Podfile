@@ -16,6 +16,7 @@ target 'voice-translator' do
     pod 'Firebase/Messaging'
     pod 'googleapis', :path => '.'
     pod 'Firebase/DynamicLinks'
+    pod 'Firebase/Crashlytics'
 
 end
 
