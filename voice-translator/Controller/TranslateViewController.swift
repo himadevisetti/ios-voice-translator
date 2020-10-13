@@ -200,8 +200,10 @@ class TranslateViewController: UIViewController, Loggable {
             let appD = UIApplication.shared.delegate as? AppDelegate
             switch status {
             case .denied, .restricted, .notDetermined:
-                if (!appD!.hasAlreadyLaunched) {
+                if (appD!.hasAlreadyLaunched) {
                     self.showError("Please grant media library access for 'Voice Translate' app in Settings > Privacy")
+                } else {
+                    appD!.sethasAlreadyLaunched()
                 }
             case .authorized:
                 break
