@@ -39,7 +39,7 @@ class Utilities {
     static func styleFilledButton(_ button:UIButton) {
         
         button.backgroundColor = UIColor.systemIndigo
-        button.layer.cornerRadius = 25.0
+        button.layer.cornerRadius = 20.0
         button.tintColor = UIColor.white
         
     }
@@ -47,7 +47,7 @@ class Utilities {
     static func settingsStyleButton(_ button:UIButton) {
         
         button.backgroundColor = UIColor.init(red: 143/255, green: 161/255, blue: 255/255, alpha: 1)
-        button.layer.cornerRadius = 25.0
+        button.layer.cornerRadius = 20.0
         button.tintColor = UIColor.white
         
     }
@@ -75,7 +75,7 @@ class Utilities {
         button.backgroundColor = UIColor.white
         button.setTitleColor(.black, for: .normal)
         button.layer.borderColor = UIColor.black.cgColor
-        button.layer.cornerRadius = 25.0
+        button.layer.cornerRadius = 20.0
         button.tintColor = UIColor.black
         
     }
@@ -218,6 +218,26 @@ class Utilities {
         actionCodeSettings.setIOSBundleID(Bundle.main.bundleIdentifier!)
         
         return actionCodeSettings
+    }
+    
+    // Fetch user's firstname and lastname from database to display on profile page
+    static func fetchUsernameFromFirestore(email: String) -> Void {
+        
+        let db = Firestore.firestore()
+        db.collection("users").whereField("email", isEqualTo: email)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    Log(self).error("Error fetching user's name from firestore for profile display: \(err.localizedDescription)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let firstName = document.data()["firstname"] as? String
+                        let lastName = document.data()["lastname"] as? String
+                        SharedData.instance.userFirstName = firstName
+                        SharedData.instance.userLastName = lastName
+                    }
+                }
+            }
+
     }
     
     // Check if user exists in firestore database

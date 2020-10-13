@@ -43,6 +43,20 @@ class LoginViewController: UIViewController, GIDSignInDelegate, Loggable {
         setUpActivityIndicator()
     }
     
+    // Automatically sign in the user if user did not log out explicitly
+    override func viewDidAppear(_ animated: Bool) {
+        if Auth.auth().currentUser?.email != nil {
+            let email = Auth.auth().currentUser?.email
+            SharedData.instance.userName = email
+            
+            // Fetch user's firstname and lastname from database to display on profile page
+            Utilities.fetchUsernameFromFirestore(email: email!)
+            
+            // Show landing screen
+            transitionToLanding()
+        } else { return }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
@@ -199,21 +213,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate, Loggable {
                 else {
                     
                     // Fetch user's firstname and lastname from database to display on profile page
-                    let db = Firestore.firestore()
-                    db.collection("users").whereField("email", isEqualTo: email)
-                        .getDocuments() { (querySnapshot, err) in
-                            if let err = err {
-//                              print("Error getting documents: \(err.localizedDescription)")
-                                Log(self).error("Error fetching user's name from firestore for profile display: \(err.localizedDescription)")
-                            } else {
-                                for document in querySnapshot!.documents {
-                                    let firstName = document.data()["firstname"] as? String
-                                    let lastName = document.data()["lastname"] as? String
-                                    SharedData.instance.userFirstName = firstName
-                                    SharedData.instance.userLastName = lastName
-                                }
-                            }
-                        }
+                    Utilities.fetchUsernameFromFirestore(email: email)
                     
                     // detect user coming from verifyEmail flow (verifyEmailFlow == true)
                     if (self.verifyEmailFlow) {
