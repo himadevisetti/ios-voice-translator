@@ -31,6 +31,7 @@ class SpeechViewController : UIViewController, AudioControllerDelegate, Loggable
         
         setUpNavigationBarAndItems()
         optionsCard.cornerRadius = optionsCard.frame.height/2
+        optionsCard.backgroundColor = .systemGray
         AudioController.sharedInstance.delegate = self
         SpeechRecognitionService.sharedInstance.delegate = self
     }
@@ -69,12 +70,14 @@ class SpeechViewController : UIViewController, AudioControllerDelegate, Loggable
             SpeechRecognitionService.sharedInstance.stopStreaming()
             listening = false
             audioButton.setImage(UIImage(systemName: "mic.slash.fill"), for: .normal)
+            optionsCard.backgroundColor = .systemGray
         } else {//Record the audio
             audioData = NSMutableData()
             _ = AudioController.sharedInstance.prepare(specifiedSampleRate: SAMPLE_RATE)
             SpeechRecognitionService.sharedInstance.sampleRate = SAMPLE_RATE
             _ = AudioController.sharedInstance.start()
             listening = true
+            optionsCard.backgroundColor = .white
             audioButton.setImage(UIImage(systemName: "mic.fill"), for: .normal)
         }
     }

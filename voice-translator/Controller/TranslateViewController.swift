@@ -196,6 +196,16 @@ class TranslateViewController: UIViewController, Loggable {
         
         let mediaAction = UIAlertAction(title: " Media", style: .default) { (action) -> Void in
             
+            let status = MPMediaLibrary.authorizationStatus()
+            switch status {
+            case .denied, .restricted, .notDetermined:
+                self.showError("Please grant media library access for 'Voice Translate' app in Settings > Privacy")
+            case .authorized:
+                break
+            @unknown default:
+                self.showError("There's an unknown error while accessing media library. Please grant media library access for 'Voice Translate' app in Settings > Privacy")
+            }
+            
             let mediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.anyAudio)
             mediaPicker.delegate = self
             mediaPicker.allowsPickingMultipleItems = false
@@ -366,69 +376,28 @@ class TranslateViewController: UIViewController, Loggable {
         return nil
     }
     
-    func checkForMusicLibraryAccess(pathURL: URL, title: String) {
+    func accessMusicLibrary(pathURL: URL, title: String) {
         
-        let status = MPMediaLibrary.authorizationStatus()
-        switch status {
-        case .authorized:
-            Log(self).info("Access to media library is authorized")
-            exportFileToAppSandbox(pathURL, title: title) { sandboxFileURL, error in
-                guard let sandboxFileURL = sandboxFileURL, error == nil else {
-                    Log(self).error("Export failed: \(error!)", includeCodeLocation: true)
-                    return
-                }
-                
-                SharedData.instance.fileName = sandboxFileURL.lastPathComponent
-                self.fileURL = URL(fileURLWithPath: sandboxFileURL.path)
-                
-                DispatchQueue.main.async {
-                    // Export completed. Hide spinning wheel
-                    self.indicator.stopAnimating()
-                    self.indicator.hidesWhenStopped = true
-                    
-                    // Setting the fileName to the fileName outlet in the view
-                    self.fileName.text = sandboxFileURL.lastPathComponent
-                    self.fileName.alpha = 1
-                }
-                
+        Log(self).info("Access to media library is authorized")
+        exportFileToAppSandbox(pathURL, title: title) { sandboxFileURL, error in
+            guard let sandboxFileURL = sandboxFileURL, error == nil else {
+                Log(self).error("Export failed: \(error!)", includeCodeLocation: true)
+                return
             }
-        case .notDetermined:
-            Log(self).info("Access to media library is not determined")
-            MPMediaLibrary.requestAuthorization() { status in
-                if status == .authorized {
-                    DispatchQueue.main.async {
-                        Log(self).info("Access to media library is authorized")
-                        self.exportFileToAppSandbox(pathURL, title: title) { sandboxFileURL, error in
-                            guard let sandboxFileURL = sandboxFileURL, error == nil else {
-                                Log(self).error("Export failed: \(error!)", includeCodeLocation: true)
-                                return
-                            }
-                            
-                            SharedData.instance.fileName = sandboxFileURL.lastPathComponent
-                            self.fileURL = URL(fileURLWithPath: sandboxFileURL.path)
-                            
-                            DispatchQueue.main.async {
-                                // Export completed. Hide spinning wheel
-                                self.indicator.stopAnimating()
-                                self.indicator.hidesWhenStopped = true
-                                
-                                // Setting the fileName to the fileName outlet in the view
-                                self.fileName.text = sandboxFileURL.lastPathComponent
-                                self.fileName.alpha = 1
-                            }
-                        }
-                    }
-                }
+            
+            SharedData.instance.fileName = sandboxFileURL.lastPathComponent
+            self.fileURL = URL(fileURLWithPath: sandboxFileURL.path)
+            
+            DispatchQueue.main.async {
+                // Export completed. Hide spinning wheel
+                self.indicator.stopAnimating()
+                self.indicator.hidesWhenStopped = true
+                
+                // Setting the fileName to the fileName outlet in the view
+                self.fileName.text = sandboxFileURL.lastPathComponent
+                self.fileName.alpha = 1
             }
-        case .restricted:
-            // do nothing
-            Log(self).info("Access to media library is restricted")
-            break
-        case .denied:
-            // do nothing, or beg the user to authorize us in Settings
-            Log(self).info("Access to media library is denied")
-            break
-        default: fatalError()
+            
         }
         
     }
@@ -528,7 +497,7 @@ extension TranslateViewController: MPMediaPickerControllerDelegate {
             return
         }
         let title = item.value(forProperty: MPMediaItemPropertyTitle) as? String ?? "Unknown Title"
-        checkForMusicLibraryAccess(pathURL: pathURL!, title: title)
+        accessMusicLibrary(pathURL: pathURL!, title: title)
         
         self.dismiss(animated:true)
     }

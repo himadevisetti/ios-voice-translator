@@ -162,6 +162,10 @@ class RecordViewController: UIViewController, AVAudioRecorderDelegate {
             stopRecording(success: false)
         }
     }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        Log(self).error("Error while recording audio : \(error!.localizedDescription)")
+    }
         
     @IBAction func uploadButtonTapped(_ sender: Any) {
         
