@@ -141,7 +141,7 @@ class MessageViewController: UIViewController, Loggable {
                         let textLabel = UILabel()
                         textLabel.backgroundColor = UIColor.white
 //                        textLabel.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
-                        textLabel.font = UIFont(name: "Avenir Next", size: 14)
+                        textLabel.font = UIFont(name: "Avenir Next", size: 17)
                         textLabel.text = statusURL
                         textLabel.lineBreakMode = .byWordWrapping
                         textLabel.numberOfLines = 0;

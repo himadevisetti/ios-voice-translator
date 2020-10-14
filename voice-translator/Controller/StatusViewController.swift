@@ -213,7 +213,7 @@ class StatusViewController: UIViewController, Loggable {
         textLabel!.widthAnchor.constraint(equalToConstant: self.stackViewToShowFiles.frame.width).isActive = true
 //      textLabel!.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
 //      textLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
-        textLabel!.font = UIFont(name: "Avenir Next", size: 14)
+        textLabel!.font = UIFont(name: "Avenir Next", size: 17)
 //      textLabel!.sizeToFit()
 //      textLabel!.layoutIfNeeded()
         textLabel!.text = message

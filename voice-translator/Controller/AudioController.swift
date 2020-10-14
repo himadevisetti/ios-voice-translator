@@ -122,8 +122,9 @@ func recordingCallback(
 
   var bufferList = AudioBufferList()
   bufferList.mNumberBuffers = channelCount
-  let buffers = UnsafeMutableBufferPointer<AudioBuffer>(start: &bufferList.mBuffers,
-                                                        count: Int(bufferList.mNumberBuffers))
+
+  let buffers = withUnsafeMutablePointer(to: &bufferList.mBuffers) { UnsafeMutableBufferPointer<AudioBuffer>(start: $0, count: Int(bufferList.mNumberBuffers)) }
+
   buffers[0].mNumberChannels = 1
   buffers[0].mDataByteSize = inNumberFrames * 2
   buffers[0].mData = nil
@@ -134,7 +135,7 @@ func recordingCallback(
                            inTimeStamp,
                            inBusNumber,
                            inNumberFrames,
-                           UnsafeMutablePointer<AudioBufferList>(&bufferList))
+                           &bufferList)
   if (status != noErr) {
     return status;
   }
