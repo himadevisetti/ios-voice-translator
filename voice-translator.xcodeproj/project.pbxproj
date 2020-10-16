@@ -40,7 +40,6 @@
 		DC6C9A9D2524E5C20099CFB9 /* UserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9A9B2524E5C20099CFB9 /* UserInfoHeader.swift */; };
 		DC6C9AA12524F2C40099CFB9 /* ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9AA02524F2C40099CFB9 /* ProfileSection.swift */; };
 		DC6C9AD525259D510099CFB9 /* AgreementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9AD425259D510099CFB9 /* AgreementsViewController.swift */; };
-		DC6C9B092527EB770099CFB9 /* UIViewController.extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9B082527EB770099CFB9 /* UIViewController.extension.swift */; };
 		DC6C9B0C2528F7B10099CFB9 /* AppDelegate.extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C9B0B2528F7B00099CFB9 /* AppDelegate.extension.swift */; };
 		DCA13B1B2515781F006DD9F3 /* SpeechRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B182515781E006DD9F3 /* SpeechRecognitionService.swift */; };
 		DCA13B1C2515781F006DD9F3 /* TextToSpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B192515781E006DD9F3 /* TextToSpeechService.swift */; };
@@ -90,7 +89,6 @@
 		DC6C9A9B2524E5C20099CFB9 /* UserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoHeader.swift; sourceTree = "<group>"; };
 		DC6C9AA02524F2C40099CFB9 /* ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSection.swift; sourceTree = "<group>"; };
 		DC6C9AD425259D510099CFB9 /* AgreementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementsViewController.swift; sourceTree = "<group>"; };
-		DC6C9B082527EB770099CFB9 /* UIViewController.extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.extension.swift; sourceTree = "<group>"; };
 		DC6C9B0B2528F7B00099CFB9 /* AppDelegate.extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.extension.swift; sourceTree = "<group>"; };
 		DCA13B182515781E006DD9F3 /* SpeechRecognitionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechRecognitionService.swift; sourceTree = "<group>"; };
 		DCA13B192515781E006DD9F3 /* TextToSpeechService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextToSpeechService.swift; sourceTree = "<group>"; };
@@ -197,7 +195,6 @@
 				DC121542251EB04F003B8832 /* LanguageOptionsTableViewController.swift */,
 				DC6C9A962524E4420099CFB9 /* ProfileViewController.swift */,
 				DC6C9AD425259D510099CFB9 /* AgreementsViewController.swift */,
-				DC6C9B082527EB770099CFB9 /* UIViewController.extension.swift */,
 				DC1EA23D252A8FFE00869554 /* TranslateLanguageOptionsTableViewController.swift */,
 				DC1EA281252D3A0200869554 /* ConfirmPasswordViewController.swift */,
 			);
@@ -403,7 +400,6 @@
 				DC1EA2382529630300869554 /* AudioController.swift in Sources */,
 				DCA13B1B2515781F006DD9F3 /* SpeechRecognitionService.swift in Sources */,
 				DCA13B1D2515781F006DD9F3 /* TranslationService.swift in Sources */,
-				DC6C9B092527EB770099CFB9 /* UIViewController.extension.swift in Sources */,
 				DC1EA23E252A8FFE00869554 /* TranslateLanguageOptionsTableViewController.swift in Sources */,
 				DC1EA241252BA79500869554 /* InfoPlistParser.swift in Sources */,
 				A0957F3924EF5B6C00DB237A /* NetworkService.swift in Sources */,
