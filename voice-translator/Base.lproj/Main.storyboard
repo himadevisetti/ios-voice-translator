@@ -994,7 +994,7 @@
                             <constraint firstItem="grD-rw-5eN" firstAttribute="trailing" secondItem="9RG-hE-VXa" secondAttribute="trailing" id="vdH-dZ-048"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="nYi-di-mbu"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -1324,7 +1324,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Logo" width="1920" height="1080"/>
+        <image name="Logo" width="1024" height="576"/>
         <image name="mic.slash.fill" catalog="system" width="108" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

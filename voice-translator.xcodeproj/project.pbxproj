@@ -48,7 +48,7 @@
 		DCA13B1F2515A940006DD9F3 /* SpeechViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B1E2515A940006DD9F3 /* SpeechViewController.swift */; };
 		DCA13B3A2516D7C2006DD9F3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA13B392516D7C2006DD9F3 /* SettingsViewController.swift */; };
 		DCB023FC2516EB99007585ED /* Pods_voice_translator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCB023FB2516EB99007585ED /* Pods_voice_translator.framework */; };
-		DCE773B925361CC500EDE22E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCE773B825361CC500EDE22E /* GoogleService-Info.plist */; };
+		DCE7E6D22538BDCF004989F9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCE7E6D12538BDCE004989F9 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,7 +98,7 @@
 		DCA13B1E2515A940006DD9F3 /* SpeechViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechViewController.swift; sourceTree = "<group>"; };
 		DCA13B392516D7C2006DD9F3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		DCB023FB2516EB99007585ED /* Pods_voice_translator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_voice_translator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DCE773B825361CC500EDE22E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DCE7E6D12538BDCE004989F9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,7 +163,7 @@
 				A039598024EB49C100EC77EE /* Main.storyboard */,
 				A039598324EB49C400EC77EE /* Assets.xcassets */,
 				A039598524EB49C400EC77EE /* LaunchScreen.storyboard */,
-				DCE773B825361CC500EDE22E /* GoogleService-Info.plist */,
+				DCE7E6D12538BDCE004989F9 /* GoogleService-Info.plist */,
 				A039598824EB49C400EC77EE /* Info.plist */,
 			);
 			path = "voice-translator";
@@ -301,7 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A039598724EB49C400EC77EE /* LaunchScreen.storyboard in Resources */,
-				DCE773B925361CC500EDE22E /* GoogleService-Info.plist in Resources */,
+				DCE7E6D22538BDCF004989F9 /* GoogleService-Info.plist in Resources */,
 				A039598424EB49C400EC77EE /* Assets.xcassets in Resources */,
 				A039598224EB49C100EC77EE /* Main.storyboard in Resources */,
 			);

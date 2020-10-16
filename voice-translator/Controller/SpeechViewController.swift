@@ -54,6 +54,11 @@ class SpeechViewController : UIViewController, AudioControllerDelegate, Loggable
         let settingsButton = UIBarButtonItem(image: UIImage(systemName: "gear")!.withRenderingMode(.alwaysOriginal),
                                              style: .plain, target: self, action: #selector(settingsButtonTapped))
         self.navigationItem.rightBarButtonItem  = settingsButton
+
+        // Add header to the tableview
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        tableView.tableHeaderView = headerView
+        tableView.sectionHeaderHeight = 60
     }
     
     @IBAction func settingsButtonTapped(_ sender: Any) {
