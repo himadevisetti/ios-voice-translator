@@ -144,6 +144,14 @@ extension AppDelegate {
                     // Create agree button
                     let agreeAction = UIAlertAction(title: "Ok", style: .default) { (action) -> Void in
                         Log("verifyEmail").info("Account has been verified")
+                        // Sign out the user (disable auto-login) as this is their first-time and they need to login manually using username and password
+                        let firebaseAuth = Auth.auth()
+                        do {
+                          try firebaseAuth.signOut()
+                        } catch let signOutError as NSError {
+                            // Send this to logs
+                            Log("verifyEmail").info("Error while signing out the user from firebase: \(signOutError.localizedDescription)")
+                        }
                         if let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.loginViewController) as? LoginViewController {
                             let appDelegate = UIApplication.shared.delegate as! AppDelegate
                             appDelegate.hasAlreadyLaunched = false
