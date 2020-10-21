@@ -574,6 +574,7 @@
 				CODE_SIGN_ENTITLEMENTS = "voice-translator/voice-translator.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 83AJSFCSHH;
 				INFOPLIST_FILE = "voice-translator/Info.plist";
@@ -597,6 +598,7 @@
 				CODE_SIGN_ENTITLEMENTS = "voice-translator/voice-translator.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 83AJSFCSHH;
 				INFOPLIST_FILE = "voice-translator/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -89,7 +89,7 @@ class TranslateViewController: UIViewController, Loggable {
         self.navigationItem.title = Constants.Storyboard.translateScreenTitle
         
         // Hide bottom toolbar
-        //      self.navigationController?.setToolbarHidden(true, animated: true)
+        self.navigationController?.setToolbarHidden(true, animated: true)
         
         // Add record button to navigation bar on the right-side
         let recordButton = UIBarButtonItem(image: UIImage(systemName: "music.mic")!.withRenderingMode(.alwaysOriginal),

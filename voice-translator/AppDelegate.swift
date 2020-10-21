@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         FirebaseApp.configure()
+        Messaging.messaging().delegate = self
         
         // [START register_for_notifications]
         if #available(iOS 10.0, *) {
@@ -43,6 +44,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         application.registerForRemoteNotifications()
+
+        fetchFCMToken() // This will be nil the first time, but it will give you a value on most subsequent runs
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(tokenRefreshNotification),
+                                               name: NSNotification.Name.MessagingRegistrationTokenRefreshed,
+                                               object: nil)
+
         if voiceLists == nil || (voiceLists?.isEmpty ?? true) {
             TextToSpeechRecognitionService.sharedInstance.voiceListDelegate = self
             TextToSpeechRecognitionService.sharedInstance.getVoiceLists ()
@@ -53,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // If the user is already logged into firebase
         if let user = Auth.auth().currentUser {
-//          print("You're signed in as \(user.uid), email: \(String(describing: user.email))")
+            //          print("You're signed in as \(user.uid), email: \(String(describing: user.email))")
             Log(self).info("You're signed in as \(user.uid)")
         }
         
@@ -77,6 +85,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         hasAlreadyLaunched = true
     }
     
+    func fetchFCMToken() {
+        Messaging.messaging().token { token, error in
+            if let error = error {
+                Log(self).error("FCM token not yet received:  \(error.localizedDescription)")
+            }
+        }
+    }
+
+    @objc func tokenRefreshNotification(_ notification: NSNotification?) {
+        fetchFCMToken()
+    }
+
     @available(iOS 9.0, *)
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
         return GIDSignIn.sharedInstance().handle(url)
@@ -105,9 +125,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SpeechRecognitionService.sharedInstance.getDeviceID { (deviceID) in
             // authenticate using an authorization token (obtained using OAuth)
             FCMTokenProvider.getToken(deviceID: deviceID) { (shouldWait, token, error) in
-                //          print("shouldWait: \(shouldWait), token: \(String(describing: token)), error: \(error?.localizedDescription ?? "")")
+                //              print("shouldWait: \(shouldWait), token: \(String(describing: token)), error: \(error?.localizedDescription ?? "")")
                 if error != nil {
-//                  print("error: \(error?.localizedDescription ?? "")")
+                    //                  print("error: \(error?.localizedDescription ?? "")")
                     Log(self).error("\(String(describing: error?.localizedDescription)) ?? 'No error description available'", includeCodeLocation: true)
                 }
             }

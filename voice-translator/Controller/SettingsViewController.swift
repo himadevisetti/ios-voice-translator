@@ -93,6 +93,9 @@ class SettingsViewController: UIViewController {
                                          style: .plain, target: self, action: #selector(homeButtonTapped))
         self.navigationItem.rightBarButtonItem  = homeButton
         
+        // Hide bottom toolbar
+        self.navigationController?.setToolbarHidden(true, animated: true)
+        
     }
     
     func setUpElements() {

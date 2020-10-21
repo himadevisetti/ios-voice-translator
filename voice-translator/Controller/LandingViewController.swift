@@ -30,6 +30,11 @@ class LandingViewController: UIViewController {
         setUpElements()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setToolbarHidden(false, animated: animated)
+    }
+
     func setUpNavigationBarAndItems() {
         
         // Set the screen title
