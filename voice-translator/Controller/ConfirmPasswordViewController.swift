@@ -23,6 +23,15 @@ class ConfirmPasswordViewController: UIViewController, Loggable {
     var email: String?
     var actionCode: String? // oobCode from reset password link
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        // Text fields should be setup in viewDidLayoutSubviews() instead of viewDidLoad() in order to adjust width according to device size
+        Utilities.styleTextField(emailText)
+        Utilities.styleTextField(passwordText)
+        Utilities.styleTextField(confirmPasswordText)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,9 +63,6 @@ class ConfirmPasswordViewController: UIViewController, Loggable {
         errorLabel.alpha = 0
         
         // Style the UI Elements
-        Utilities.styleTextField(emailText)
-        Utilities.styleTextField(passwordText)
-        Utilities.styleTextField(confirmPasswordText)
         Utilities.styleFilledButton(confirmPasswordButton)
         emailText.text = email
         

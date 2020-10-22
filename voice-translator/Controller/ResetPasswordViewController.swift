@@ -15,6 +15,13 @@ class ResetPasswordViewController: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var resetPasswordButton: UIButton!
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        // Text fields should be setup in viewDidLayoutSubviews() instead of viewDidLoad() in order to adjust width according to device size
+        Utilities.styleTextField(emailText)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,7 +53,6 @@ class ResetPasswordViewController: UIViewController {
         errorLabel.alpha = 0
                     
         // Style the UI Elements
-        Utilities.styleTextField(emailText)
         Utilities.styleFilledButton(resetPasswordButton)
     }
 

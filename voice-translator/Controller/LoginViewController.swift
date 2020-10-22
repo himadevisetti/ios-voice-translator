@@ -28,6 +28,14 @@ class LoginViewController: UIViewController, GIDSignInDelegate, Loggable {
     var verifyEmailFlow: Bool = false
     var indicator = UIActivityIndicatorView(style: .large)
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        // Text fields should be setup in viewDidLayoutSubviews() instead of viewDidLoad() in order to adjust width according to device size
+        Utilities.styleTextField(emailText)
+        Utilities.styleTextField(passwordText)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -84,8 +92,6 @@ class LoginViewController: UIViewController, GIDSignInDelegate, Loggable {
         errorLabel.alpha = 0
         
         // Style the UI Elements
-        Utilities.styleTextField(emailText)
-        Utilities.styleTextField(passwordText)
         Utilities.styleFilledButton(logInButton)
         
         // Disable autofill accessory to save password
@@ -104,7 +110,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate, Loggable {
     // If invalid, return an error string
     func validateFields() -> String? {
         
-        // Esnure that all mandatory fields are filled in
+        // Ensure that all mandatory fields are filled in
         if emailText.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
             || passwordText.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
             return "Please fill in all fields."

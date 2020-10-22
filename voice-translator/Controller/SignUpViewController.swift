@@ -23,6 +23,16 @@ class SignUpViewController: UIViewController, Loggable {
     
     var logCategory = "Sign up"
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        // Text fields should be setup in viewDidLayoutSubviews() instead of viewDidLoad() in order to adjust width according to device size
+        Utilities.styleTextField(firstNameText)
+        Utilities.styleTextField(lastNameText)
+        Utilities.styleTextField(emailText)
+        Utilities.styleTextField(passwordText)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,10 +64,6 @@ class SignUpViewController: UIViewController, Loggable {
         errorLabel.alpha = 0
         
         // Style the UI elements
-        Utilities.styleTextField(firstNameText)
-        Utilities.styleTextField(lastNameText)
-        Utilities.styleTextField(emailText)
-        Utilities.styleTextField(passwordText)
         Utilities.styleFilledButton(signUpButton)
         
         // Disable autofill accessory to save password
