@@ -71,9 +71,9 @@
 		</dict>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses media library for accessing audio files</string>
+	<string>This allows the app to provide you audio file translate feature by letting you access your Apple Music library to choose audio files for translation.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>$(PRODUCT_NAME) uses microphone for recording and speech</string>
+	<string>This allows the app to provide you certain features like speech translate, audio file translate by letting you access your microphone to speak and/or record audio files for translation.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
